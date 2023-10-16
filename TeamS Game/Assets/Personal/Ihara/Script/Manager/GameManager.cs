@@ -40,21 +40,23 @@ public enum GameMode
 
 public class GameManager : MonoBehaviour
 {
-    public static GameState m_GameState;                // 現在のゲーム状態
-    [SerializeField] private GameState m_CheckGameState;// 現在のゲーム状態(確認用)
-    [SerializeField] private GameMode m_GameMode;       // 現在のゲームモード
+    public static GameState m_sGameState;                // 現在のゲーム状態
+    public static GameMode  m_sGameMode;                 // 現在のゲームモード
+    [SerializeField] private GameState m_CheckGameState; // 現在のゲーム状態(確認用)
+    [SerializeField] private GameMode m_GameMode;        // 現在のゲームモード(変更用)
 
     private void Awake()
     {
-        m_GameState = GameState.GameStart;
+        m_sGameState = GameState.GameStart;
     }
 
     private void Update()
     {
-        m_CheckGameState = m_GameState;
+        m_CheckGameState = m_sGameState;
+        m_sGameMode = m_GameMode;
         if (m_GameMode == GameMode.Debug)
         {
-            Debug.Log(m_GameState);
+            //Debug.Log(m_sGameState);
         }
 
         if(Input.GetKeyDown(KeyCode.A))
@@ -71,8 +73,8 @@ public class GameManager : MonoBehaviour
      */
     public static GameState GetSetGameState
     {
-        get { return m_GameState; }
-        set { m_GameState = value; }
+        get { return m_sGameState; }
+        set { m_sGameState = value; }
     }
 
     /**
@@ -81,9 +83,9 @@ public class GameManager : MonoBehaviour
      * @return bool型
      * @brief 
      */
-    public bool IsDebug()
+    public static bool IsDebug()
     {
-        if (m_GameMode != GameMode.Debug)
+        if (m_sGameMode == GameMode.Debug)
         {
             return true;
         }
