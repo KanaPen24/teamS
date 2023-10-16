@@ -13,9 +13,10 @@ using UnityEngine;
 public enum HitType
 {
     NONE = 0,
-    ATTACK,
-    RECEIVE,
-    FIELD,
+
+    ATTACK,     // 攻撃
+    BODY,    // 体
+    FIELD,      // 足場
 
     MAX_TYPE,
 }
@@ -23,7 +24,7 @@ public enum HitType
 public class ON_HitBase
 {
     // コンストラクタ
-    public ON_HitBase(Vector2 center, Vector2 size, int ID) : this(center, size, true, HitType.RECEIVE, ID)
+    public ON_HitBase(Vector2 center, Vector2 size, int ID) : this(center, size, true, HitType.BODY, ID)
     {
         m_hitID = 0;
     }
