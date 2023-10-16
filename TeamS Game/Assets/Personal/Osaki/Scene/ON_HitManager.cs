@@ -15,11 +15,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 衝突時データ
-public struct HitData
+public class HitData
 {
     public int myID;       // 自分のID
     public int otherID;    // 相手のID
-    public HitState state; // 衝突時状態 
+    public HitState state; // 衝突時状態
+    public HitData(int myid, int otherid, HitState hit)
+    {
+        myID = myid; otherID = otherid; state = hit;
+    }
 }
 
 // 衝突時状態
@@ -29,8 +33,9 @@ public enum HitState
 
     ATTACK,     // 攻撃する
     DEFENCE,    // 攻撃される
-    STAND,      // 上に乗る
-    CARRY,      // 上に乗られる
+    GOURND,     // フィールドに当たった
+    BODYS,       // 体同士が接触
+    BALANCE,    // 攻撃同士が当たる
 
 
     MAX_STATE
@@ -45,7 +50,7 @@ public class ON_HitManager
     private int hitCnt = 0;     // 当たった組み合わせ数
     private List<HitData> m_hitDatas = new List<HitData>();     // 衝突データリスト
     
-    void Init()
+    public void Init()
     {
         if(instance == null)
         {
@@ -58,14 +63,60 @@ public class ON_HitManager
         }
     }
 
-    void Update()
+    public void Update()
     {
         // リストの初期化
         m_hitDatas.Clear();
+        hitCnt = 0;
 
         // 当たり判定の計算
+        for(int i = 0; i < m_hits.Count; ++i)
+        {
+            for(int j = i; j < m_hits.Count; ++j)
+            {
+                // 左右
+                if (m_hits[i].GetCenter().x + m_hits[i].GetSize().x <= m_hits[j].GetCenter().x - m_hits[j].GetSize().x) continue;
+                if (m_hits[i].GetCenter().x - m_hits[i].GetSize().x >= m_hits[j].GetCenter().x + m_hits[j].GetSize().x) continue;
 
+                // 上下
+                if (m_hits[i].GetCenter().y + m_hits[i].GetSize().y <= m_hits[j].GetCenter().y - m_hits[j].GetSize().y) continue;
+                if (m_hits[i].GetCenter().y - m_hits[i].GetSize().y >= m_hits[j].GetCenter().y + m_hits[j].GetSize().y) continue;
 
+                // 同一オブジェクトか
+                if (m_hits[i].GetObjID() == m_hits[j].GetObjID()) continue;
+
+                // 当たっている
+                // 当たり判定の状態判定し、追加
+                m_hitDatas.Add(new HitData(m_hits[i].GetObjID(), m_hits[j].GetObjID(), DecideState(i, j)));
+            }
+        }
+
+        hitCnt = m_hitDatas.Count;
+    }
+
+    // 当たり判定の状態特定
+    private HitState DecideState(int i, int j)
+    {
+        HitState state = HitState.NONE;
+        if(m_hits[i].GetHitType() == HitType.FIELD || m_hits[j].GetHitType() == HitType.FIELD)
+        {
+            state = HitState.GOURND;
+            return state;
+        }
+
+        switch(m_hits[i].GetHitType())
+        {
+            case HitType.ATTACK:
+                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.BALANCE;
+                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.ATTACK;
+                break;
+            case HitType.BODY:
+                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.DEFENCE;
+                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.BODYS;
+                break;
+        }
+
+        return state;
     }
 
     // 当たり判定の生成
@@ -75,7 +126,7 @@ public class ON_HitManager
 
         if(m_hits.Count > 0)
         {
-            m_hits[m_hits.Count - 1].SetHitID(m_hits[m_hits.Count - 2].GetHitID());
+            m_hits[m_hits.Count - 1].SetHitID(m_hits[m_hits.Count - 2].GetHitID() + 1);
         }
         return m_hits[m_hits.Count - 1].GetHitID();
     }
