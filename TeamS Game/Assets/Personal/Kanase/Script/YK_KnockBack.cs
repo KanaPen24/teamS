@@ -1,3 +1,9 @@
+/**
+ * @file   YK_KnockBack.cs
+ * @brief  ノックバック処理
+ * @author 吉田叶聖
+ * @date   2023/10/15
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +12,10 @@ using DG.Tweening;
 public class YK_KnockBack : MonoBehaviour
 {
     GameObject target;
-    public float speed, ratio;
-    public float P1_Y;
-    public float m_LastSpeed;
+    [SerializeField] private float speed, ratio;
+    [SerializeField] private float P1_Y;    //ベジエ曲線の途中の打点Y　
+                                            //ここの数値を上げるとノックバックのY点があがる
+    [SerializeField] private float m_LastSpeed; //吹っ飛び終わった後のスピード抑制
     /// <summary> ヒットストップ時間(秒) </summary>
     public float HitStopTime = 0.23f;
 
@@ -33,8 +40,10 @@ public class YK_KnockBack : MonoBehaviour
 
     IEnumerator Throw()
     {
+        //ヒットストップ
         var seq = DOTween.Sequence();
         seq.SetDelay(HitStopTime);
+
         float t = 0f;
         float distance = Vector3.Distance(transform.position, target.transform.position);
 
@@ -59,7 +68,6 @@ public class YK_KnockBack : MonoBehaviour
         Vector3 P1 = new Vector3(P1x, P1y, 0);
 
         Vector3 look = P1;
-        //transform.rotation = Quaternion.FromToRotation(Vector3.up, look);
         float slerp_start_point = ratio * 0.5f;
 
         while (t <= 1 && target)
@@ -72,7 +80,6 @@ public class YK_KnockBack : MonoBehaviour
             {
                 look = target.transform.position - transform.position;
                 Quaternion to = Quaternion.FromToRotation(Vector3.up, look);
-               // transform.rotation = Quaternion.Slerp(transform.rotation, to, speed * 0.5f * Time.deltaTime);
             }
 
             t += 1 / distance / speed * Time.deltaTime;
