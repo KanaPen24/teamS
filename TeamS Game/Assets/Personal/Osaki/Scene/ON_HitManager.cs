@@ -74,6 +74,8 @@ public class ON_HitManager
         {
             for(int j = i; j < m_hits.Count; ++j)
             {
+                // 当たり判定がoffだったらスキップする
+                if (m_hits[j].GetActive() == false) continue;
                 // 左右
                 if (m_hits[i].GetCenter().x + m_hits[i].GetSize().x <= m_hits[j].GetCenter().x - m_hits[j].GetSize().x) continue;
                 if (m_hits[i].GetCenter().x - m_hits[i].GetSize().x >= m_hits[j].GetCenter().x + m_hits[j].GetSize().x) continue;
@@ -98,12 +100,14 @@ public class ON_HitManager
     private HitState DecideState(int i, int j)
     {
         HitState state = HitState.NONE;
+        // 地面と当たっているか
         if(m_hits[i].GetHitType() == HitType.FIELD || m_hits[j].GetHitType() == HitType.FIELD)
         {
             state = HitState.GOURND;
             return state;
         }
 
+        // 自分の状態によって処理派生
         switch(m_hits[i].GetHitType())
         {
             case HitType.ATTACK:
