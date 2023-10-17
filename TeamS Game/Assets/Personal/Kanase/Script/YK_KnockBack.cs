@@ -10,31 +10,34 @@ using UnityEngine;
 using DG.Tweening;
 
 public class YK_KnockBack : MonoBehaviour
-{
-    GameObject target;
-    [SerializeField] private float speed, ratio;
-    [SerializeField] private float P1_Y;    //ベジエ曲線の途中の打点Y　
+{    
+    [SerializeField] private Vector3 m_Target;
+    private Vector3 m_TargetStorage;    //ターゲットの座標保存用
+    [SerializeField] private float m_Speed, m_Ratio;
+    [SerializeField] private float m_P1Y;    //ベジエ曲線の途中の打点Y　
                                             //ここの数値を上げるとノックバックのY点があがる
     [SerializeField] private float m_LastSpeed; //吹っ飛び終わった後のスピード抑制
+    [SerializeField] private bool m_Direction = true;
     /// <summary> ヒットストップ時間(秒) </summary>
-    public float HitStopTime = 0.23f;
+    public float HitStopTime;
 
     void Start()
     {
-        
+        //ターゲットの座標指定
+        m_TargetStorage = m_Target;
+        m_Target = m_Target + transform.position;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            OnStart(GameObject.Find("Target").gameObject);
+            OnStart();
         }
     }
 
-    public void OnStart(GameObject target)
+    public void OnStart()
     {
-        this.target = target;
         StartCoroutine(Throw());
     }
 
@@ -45,10 +48,15 @@ public class YK_KnockBack : MonoBehaviour
         seq.SetDelay(HitStopTime);
 
         float t = 0f;
-        float distance = Vector3.Distance(transform.position, target.transform.position);
+        float distance = Vector3.Distance(transform.position, m_Target);
 
         Vector3 offset = transform.position;
-        Vector3 P2 = target.transform.position - offset;
+        Vector3 P2;
+        //左右の切り替え
+        if (m_Direction)
+            P2 = m_Target - offset;    //右に吹っ飛ぶ
+        else
+            P2 = -m_Target + offset;    //左に吹っ飛ぶ
 
         //高度設定
         float angle = 45f;
@@ -62,15 +70,15 @@ public class YK_KnockBack : MonoBehaviour
         }
 
 
-        float P1x = P2.x * ratio;
+        float P1x = P2.x * m_Ratio;
         //angle * Mathf.Deg2Rad 角度からラジアンへ変換
-        float P1y = Mathf.Sin(angle * Mathf.Deg2Rad) * Mathf.Abs(P1x) / Mathf.Cos(angle * Mathf.Deg2Rad)+P1_Y;
+        float P1y = Mathf.Sin(angle * Mathf.Deg2Rad) * Mathf.Abs(P1x) / Mathf.Cos(angle * Mathf.Deg2Rad)+m_P1Y;
         Vector3 P1 = new Vector3(P1x, P1y, 0);
 
         Vector3 look = P1;
-        float slerp_start_point = ratio * 0.5f;
+        float slerp_start_point = m_Ratio * 0.5f;
 
-        while (t <= 1 && target)
+        while (t <= 1)
         {
             float Vx = 2 * (1f - t) * t * P1.x + Mathf.Pow(t, 2) * P2.x + offset.x;
             float Vy = 2 * (1f - t) * t * P1.y + Mathf.Pow(t, 2) * P2.y + offset.y;
@@ -78,18 +86,18 @@ public class YK_KnockBack : MonoBehaviour
 
             if (t > slerp_start_point)
             {
-                look = target.transform.position - transform.position;
+               // look = target.transform.position - transform.position;
                 Quaternion to = Quaternion.FromToRotation(Vector3.up, look);
             }
 
-            t += 1 / distance / speed * Time.deltaTime;
+            t += 1 / distance / m_Speed * Time.deltaTime;
             //速度変化
-            if (speed < m_LastSpeed) 
-            speed += 0.017f;
+            if (m_Speed < m_LastSpeed) 
+            m_Speed += 0.017f;
             yield return null;
         }
-
-       // Destroy (this.gameObject);
+        //ターゲットの座標更新
+        m_Target = transform.position + m_TargetStorage;
     }
 }
 
