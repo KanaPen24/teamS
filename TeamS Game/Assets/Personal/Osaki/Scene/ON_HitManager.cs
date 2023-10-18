@@ -33,7 +33,7 @@ public enum HitState
 
     ATTACK,     // 攻撃する
     DEFENCE,    // 攻撃される
-    GOURND,     // フィールドに当たった
+    GRUOND,     // フィールドに当たった
     BODYS,       // 体同士が接触
     BALANCE,    // 攻撃同士が当たる
 
@@ -52,18 +52,10 @@ public class ON_HitManager
     
     public void Init()
     {
-        if(instance == null)
-        {
-            instance = this;
-            m_hits.Clear();
-        }
-        else
-        {
-            instance = null;
-        }
+        m_hits.Clear();
     }
 
-    public void Update()
+    public void UpdateHit()
     {
         // リストの初期化
         m_hitDatas.Clear();
@@ -103,7 +95,7 @@ public class ON_HitManager
         // 地面と当たっているか
         if(m_hits[i].GetHitType() == HitType.FIELD || m_hits[j].GetHitType() == HitType.FIELD)
         {
-            state = HitState.GOURND;
+            state = HitState.GRUOND;
             return state;
         }
 
@@ -124,11 +116,11 @@ public class ON_HitManager
     }
 
     // 当たり判定の生成
-    public int GenerateHit(Vector2 center, Vector2 size, bool active, HitType type, int ID)
+    public int GenerateHit(Vector3 center, Vector3 size, bool active, HitType type, int ID)
     {
         m_hits.Add(new ON_HitBase(center, size, active, type, ID));
 
-        if(m_hits.Count > 0)
+        if(m_hits.Count > 1)
         {
             m_hits[m_hits.Count - 1].SetHitID(m_hits[m_hits.Count - 2].GetHitID() + 1);
         }
@@ -193,7 +185,7 @@ public class ON_HitManager
     }
 
     // 当たり判定の移動( 引数：当たり判定ID, 移動量
-    public void MoveHit(int id, Vector2 vec)
+    public void MoveHit(int id, Vector3 vec)
     {
         // 指定された特定の当たり判定のみ移動
         for(int i = 0; i < m_hits.Count; ++i)
@@ -207,7 +199,7 @@ public class ON_HitManager
     }
 
     // 当たり判定の移動( 引数:オブジェクトID, 移動量
-    public void MoveHits(int objID, Vector2 vec)
+    public void MoveHits(int objID, Vector3 vec)
     {
         // 指定されたオブジェクトの当たり判定をすべて移動
         for(int i = 0; i < m_hits.Count; ++i)
@@ -220,7 +212,7 @@ public class ON_HitManager
     }
 
     // 当たり判定の中心座標変更( 引数：当たり判定ID
-    public void SetCenter(int id, Vector2 pos)
+    public void SetCenter(int id, Vector3 pos)
     {
         for (int i = 0; i < m_hits.Count; ++i)
         {
@@ -260,13 +252,26 @@ public class ON_HitManager
     }
 
     // 当たり判定の大きさ変更( 引数:当たり判定id, 大きさ
-    public void SetSize(int id, Vector2 size)
+    public void SetSize(int id, Vector3 size)
     {
         for (int i = 0; i < m_hits.Count; ++i)
         {
             if (m_hits[i].GetHitID() == id)
             {
                 m_hits[i].SetSize(size);
+                break;
+            }
+        }
+    }
+
+    // デバッグ用で当たり判定のIDとパラメータを表示する
+    public void DebugHitID(int myId)
+    {
+        for (int i = 0; i < m_hits.Count; ++i)
+        {
+            if (m_hits[i].GetHitID() == myId)
+            {
+                Debug.Log("hitID:" + i + "　pos:" + m_hits[i].GetCenter());
                 break;
             }
         }

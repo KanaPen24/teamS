@@ -24,12 +24,12 @@ public enum HitType
 public class ON_HitBase
 {
     // コンストラクタ
-    public ON_HitBase(Vector2 center, Vector2 size, int ID) : this(center, size, true, HitType.BODY, ID)
+    public ON_HitBase(Vector3 center, Vector3 size, int ID) : this(center, size, true, HitType.BODY, ID)
     {
         m_hitID = 0;
     }
 
-    public ON_HitBase(Vector2 center, Vector2 size, bool active, HitType type, int ID)
+    public ON_HitBase(Vector3 center, Vector3 size, bool active, HitType type, int ID)
     {
         m_center = center;
         m_size = size;
@@ -40,12 +40,12 @@ public class ON_HitBase
     }
 
     // 中心
-    public void SetCenter(Vector2 value) { m_center = value; }
-    public Vector2 GetCenter() { return m_center; }
+    public void SetCenter(Vector3 value) { m_center = value; }
+    public Vector3 GetCenter() { return m_center; }
 
     // 大きさ
-    public void SetSize(Vector2 value) { m_size = value; }
-    public Vector2 GetSize() { return m_size; }
+    public void SetSize(Vector3 value) { m_size = value; }
+    public Vector3 GetSize() { return m_size; }
 
     // 有効
     public void SetActive(bool value) { m_active = value; }
@@ -64,10 +64,10 @@ public class ON_HitBase
     public int GetHitID() { return m_hitID; }
 
     // 当たり判定の移動
-    public void MoveHit(Vector2 vec) { m_center += vec; }
+    public void MoveHit(Vector3 vec) { m_center += vec; }
 
-    private Vector2   m_center; // 当たり判定の中心
-    private Vector2   m_size;   // 当たり判定の大きさ(中心からの距離
+    private Vector3   m_center; // 当たり判定の中心
+    private Vector3   m_size;   // 当たり判定の大きさ(中心からの距離
     private bool      m_active; // 当たり判定が有効か(true:有効 false:無効
     private HitType   m_type;   // 当たり判定のタイプ
     private int       m_objID;  // 当たり判定のあるオブジェクトID
