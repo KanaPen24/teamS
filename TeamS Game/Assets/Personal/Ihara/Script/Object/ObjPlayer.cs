@@ -11,10 +11,16 @@ using UnityEngine;
 
 public class ObjPlayer : ObjBase
 {
-    public float m_fSpeed;   // 基本速度
-    public float m_fMaxSpeed;// 最高速度
-    public float m_fAccel;   // 加速度
-    private Vector3 m_vVel;  // 速度 
+    public float Speed;   // 基本速度
+    public float MaxSpeed;// 最高速度
+    public float Accel;   // 加速度
+
+    private void Start()
+    {
+        GetSetSpeed = Speed;
+        GetSetMaxSpeed = MaxSpeed;
+        GetSetAccel = Accel;
+    }
 
     public void Update()
     {
@@ -22,22 +28,22 @@ public class ObjPlayer : ObjBase
         // 移動
         if (IS_XBoxInput.LStick_H > 0.2f || IS_XBoxInput.LStick_H < -0.2f)
         {
-            m_vVel.x += IS_XBoxInput.LStick_H * m_fSpeed * m_fAccel;
-            if (m_vVel.x > m_fMaxSpeed)
+            GetSetSpeed += IS_XBoxInput.LStick_H * Speed * Accel;
+            if (GetSetSpeed > MaxSpeed)
             {
-                m_vVel.x = m_fMaxSpeed;
+                GetSetSpeed = MaxSpeed;
             }
-            if (m_vVel.x < -m_fMaxSpeed)
+            if (GetSetSpeed < -MaxSpeed)
             {
-                m_vVel.x = -m_fMaxSpeed;
+                GetSetSpeed = -MaxSpeed;
             }
         }
         else
         {
-            m_vVel.x *= 0.99f;
-            if(m_vVel.x <= 0.01f && m_vVel.x >= 0.01f)
+            GetSetSpeed *= 0.99f;
+            if(GetSetSpeed <= 0.01f && GetSetSpeed >= 0.01f)
             {
-                m_vVel.x = 0f;
+                GetSetSpeed = 0f;
             }
         }
         // ----------------
@@ -45,7 +51,7 @@ public class ObjPlayer : ObjBase
 
     public override void UpdateObj()
     {
-        this.transform.position += m_vVel;
+        this.transform.position += new Vector3(GetSetSpeed, GetSetFallSpeed, 0f);
     }
 
     public override void UpdateDebug()
