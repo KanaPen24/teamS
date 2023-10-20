@@ -32,6 +32,7 @@ public class YK_KnockBack : MonoBehaviour
 
     private void Update()
     {
+        //テスト
         if (Input.GetKeyDown(KeyCode.M))
         {
             m_bAtkHit = true;
@@ -104,11 +105,13 @@ public class YK_KnockBack : MonoBehaviour
                // look = target.transform.position - transform.position;
                 Quaternion to = Quaternion.FromToRotation(Vector3.up, look);
             }
+            //テスト
             if (Input.GetKeyDown(KeyCode.N))
             {
                 m_bAtkHit = true;               
             }
-            if(transform.position.y<0.0f)
+            //テスト
+            if (transform.position.y<0.0f)
             {
                 m_bGroundHit = true;
                 //地面の高さ(Y)に合わせる

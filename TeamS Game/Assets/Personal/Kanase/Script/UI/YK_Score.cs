@@ -13,6 +13,7 @@ public class YK_Score : YK_UI
 {
     Text scoreText; // スコアを表示するためのTextコンポーネントへの参照
     [SerializeField] private int m_nScore; //スコアの値を格納するためのプライベートな整数
+    [SerializeField] private float m_fTime; //スコアの加算時間
 
     /**
      * @brief Startは最初のフレームの前に呼び出されます。
@@ -29,11 +30,11 @@ public class YK_Score : YK_UI
      */
     void Update()
     {
-        /**
-         * 現在のスコアを表示するためにTextコンポーネントを更新します。
-         * スコアは5桁のゼロ埋め形式で表示されます。
-         */
-        scoreText.text = "Score:" + m_nScore.ToString("D5");
+        //テスト
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            AddScore(100);
+        }
     }
 
     /**
@@ -42,7 +43,8 @@ public class YK_Score : YK_UI
      */
     private void AddScore(int num)
     {
-        m_nScore += num;
+        //スコア+num m_fTimeすすめる
+        StartCoroutine(ScoreAnimation(num, m_fTime));
     }
 
     /**
@@ -51,5 +53,33 @@ public class YK_Score : YK_UI
     private void ResetScore()
     {
         m_nScore = 0;
+    }
+    // スコアをアニメーションさせる
+    IEnumerator ScoreAnimation(int addScore, float time)
+    {
+        //前回のスコア
+        int befor = m_nScore;
+        //今回のスコア
+        int after = m_nScore + addScore;
+        //得点加算
+        m_nScore += addScore;
+        //0fを経過時間にする
+        float elapsedTime = 0.0f;
+
+        //timeが0になるまでループさせる
+        while (elapsedTime < time)
+        {
+            float rate = elapsedTime / time;
+            int num;
+            num = (int)(befor + (after - befor) * rate);
+            // テキストの更新
+            scoreText.text = "Score:" + num.ToString("D5");
+
+            elapsedTime += Time.deltaTime;
+            // 0.01秒待つ
+            yield return new WaitForSeconds(0.01f);
+        }
+        // 最終的な着地のスコア
+        scoreText.text = "Score:" + m_nScore.ToString("D5");
     }
 }
