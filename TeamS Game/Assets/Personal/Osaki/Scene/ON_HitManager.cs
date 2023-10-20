@@ -20,9 +20,10 @@ public class HitData
     public int myID;       // Ž©•ª‚ÌID
     public int otherID;    // ‘ŠŽè‚ÌID
     public HitState state; // Õ“ËŽžó‘Ô
-    public HitData(int myid, int otherid, HitState hit)
+    public HitDir dir;     // Õ“Ë•ûŒü
+    public HitData(int myid, int otherid, HitState hit, HitDir hitdir)
     {
-        myID = myid; otherID = otherid; state = hit;
+        myID = myid; otherID = otherid; state = hit; dir = hitdir;
     }
 }
 
@@ -34,13 +35,25 @@ public enum HitState
     ATTACK,     // UŒ‚‚·‚é
     DEFENCE,    // UŒ‚‚³‚ê‚é
     GRUOND,     // ƒtƒB[ƒ‹ƒh‚É“–‚½‚Á‚½
-    BODYS,       // ‘Ì“¯Žm‚ªÚG
+    BODYS,      // ‘Ì“¯Žm‚ªÚG
     BALANCE,    // UŒ‚“¯Žm‚ª“–‚½‚é
 
 
     MAX_STATE
 }
 
+// Õ“Ë•ûŒü
+public enum HitDir
+{
+    NONE = 0,
+
+    UP,   // ã
+    DOWN, // ‰º
+    RIGHT,// ‰E
+    LEFT, // ¶
+
+    MAX_STATE
+}
 
 public class ON_HitManager
 {
@@ -81,7 +94,10 @@ public class ON_HitManager
 
                 // “–‚½‚Á‚Ä‚¢‚é
                 // “–‚½‚è”»’è‚Ìó‘Ô”»’è‚µA’Ç‰Á
-                m_hitDatas.Add(new HitData(m_hits[i].GetObjID(), m_hits[j].GetObjID(), DecideState(i, j)));
+                m_hitDatas.Add(new HitData(m_hits[i].GetObjID(),
+                    m_hits[j].GetObjID(),
+                    DecideState(i, j),
+                    DecideHitDir(i, j)));
             }
         }
 
@@ -113,6 +129,34 @@ public class ON_HitManager
         }
 
         return state;
+    }
+
+    // Õ“Ë•ûŒü‚ÌŠm’è
+    private HitDir DecideHitDir(int i, int j)
+    {
+        HitDir hitDir = HitDir.NONE;
+
+        // ‰E‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
+        if ((m_hits[i].GetCenter().x + m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
+             m_hits[i].GetCenter().x - m_hits[i].GetSize().x < m_hits[j].GetCenter().x) &&
+            (m_hits[i].GetCenter().y + m_hits[i].GetSize().y > m_hits[j].GetCenter().y - m_hits[i].GetSize().y &&
+             m_hits[i].GetCenter().y - m_hits[i].GetSize().y < m_hits[j].GetCenter().y + m_hits[i].GetSize().y))
+            return hitDir = HitDir.RIGHT;
+        // ¶‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
+        if ((m_hits[i].GetCenter().x - m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
+             m_hits[i].GetCenter().x + m_hits[i].GetSize().x > m_hits[j].GetCenter().x) &&
+            (m_hits[i].GetCenter().y + m_hits[i].GetSize().y > m_hits[j].GetCenter().y - m_hits[i].GetSize().y &&
+             m_hits[i].GetCenter().y - m_hits[i].GetSize().y < m_hits[j].GetCenter().y + m_hits[i].GetSize().y))
+            return hitDir = HitDir.LEFT;
+        // ã‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
+    //    if ((m_hits[i].GetCenter().x - m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
+    // m_hits[i].GetCenter().x + m_hits[i].GetSize().x > m_hits[j].GetCenter().x) &&
+    //(m_hits[i].GetCenter().y + m_hits[i].GetSize().y > m_hits[j].GetCenter().y - m_hits[i].GetSize().y / 2f &&
+    // m_hits[i].GetCenter().y - m_hits[i].GetSize().y < m_hits[j].GetCenter().y + m_hits[i].GetSize().y / 2f))
+            //return hitDir = HitDir.LEFT;
+        // ‰º‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
+
+        return hitDir;
     }
 
     // “–‚½‚è”»’è‚Ì¶¬
@@ -154,8 +198,20 @@ public class ON_HitManager
         return -1;
     }
 
-    // “–‚½‚è”»’è‚Ì‘g‚Ý‡‚í‚¹”
+    // “–‚½‚è”»’è‚Ì”Žæ“¾
     public int GetHitCnt()
+    {
+        return m_hits.Count;
+    }
+
+    // “–‚½‚è”»’è‚Ìƒf[ƒ^Žæ“¾
+    public ON_HitBase GetHit(int num)
+    {
+        return m_hits[num];
+    }
+
+    // “–‚½‚è”»’è‚Ì‘g‚Ý‡‚í‚¹”
+    public int GetHitCombiCnt()
     {
         return hitCnt;
     }
