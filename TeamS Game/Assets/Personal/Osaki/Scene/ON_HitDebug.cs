@@ -65,6 +65,9 @@ public class ON_HitDebug
 
     void Update()
     {
+        // デバックが開始されたか確認
+        if (hitDebugs.Count < 1) return;
+
         // hitIDのオブジェクトが存在するか確認用
         Dictionary<int, bool> keys = new Dictionary<int, bool>();
         for(int i = 0; i < hitDebugs.Count; ++i)
