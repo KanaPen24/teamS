@@ -11,39 +11,29 @@ using UnityEngine;
 
 public class ObjPlayer : ObjBase
 {
-    public float Speed;   // 基本速度
-    public float MaxSpeed;// 最高速度
-    public float Accel;   // 加速度
-
-    private void Start()
-    {
-        GetSetSpeed = Speed;
-        GetSetMaxSpeed = MaxSpeed;
-        GetSetAccel = Accel;
-    }
-
     public void Update()
     {
         // --- 入力確認 ---
         // 移動
         if (IS_XBoxInput.LStick_H > 0.2f || IS_XBoxInput.LStick_H < -0.2f)
         {
-            GetSetSpeed += IS_XBoxInput.LStick_H * Speed * Accel;
-            if (GetSetSpeed > MaxSpeed)
+            m_vSpeed.x += IS_XBoxInput.LStick_H * m_fAccel;
+
+            if (m_vSpeed.x > m_vMaxSpeed.x)
             {
-                GetSetSpeed = MaxSpeed;
+                m_vSpeed.x = m_vMaxSpeed.x;
             }
-            if (GetSetSpeed < -MaxSpeed)
+            if (m_vSpeed.x < -m_vMaxSpeed.x)
             {
-                GetSetSpeed = -MaxSpeed;
+                m_vSpeed.x = -m_vMaxSpeed.x;
             }
         }
         else
         {
-            GetSetSpeed *= 0.99f;
-            if(GetSetSpeed <= 0.01f && GetSetSpeed >= 0.01f)
+            m_vSpeed *= 0.99f;
+            if (m_vSpeed.x <= 0.01f && m_vSpeed.x >= 0.01f)
             {
-                GetSetSpeed = 0f;
+                m_vSpeed.x = 0f;
             }
         }
         // ----------------
@@ -51,7 +41,8 @@ public class ObjPlayer : ObjBase
 
     public override void UpdateObj()
     {
-        this.transform.position += new Vector3(GetSetSpeed, GetSetFallSpeed, 0f);
+        m_vMove = m_vSpeed;
+        this.transform.position += new Vector3(m_vMove.x, m_vMove.y, 0f);
     }
 
     public override void UpdateDebug()
