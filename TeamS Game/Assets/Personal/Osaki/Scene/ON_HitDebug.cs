@@ -32,13 +32,27 @@ public class ON_HitDebug
         image = (Sprite)Resources.Load("Square", typeof(Sprite));
         hitDebugs.Clear();
     }
-
-    // Start is called before the first frame update
+    
+    // デバックモード開始時
     public void StartHitDebug()
     {
-        
+        for(int i = 0; i < ON_HitManager.instance.GetHitCnt(); ++i)
+        {
+            hitDebugs.Add(new HitDebugDraw());
+
+            // ID, 座標, 大きさ設定
+            hitDebugs[i].hitID = ON_HitManager.instance.GetHit(i).GetHitID();
+            hitDebugs[i].obj.transform.position = ON_HitManager.instance.GetHit(i).GetCenter();
+            hitDebugs[i].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize();
+
+            // スプライトの色設定
+            var sprite = hitDebugs[i].obj.AddComponent<SpriteRenderer>();
+            sprite.color = SetColor(ON_HitManager.instance.GetHit(i).GetHitType());
+            sprite.sprite = image;
+        }
     }
 
+    // デバックモード終了時
     public void FinHitDebug()
     {
         for(int i = 0; i < hitDebugs.Count; ++i)
@@ -51,14 +65,66 @@ public class ON_HitDebug
 
     void Update()
     {
-        // デバックモード開始以降に生成された当たり判定を描画クラスに追加
+        // hitIDのオブジェクトが存在するか確認用
+        Dictionary<int, bool> keys = new Dictionary<int, bool>();
+        for(int i = 0; i < hitDebugs.Count; ++i)
+        {
+            keys[hitDebugs[i].hitID] = true;
+        }
 
-        // 当たり判定IDを使い、対応した当たり判定描画クラスの座標変化
+        for (int i = 0; i < ON_HitManager.instance.GetHitCnt(); ++i)
+        {
+            for (int j = 0; j < hitDebugs.Count; ++j)
+            {
+                // 当たり判定IDを使い、対応した当たり判定描画クラスの座標変化
+                if(ON_HitManager.instance.GetHit(i).GetHitID() == hitDebugs[j].hitID)
+                {
+                    hitDebugs[j].obj.transform.position = ON_HitManager.instance.GetHit(i).GetCenter();
+                    hitDebugs[j].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize();
 
-        // 当たり判定が非Activeの場合、色を変化
+                    // 当たり判定が非Activeの場合、色を変化
+                    if (!ON_HitManager.instance.GetHit(i).GetActive())
+                        hitDebugs[j].obj.GetComponent<SpriteRenderer>().color = new Color(0.1f, 0.1f, 0.1f, 0.3f);
 
+                    // 使用済み
+                    keys[hitDebugs[j].hitID] = false;
+
+                    continue;
+                }
+            }
+
+            // デバックモード開始以降に当たり判定が生成された場合
+            hitDebugs.Add(new HitDebugDraw());
+
+            // ID, 座標, 大きさ設定
+            hitDebugs[i].hitID = ON_HitManager.instance.GetHit(i).GetHitID();
+            hitDebugs[i].obj.transform.position = ON_HitManager.instance.GetHit(i).GetCenter();
+            hitDebugs[i].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize();
+
+            // スプライトの色設定
+            var sprite = hitDebugs[i].obj.AddComponent<SpriteRenderer>();
+            sprite.color = SetColor(ON_HitManager.instance.GetHit(i).GetHitType());
+            sprite.sprite = image;
+        }
+
+        // デバックモード開始以降に当たり判定が削除された場合
+        for (int i = 0; i < hitDebugs.Count; ++i)
+        {
+            if(keys[hitDebugs[i].hitID])
+            {
+                Object.Destroy(hitDebugs[i].obj);
+                hitDebugs.RemoveAt(i);
+            }
+        }
     }
 
+    // HitType毎に色を変更
+    private Color SetColor(HitType type)
+    {
+        return new Color(0.5f, 0.5f, 0.8f, 0.3f);
+    }
+
+    // デバック表示が可能か確認用
     public void DebugHit()
     {
         hitDebugs.Add(new HitDebugDraw());
