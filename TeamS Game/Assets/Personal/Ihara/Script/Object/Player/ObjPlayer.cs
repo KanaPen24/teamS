@@ -13,7 +13,6 @@ public class ObjPlayer : ObjBase
 {
     private void Start()
     {
-        m_vSpeed.y = -0.02f;
     }
     public void Update()
     {
