@@ -63,7 +63,7 @@ public class ObjManager : MonoBehaviour
             int myID = -1;
             int otherID = -1;
 
-            // 自身と相手のオブジェクトIDを当たり判定IDで検索
+            // 自身と相手のオブジェクトを当たり判定IDで検索
             for (int j = 0; j < Objs.Count; ++j)
             {
                 // 自身のIDを検索
@@ -91,15 +91,15 @@ public class ObjManager : MonoBehaviour
                 " 相手: " + ON_HitManager.instance.GetData(i).otherID);
 
             // 衝突時データが体接触の判定だったら
-            if (ON_HitManager.instance.GetData(i).state == HitState.BODYS)
+            if (ON_HitManager.instance.GetData(i).state == HitState.GRUOND)
             {
                 // 右に当たっていたら
                 if (ON_HitManager.instance.GetData(i).dir == HitDir.RIGHT)
                 {
                     // 座標調整
-                    //Objs[myID].GetSetPos = new Vector3(Objs[otherID].GetSetPos.x, Objs[myID].GetSetPos.y, 0f) -
-                    //                       new Vector3(Objs[otherID].GetSetScale.x / 2f +
-                    //                                   Objs[myID].GetSetScale.x / 2f, 0f, 0f);
+                    Objs[myID].GetSetPos = new Vector3(Objs[otherID].GetSetPos.x, Objs[myID].GetSetPos.y, 0f) -
+                                           new Vector3(Objs[otherID].GetSetScale.x / 2f +
+                                                       Objs[myID].GetSetScale.x / 2f, 0f, 0f);
 
                     // 速度を0にする
                     Objs[myID].GetSetSpeed = new Vector3(0f, Objs[myID].GetSetSpeed.y, 0f);
@@ -108,12 +108,34 @@ public class ObjManager : MonoBehaviour
                 if (ON_HitManager.instance.GetData(i).dir == HitDir.LEFT)
                 {
                     // 座標調整
-                    //Objs[myID].GetSetPos = new Vector3(Objs[otherID].GetSetPos.x, Objs[myID].GetSetPos.y, 0f) +
-                    //                       new Vector3(Objs[otherID].GetSetScale.x / 2f -
-                    //                                   Objs[myID].GetSetScale.x / 2f, 0f, 0f);
+                    Objs[myID].GetSetPos = new Vector3(Objs[otherID].GetSetPos.x, Objs[myID].GetSetPos.y, 0f) +
+                                           new Vector3(Objs[otherID].GetSetScale.x / 2f +
+                                                       Objs[myID].GetSetScale.x / 2f, 0f, 0f);
 
                     // 速度を0にする
                     Objs[myID].GetSetSpeed = new Vector3(0f, Objs[myID].GetSetSpeed.y, 0f);
+                }
+                // 上に当たっていたら
+                if (ON_HitManager.instance.GetData(i).dir == HitDir.UP)
+                {
+                    // 座標調整
+                    Objs[myID].GetSetPos = new Vector3(Objs[myID].GetSetPos.x, Objs[otherID].GetSetPos.y, 0f) -
+                                           new Vector3(0f, Objs[otherID].GetSetScale.y / 2f +
+                                                       Objs[myID].GetSetScale.y / 2f, 0f);
+
+                    // 速度を0にする
+                    Objs[myID].GetSetSpeed = new Vector3(Objs[myID].GetSetSpeed.x, 0f, 0f);
+                }
+                // 下に当たっていたら
+                if (ON_HitManager.instance.GetData(i).dir == HitDir.DOWN)
+                {
+                    // 座標調整
+                    Objs[myID].GetSetPos = new Vector3(Objs[myID].GetSetPos.x, Objs[otherID].GetSetPos.y, 0f) +
+                                           new Vector3(0f, Objs[otherID].GetSetScale.y / 2f +
+                                                       Objs[myID].GetSetScale.y / 2f, 0f);
+
+                    // 速度を0にする
+                    Objs[myID].GetSetSpeed = new Vector3(Objs[myID].GetSetSpeed.x, 0f, 0f);
                 }
             }
         }
