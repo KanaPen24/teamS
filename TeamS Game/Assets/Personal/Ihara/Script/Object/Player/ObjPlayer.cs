@@ -11,32 +11,36 @@ using UnityEngine;
 
 public class ObjPlayer : ObjBase
 {
+    private void Start()
+    {
+        m_vSpeed.y = -0.02f;
+    }
     public void Update()
     {
-        // --- 入力確認 ---
-        // 移動
-        if (IS_XBoxInput.LStick_H > 0.2f || IS_XBoxInput.LStick_H < -0.2f)
-        {
-            m_vSpeed.x += IS_XBoxInput.LStick_H * m_fAccel;
+        //// --- 入力確認 ---
+        //// 移動
+        //if (IS_XBoxInput.LStick_H > 0.2f || IS_XBoxInput.LStick_H < -0.2f)
+        //{
+        //    m_vSpeed.x += IS_XBoxInput.LStick_H * m_fAccel;
 
-            if (m_vSpeed.x > m_vMaxSpeed.x)
-            {
-                m_vSpeed.x = m_vMaxSpeed.x;
-            }
-            if (m_vSpeed.x < -m_vMaxSpeed.x)
-            {
-                m_vSpeed.x = -m_vMaxSpeed.x;
-            }
-        }
-        else
-        {
-            m_vSpeed *= 0.99f;
-            if (m_vSpeed.x <= 0.01f && m_vSpeed.x >= 0.01f)
-            {
-                m_vSpeed.x = 0f;
-            }
-        }
-        // ----------------
+        //    if (m_vSpeed.x > m_vMaxSpeed.x)
+        //    {
+        //        m_vSpeed.x = m_vMaxSpeed.x;
+        //    }
+        //    if (m_vSpeed.x < -m_vMaxSpeed.x)
+        //    {
+        //        m_vSpeed.x = -m_vMaxSpeed.x;
+        //    }
+        //}
+        //else
+        //{
+        //    m_vSpeed.x *= 0.99f;
+        //    if (m_vSpeed.x <= 0.01f && m_vSpeed.x >= 0.01f)
+        //    {
+        //        m_vSpeed.x = 0f;
+        //    }
+        //}
+        //// ----------------
     }
 
     public override void UpdateObj()
