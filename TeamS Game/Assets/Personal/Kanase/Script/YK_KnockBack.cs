@@ -14,10 +14,10 @@ public class YK_KnockBack : MonoBehaviour
     [SerializeField] private Vector3 m_Target;
     private Vector3 m_fTargetStorage;    //ターゲットの座標保存用
     [SerializeField] private float m_fSpeed, m_fRatio;
-    [SerializeField] private float m_fP1Y;    //ベジエ曲線の途中の打点Y　
-                                            //ここの数値を上げるとノックバックのY点があがる
+    [SerializeField] private float m_fP1Y;      //ベジエ曲線の途中の打点Y　
+                                                //ここの数値を上げるとノックバックのY点があがる
     [SerializeField] private float m_fLastSpeed; //吹っ飛び終わった後のスピード抑制
-    [SerializeField] private bool m_bDirection = true;   //方向フラグ
+    [SerializeField] private bool m_bDirection = true;      //方向フラグ
     [SerializeField] private bool m_bAtkHit = false;        //攻撃当たり判定フラグ
     [SerializeField] private bool m_bGroundHit = false;     //地面当たり判定フラグ
     /// <summary> ヒットストップ時間(秒) </summary>
@@ -30,15 +30,18 @@ public class YK_KnockBack : MonoBehaviour
         m_Target = m_Target + transform.position;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         //テスト
+        //攻撃をくらったら
+        //ObjBaseから攻撃当たった判定をもらう
         if (Input.GetKeyDown(KeyCode.M))
         {
             m_bAtkHit = true;
             m_bGroundHit = false;
             OnStart();
         }
+        //Objectの方向を取得してフラグにぶち込む
     }
 
     public void OnStart()
@@ -105,12 +108,16 @@ public class YK_KnockBack : MonoBehaviour
                 Quaternion to = Quaternion.FromToRotation(Vector3.up, look);
             }
             //テスト
+            //空中で攻撃をくらったら
+            //ObjBaseから攻撃当たった判定をもらう
             if (Input.GetKeyDown(KeyCode.N))
             {
                 m_bAtkHit = true;               
             }
             //テスト
-            if (transform.position.y<0.0f)
+            //地面に当たったらそれ以下に落ちないようにする
+            //ObjBaseから地面に当たった判定をもらう
+            if (transform.position.y<0.0f/*それぞれのObjが地面に当たった時のY座標*/)
             {
                 m_bGroundHit = true;
                 //地面の高さ(Y)に合わせる
