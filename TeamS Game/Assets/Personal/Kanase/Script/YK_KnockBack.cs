@@ -69,7 +69,6 @@ public class YK_KnockBack : MonoBehaviour
             P2.x = m_Target.x - offset.x;    //‰E‚É‚Á”ò‚Ô
         else
             P2 = -m_Target + offset;    //¶‚É‚Á”ò‚Ô
-        Debug.Log(P2);
         //’µ‚Ôæ‚ÌY²‚Í’n–Ê‚É‡‚í‚¹‚é
         //P2.y = m_TargetStorage.y;
 
