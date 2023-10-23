@@ -19,9 +19,4 @@ public class ObjEnemyA : ObjEnemyBase
     {
         //Debug.Log("EnemyA");
     }
-
-    public override void DamageAttack()
-    {
-
-    }
 }

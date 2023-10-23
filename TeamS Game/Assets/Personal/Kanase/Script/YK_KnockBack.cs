@@ -10,42 +10,50 @@ using UnityEngine;
 using DG.Tweening;
 
 public class YK_KnockBack : MonoBehaviour
-{    
+{
+    public static YK_KnockBack instance;
+
     [SerializeField] private Vector3 m_Target;
     private Vector3 m_fTargetStorage;    //ターゲットの座標保存用
     [SerializeField] private float m_fSpeed, m_fRatio;
     [SerializeField] private float m_fP1Y;      //ベジエ曲線の途中の打点Y　
                                                 //ここの数値を上げるとノックバックのY点があがる
     [SerializeField] private float m_fLastSpeed; //吹っ飛び終わった後のスピード抑制
-    [SerializeField] private bool m_bDirection = true;      //方向フラグ
+    [SerializeField] private ObjDir m_bDirection=ObjDir.LEFT;  //方向
     [SerializeField] private bool m_bAtkHit = false;        //攻撃当たり判定フラグ
     [SerializeField] private bool m_bGroundHit = false;     //地面当たり判定フラグ
     /// <summary> ヒットストップ時間(秒) </summary>
     [SerializeField] private float m_fHitStopTime;
 
-    void Start()
+    private void Start()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
         //ターゲットの座標指定
         m_fTargetStorage = m_Target;
         m_Target = m_Target + transform.position;
     }
-
     private void FixedUpdate()
     {
-        //テスト
-        //攻撃をくらったら
-        //ObjBaseから攻撃当たった判定をもらう
+
         if (Input.GetKeyDown(KeyCode.M))
         {
             m_bAtkHit = true;
             m_bGroundHit = false;
-            OnStart();
+            KnockBack(m_bDirection);
         }
-        //Objectの方向を取得してフラグにぶち込む
     }
-
-    public void OnStart()
+    public void KnockBack(ObjDir dir)
     {
+        m_bDirection = dir;
+        m_bAtkHit = true;
+        m_bGroundHit = false;
         StartCoroutine(Throw());
     }
 
@@ -67,8 +75,9 @@ public class YK_KnockBack : MonoBehaviour
 
         Vector3 offset = transform.position;
         Vector3 P2 = Vector3.zero;
+
         //左右の切り替え
-        if (m_bDirection)
+        if (m_bDirection==ObjDir.LEFT)
             P2.x = m_Target.x - offset.x;    //右に吹っ飛ぶ
         else
             P2 = -m_Target + offset;    //左に吹っ飛ぶ
@@ -110,10 +119,10 @@ public class YK_KnockBack : MonoBehaviour
             //テスト
             //空中で攻撃をくらったら
             //ObjBaseから攻撃当たった判定をもらう
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                m_bAtkHit = true;               
-            }
+            //if (Input.GetKeyDown(KeyCode.N))
+            //{
+            //    m_bAtkHit = true;               
+            //}
             //テスト
             //地面に当たったらそれ以下に落ちないようにする
             //ObjBaseから地面に当たった判定をもらう

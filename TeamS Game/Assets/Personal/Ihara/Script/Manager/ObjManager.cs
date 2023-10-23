@@ -78,7 +78,12 @@ public class ObjManager : MonoBehaviour
                 }
 
                 // 両方の検索が終わっていたら終了する
-                if(myID != -1 && otherID != -1) break;
+                if (myID != -1 && otherID != -1)
+                {
+                    if (myID > otherID)
+                        (myID, otherID) = (otherID, myID);
+                        break;
+                }
             }
 
             // どちらかのIDが割り振られていないものだったらスキップする
@@ -87,8 +92,8 @@ public class ObjManager : MonoBehaviour
             // 確認用
             Debug.Log("判定: " + ON_HitManager.instance.GetData(i).state +
                 " 衝突方向: " + ON_HitManager.instance.GetData(i).dir +
-                " 自身: " + ON_HitManager.instance.GetData(i).myID +
-                " 相手: " + ON_HitManager.instance.GetData(i).otherID);
+                " 自身: " + myID +
+                " 相手: " + otherID);
 
             // 衝突時データが地面接触の判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.GRUOND)
@@ -142,9 +147,10 @@ public class ObjManager : MonoBehaviour
                 }
             }
 
+            //攻撃判定
             if (ON_HitManager.instance.GetData(i).state == HitState.DEFENCE)
             {
-
+                Objs[otherID].DamageAttack();
             }
         }
 
