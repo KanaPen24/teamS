@@ -19,4 +19,11 @@ public class ObjEnemyBase : ObjBase
     {
         //Debug.Log("EnemyBase");
     }
+
+
+
+
+
+
+
 }

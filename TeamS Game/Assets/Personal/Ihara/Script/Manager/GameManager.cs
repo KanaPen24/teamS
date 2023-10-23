@@ -52,6 +52,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        //if(m_sGameMode != m_GameMode)
+        //{
+        //    if(m_GameMode == GameMode.Debug)
+        //    {
+        //        ON_HitDebug.instance.StartHitDebug();
+        //    }
+        //    else ON_HitDebug.instance.FinHitDebug();
+        //}
         m_CheckGameState = m_sGameState;
         m_sGameMode = m_GameMode;
         if (m_GameMode == GameMode.Debug)

@@ -142,7 +142,7 @@ public class ObjManager : MonoBehaviour
                 }
             }
 
-            if (ON_HitManager.instance.GetData(i).state == HitState.BODYS)
+            if (ON_HitManager.instance.GetData(i).state == HitState.DEFENCE)
             {
 
             }
