@@ -52,4 +52,9 @@ public class ObjPlayer : ObjBase
     {
         //Debug.Log("Player");
     }
+
+    public override void DamageAttack()
+    {
+
+    }
 }
