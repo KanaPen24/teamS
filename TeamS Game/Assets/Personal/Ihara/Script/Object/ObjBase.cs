@@ -5,10 +5,34 @@
  * @date   2023/10/13
  * @Update 2023/10/13 作成
  **/
+
+
+// memo 地面に当たっているか
+//      攻撃を喰らう仮想関数が欲しい○
+//      向きが欲しい○
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// --- オブジェクトの向き ---
+public enum ObjDir
+{
+    NONE = 0,
+    RIGHT,
+    LEFT,
+
+    MaxDir
+}
+
+//[System.Serializable]
+//public class Ground
+//{
+//    [SerializeField] private bool m_bStand; // 地面に立っているか
+//    [SerializeField] private Vector2 m_vLength; // 地面の長さ
+
+//    public bool GetSetStand { get { return m_bStand; } set { m_bStand = value; } }
+//    public Vector2 GetSetLength { get { return m_vLength; } set { m_vLength = value; } }
+//}
 
 // --- インスペクターで初期値を設定するクラス ------------------------------
 [System.Serializable]
@@ -20,7 +44,8 @@ public class InitParam
     [SerializeField] private float m_fWeight;     // 重さ
     [SerializeField] private Vector2 m_vSpeed;    // 速度
     [SerializeField] private Vector2 m_vMaxSpeed; // 最大速度
-    [SerializeField] private bool m_bExist;       // 存在しているかどうか
+    [SerializeField] private bool m_bExist;       // 存在しているか
+    [SerializeField] private ObjDir m_eDir;       // 向き
 
     public int GetSetHp { get { return m_nHp; } set { m_nHp = value; } }
     public int GetSetMaxHp { get { return m_nMaxHp; } set { m_nMaxHp = value; } }
@@ -29,6 +54,7 @@ public class InitParam
     public Vector2 GetSetSpeed { get { return m_vSpeed; } set { m_vSpeed = value; } }
     public Vector2 GetSetMaxSpeed { get { return m_vMaxSpeed; } set { m_vMaxSpeed = value; } }
     public bool GetSetExist { get { return m_bExist; } set { m_bExist = value; } }
+    public ObjDir GetSetDir { get { return m_eDir; } set { m_eDir = value; } }
 }
 // -------------------------------------------------------------------------
 
@@ -45,7 +71,10 @@ public class CheckParam
     [SerializeField] private Vector2 m_vSpeed;    // 速度
     [SerializeField] private Vector2 m_vMaxSpeed; // 最大速度
     [SerializeField] private Vector2 m_vMove;     // 移動量
-    [SerializeField] private bool m_bExist;       // 存在しているかどうか
+    [SerializeField] private Vector2 m_vGndLength;// 地面の長さ
+    [SerializeField] private bool m_bStand;       // 地面に立っているか
+    [SerializeField] private bool m_bExist;       // 存在しているか
+    [SerializeField] private ObjDir m_eDir;       // 向き
 
     public int GetSetObjID { get { return m_nObjID; } set { m_nObjID = value; } }
     public int GetSetHitID { get { return m_nHitID; } set { m_nHitID = value; } }
@@ -56,7 +85,10 @@ public class CheckParam
     public Vector2 GetSetSpeed { get { return m_vSpeed; } set { m_vSpeed = value; } }
     public Vector2 GetSetMaxSpeed { get { return m_vMaxSpeed; } set { m_vMaxSpeed = value; } }
     public Vector2 GetSetMove { get { return m_vMove; } set { m_vMove = value; } }
+    public Vector2 GetSetGndLen { get { return m_vGndLength; } set { m_vGndLength = value; } }
+    public bool GetSetStand { get { return m_bStand; } set { m_bStand = value; } }
     public bool GetSetExist { get { return m_bExist; } set { m_bExist = value; } }
+    public ObjDir GetSetDir { get { return m_eDir; } set { m_eDir = value; } }
 }
 // ------------------------------------------------------------------------
 
@@ -76,7 +108,10 @@ public class ObjBase : MonoBehaviour
     protected Vector2 m_vSpeed;       // 現在の速度
     protected Vector2 m_vMaxSpeed;    // 最大速度
     protected Vector2 m_vMove;        // 移動量
+    protected Vector2 m_vGndPos;      // 地面の長さ
+    protected bool m_bStand;          // 地面に立っているか
     protected bool m_bExist;          // 存在しているか
+    protected ObjDir m_eDir;          // 向き
     // ---------------------
 
     // --- 初期化関数 ---
@@ -89,6 +124,7 @@ public class ObjBase : MonoBehaviour
         m_vSpeed = InitParam.GetSetSpeed;
         m_vMaxSpeed = InitParam.GetSetMaxSpeed;
         m_bExist = InitParam.GetSetExist;
+        m_eDir = InitParam.GetSetDir;
     }
 
     // --- 参照パラメーター更新関数 ---
@@ -103,7 +139,10 @@ public class ObjBase : MonoBehaviour
         CheckParam.GetSetSpeed = m_vSpeed;
         CheckParam.GetSetMaxSpeed = m_vMaxSpeed;
         CheckParam.GetSetMove = m_vMove;
+        CheckParam.GetSetGndLen = m_vGndPos;
+        CheckParam.GetSetStand = m_bStand;
         CheckParam.GetSetExist = m_bExist;
+        CheckParam.GetSetDir = m_eDir;
     }
 
     // --- 更新関数 ---
@@ -115,6 +154,12 @@ public class ObjBase : MonoBehaviour
     public virtual void UpdateDebug()
     {
         Debug.Log("base");
+    }
+
+    // --- 攻撃を当てられた ---
+    public virtual void DamageAttack()
+    {
+
     }
 
     //  ---- 当たり判定を生成した際の処理 ----
@@ -138,11 +183,19 @@ public class ObjBase : MonoBehaviour
     public Vector2 GetSetSpeed { get { return m_vSpeed; } set { m_vSpeed = value; } }
     public Vector2 GetSetMaxSpeed { get { return m_vMaxSpeed; } set { m_vMaxSpeed = value; } }
     public Vector2 GetSetMove { get { return m_vMove; } set { m_vMove = value; } }
+    public Vector2 GetSetGndLen { get { return m_vGndPos; } set { m_vGndPos = value; } }
+    public bool GetSetStand { get { return m_bStand; } set { m_bStand = value; } }
     public bool GetSetExist { get { return m_bExist; } set { m_bExist = value; } }
+    public ObjDir GetSetDir { get { return m_eDir; } set { m_eDir = value; } }
+    public Vector3 GetSetPos
+    {
+        get { return this.gameObject.transform.position; }
+        set { this.gameObject.transform.position = value; }
+    }
+    public Vector3 GetSetScale
+    {
+        get { return this.gameObject.transform.localScale; }
+        set { this.gameObject.transform.localScale = value; }
+    }
     // ----------------------------------------------------------------------------------------
-
-    public Vector3 GetSetPos { get { return this.gameObject.transform.position; }
-                               set { this.gameObject.transform.position = value; } }
-    public Vector3 GetSetScale{ get { return this.gameObject.transform.localScale; }
-                                set { this.gameObject.transform.localScale = value; }}
 }

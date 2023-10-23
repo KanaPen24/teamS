@@ -90,7 +90,7 @@ public class ObjManager : MonoBehaviour
                 " 自身: " + ON_HitManager.instance.GetData(i).myID +
                 " 相手: " + ON_HitManager.instance.GetData(i).otherID);
 
-            // 衝突時データが体接触の判定だったら
+            // 衝突時データが地面接触の判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.GRUOND)
             {
                 // 右に当たっていたら
@@ -136,7 +136,15 @@ public class ObjManager : MonoBehaviour
 
                     // 速度を0にする
                     Objs[myID].GetSetSpeed = new Vector3(Objs[myID].GetSetSpeed.x, 0f, 0f);
+
+                    Objs[myID].GetSetStand = true;
+                    Objs[myID].GetSetGndLen = new Vector2(Objs[otherID].GetSetScale.x, Objs[otherID].GetSetScale.y);
                 }
+            }
+
+            if (ON_HitManager.instance.GetData(i).state == HitState.BODYS)
+            {
+
             }
         }
 
@@ -144,7 +152,7 @@ public class ObjManager : MonoBehaviour
         
 
         // --- 最終的な処理をここで行う ---
-        //
+        // 地面判定
 
         // --------------------------------
 
