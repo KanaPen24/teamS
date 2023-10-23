@@ -92,6 +92,10 @@ public class ON_HitManager
                 // 同一オブジェクトか
                 if (m_hits[i].GetObjID() == m_hits[j].GetObjID()) continue;
 
+                // 攻撃と地面の判定かどうか(基本的には何もしない)
+                if ((m_hits[i].GetHitType() == HitType.ATTACK && m_hits[j].GetHitType() == HitType.FIELD) &&
+                    (m_hits[j].GetHitType() == HitType.ATTACK && m_hits[i].GetHitType() == HitType.FIELD)) continue;
+
                 // 当たっている
                 // 当たり判定の状態判定し、追加
                 m_hitDatas.Add(new HitData(m_hits[i].GetObjID(),
