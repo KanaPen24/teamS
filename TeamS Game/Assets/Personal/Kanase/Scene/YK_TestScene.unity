@@ -533,6 +533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_nScore: 0
+  m_fTime: 0.2
 --- !u!114 &1997944342
 MonoBehaviour:
   m_ObjectHideFlags: 0
