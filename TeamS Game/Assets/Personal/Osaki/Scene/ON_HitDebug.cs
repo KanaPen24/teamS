@@ -45,10 +45,11 @@ public class ON_HitDebug
             hitDebugs[i].obj.transform.position = ON_HitManager.instance.GetHit(i).GetCenter();
             hitDebugs[i].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize();
 
-            // スプライトの色設定
+            // スプライトの設定
             var sprite = hitDebugs[i].obj.AddComponent<SpriteRenderer>();
             sprite.color = SetColor(ON_HitManager.instance.GetHit(i).GetHitType());
             sprite.sprite = image;
+            sprite.sortingOrder = 1000;
         }
     }
 
@@ -87,7 +88,7 @@ public class ON_HitDebug
 
                     // 当たり判定が非Activeの場合、色を変化
                     if (!ON_HitManager.instance.GetHit(i).GetActive())
-                        hitDebugs[j].obj.GetComponent<SpriteRenderer>().color = new Color(0.1f, 0.1f, 0.1f, 0.3f);
+                        hitDebugs[j].obj.GetComponent<SpriteRenderer>().color = new Color(0.1f, 0.1f, 0.1f, 0.5f);
 
                     // 使用済み
                     keys[hitDebugs[j].hitID] = false;
@@ -104,10 +105,11 @@ public class ON_HitDebug
             hitDebugs[i].obj.transform.position = ON_HitManager.instance.GetHit(i).GetCenter();
             hitDebugs[i].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize();
 
-            // スプライトの色設定
+            // スプライトの設定
             var sprite = hitDebugs[i].obj.AddComponent<SpriteRenderer>();
             sprite.color = SetColor(ON_HitManager.instance.GetHit(i).GetHitType());
             sprite.sprite = image;
+            sprite.sortingOrder = 1000;
         }
 
         // デバックモード開始以降に当たり判定が削除された場合
@@ -124,7 +126,20 @@ public class ON_HitDebug
     // HitType毎に色を変更
     private Color SetColor(HitType type)
     {
-        return new Color(0.5f, 0.5f, 0.8f, 0.3f);
+        Color col = new Color(1.0f, 0.0f, 0.0f, 0.5f);
+        switch (type)
+        {
+            case HitType.ATTACK:
+                col = new Color(1.0f, 0.0f, 0.0f, 0.5f);
+                break;
+            case HitType.BODY:
+                col = new Color(0.0f, 0.0f, 1.0f, 0.5f);
+                break;
+            case HitType.FIELD:
+                col = new Color(0.0f, 1.0f, 0.0f, 0.5f);
+                break;
+        }
+        return col;
     }
 
     // デバック表示が可能か確認用
