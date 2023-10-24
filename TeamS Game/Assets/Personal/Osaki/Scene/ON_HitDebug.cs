@@ -16,6 +16,11 @@ public class HitDebugDraw
 {
     public int hitID;
     public GameObject obj;
+
+    public HitDebugDraw()
+    {
+        obj = new GameObject("DebugHit");
+    }
 }
 
 
@@ -43,7 +48,7 @@ public class ON_HitDebug
             // ID, 座標, 大きさ設定
             hitDebugs[i].hitID = ON_HitManager.instance.GetHit(i).GetHitID();
             hitDebugs[i].obj.transform.position = ON_HitManager.instance.GetHit(i).GetCenter();
-            hitDebugs[i].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize();
+            hitDebugs[i].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize() * 2f;
 
             // スプライトの設定
             var sprite = hitDebugs[i].obj.AddComponent<SpriteRenderer>();
@@ -64,7 +69,7 @@ public class ON_HitDebug
         hitDebugs.Clear();
     }
 
-    void Update()
+    public void Update()
     {
         // デバックが開始されたか確認
         if (hitDebugs.Count < 1) return;
@@ -84,7 +89,7 @@ public class ON_HitDebug
                 if(ON_HitManager.instance.GetHit(i).GetHitID() == hitDebugs[j].hitID)
                 {
                     hitDebugs[j].obj.transform.position = ON_HitManager.instance.GetHit(i).GetCenter();
-                    hitDebugs[j].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize();
+                    hitDebugs[j].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize() * 2f;
 
                     // 当たり判定が非Activeの場合、色を変化
                     if (!ON_HitManager.instance.GetHit(i).GetActive())
@@ -97,19 +102,19 @@ public class ON_HitDebug
                 }
             }
 
-            // デバックモード開始以降に当たり判定が生成された場合
-            hitDebugs.Add(new HitDebugDraw());
-
-            // ID, 座標, 大きさ設定
-            hitDebugs[i].hitID = ON_HitManager.instance.GetHit(i).GetHitID();
-            hitDebugs[i].obj.transform.position = ON_HitManager.instance.GetHit(i).GetCenter();
-            hitDebugs[i].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize();
-
-            // スプライトの設定
-            var sprite = hitDebugs[i].obj.AddComponent<SpriteRenderer>();
-            sprite.color = SetColor(ON_HitManager.instance.GetHit(i).GetHitType());
-            sprite.sprite = image;
-            sprite.sortingOrder = 1000;
+            // // デバックモード開始以降に当たり判定が生成された場合
+            // hitDebugs.Add(new HitDebugDraw());
+            // 
+            // // ID, 座標, 大きさ設定
+            // hitDebugs[i].hitID = ON_HitManager.instance.GetHit(i).GetHitID();
+            // hitDebugs[i].obj.transform.position = ON_HitManager.instance.GetHit(i).GetCenter();
+            // hitDebugs[i].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize();
+            // 
+            // // スプライトの設定
+            // var sprite = hitDebugs[i].obj.AddComponent<SpriteRenderer>();
+            // sprite.color = SetColor(ON_HitManager.instance.GetHit(i).GetHitType());
+            // sprite.sprite = image;
+            // sprite.sortingOrder = 1000;
         }
 
         // デバックモード開始以降に当たり判定が削除された場合
@@ -130,13 +135,13 @@ public class ON_HitDebug
         switch (type)
         {
             case HitType.ATTACK:
-                col = new Color(1.0f, 0.0f, 0.0f, 0.5f);
+                col = new Color(1.0f, 0.0f, 0.0f, 0.2f);
                 break;
             case HitType.BODY:
-                col = new Color(0.0f, 0.0f, 1.0f, 0.5f);
+                col = new Color(0.0f, 0.0f, 1.0f, 0.2f);
                 break;
             case HitType.FIELD:
-                col = new Color(0.0f, 1.0f, 0.0f, 0.5f);
+                col = new Color(0.0f, 1.0f, 0.0f, 0.2f);
                 break;
         }
         return col;

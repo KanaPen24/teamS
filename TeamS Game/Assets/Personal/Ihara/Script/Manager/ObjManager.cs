@@ -78,7 +78,12 @@ public class ObjManager : MonoBehaviour
                 }
 
                 // 両方の検索が終わっていたら終了する
-                if(myID != -1 && otherID != -1) break;
+                if (myID != -1 && otherID != -1)
+                {
+                    if (myID > otherID)
+                        (myID, otherID) = (otherID, myID);
+                        break;
+                }
             }
 
             // どちらかのIDが割り振られていないものだったらスキップする
@@ -87,10 +92,10 @@ public class ObjManager : MonoBehaviour
             // 確認用
             Debug.Log("判定: " + ON_HitManager.instance.GetData(i).state +
                 " 衝突方向: " + ON_HitManager.instance.GetData(i).dir +
-                " 自身: " + ON_HitManager.instance.GetData(i).myID +
-                " 相手: " + ON_HitManager.instance.GetData(i).otherID);
+                " 自身: " + myID +
+                " 相手: " + otherID);
 
-            // 衝突時データが体接触の判定だったら
+            // 衝突時データが地面接触の判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.GRUOND)
             {
                 // 右に当たっていたら
@@ -136,7 +141,16 @@ public class ObjManager : MonoBehaviour
 
                     // 速度を0にする
                     Objs[myID].GetSetSpeed = new Vector3(Objs[myID].GetSetSpeed.x, 0f, 0f);
+
+                    Objs[myID].GetSetStand = true;
+                    Objs[myID].GetSetGndLen = new Vector2(Objs[otherID].GetSetScale.x, Objs[otherID].GetSetScale.y);
                 }
+            }
+
+            //攻撃判定
+            if (ON_HitManager.instance.GetData(i).state == HitState.DEFENCE)
+            {
+                Objs[otherID].DamageAttack();
             }
         }
 
@@ -144,7 +158,7 @@ public class ObjManager : MonoBehaviour
         
 
         // --- 最終的な処理をここで行う ---
-        //
+        // 地面判定
 
         // --------------------------------
 

@@ -40,6 +40,13 @@ public class ObjPlayer : ObjBase
         //    }
         //}
         //// ----------------
+        
+        if(Input.GetKeyDown(IS_XBoxInput.B))
+        {
+            Debug.Log("HitGenerate");
+            ON_HitManager.instance.GenerateHit(this.gameObject.transform.position + new Vector3(1f, 0f, 0f),
+                new Vector3(1f, 1f, 1f), true, HitType.ATTACK, m_nObjID);
+        }
     }
 
     public override void UpdateObj()
@@ -51,5 +58,10 @@ public class ObjPlayer : ObjBase
     public override void UpdateDebug()
     {
         //Debug.Log("Player");
+    }
+
+    public override void DamageAttack()
+    {
+
     }
 }

@@ -19,4 +19,9 @@ public class ObjEnemyBase : ObjBase
     {
         //Debug.Log("EnemyBase");
     }
+    public override void DamageAttack()
+    {
+        //攻撃をくらったらノックバックする
+        YK_KnockBack.instance.KnockBack(GetSetDir);
+    }
 }
