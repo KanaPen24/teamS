@@ -312,6 +312,7 @@ MonoBehaviour:
     m_vSpeed: {x: 0, y: 0}
     m_vMaxSpeed: {x: 0, y: 0}
     m_bExist: 1
+    m_eDir: 0
   CheckParam:
     m_nObjID: 0
     m_nHitID: 0
@@ -322,7 +323,10 @@ MonoBehaviour:
     m_vSpeed: {x: 0, y: 0}
     m_vMaxSpeed: {x: 0, y: 0}
     m_vMove: {x: 0, y: 0}
+    m_vGndLength: {x: 0, y: 0}
+    m_bStand: 0
     m_bExist: 0
+    m_eDir: 0
 --- !u!1 &1264888850
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,6 +365,7 @@ MonoBehaviour:
     m_vSpeed: {x: 0, y: 0}
     m_vMaxSpeed: {x: 0, y: 0}
     m_bExist: 0
+    m_eDir: 0
   CheckParam:
     m_nObjID: 0
     m_nHitID: 0
@@ -371,7 +376,10 @@ MonoBehaviour:
     m_vSpeed: {x: 0, y: 0}
     m_vMaxSpeed: {x: 0, y: 0}
     m_vMove: {x: 0, y: 0}
+    m_vGndLength: {x: 0, y: 0}
+    m_bStand: 0
     m_bExist: 0
+    m_eDir: 0
 --- !u!212 &1264888852
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -477,6 +485,7 @@ MonoBehaviour:
     m_vSpeed: {x: 0, y: 0}
     m_vMaxSpeed: {x: 0, y: 0}
     m_bExist: 0
+    m_eDir: 0
   CheckParam:
     m_nObjID: 0
     m_nHitID: 0
@@ -487,7 +496,10 @@ MonoBehaviour:
     m_vSpeed: {x: 0, y: 0}
     m_vMaxSpeed: {x: 0, y: 0}
     m_vMove: {x: 0, y: 0}
+    m_vGndLength: {x: 0, y: 0}
+    m_bStand: 0
     m_bExist: 0
+    m_eDir: 0
 --- !u!212 &1790556740
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -593,6 +605,7 @@ MonoBehaviour:
     m_vSpeed: {x: 0, y: 0}
     m_vMaxSpeed: {x: 1, y: 0}
     m_bExist: 1
+    m_eDir: 0
   CheckParam:
     m_nObjID: 0
     m_nHitID: 0
@@ -603,7 +616,10 @@ MonoBehaviour:
     m_vSpeed: {x: 0, y: 0}
     m_vMaxSpeed: {x: 0, y: 0}
     m_vMove: {x: 0, y: 0}
+    m_vGndLength: {x: 0, y: 0}
+    m_bStand: 0
     m_bExist: 0
+    m_eDir: 0
 --- !u!212 &2043465272
 SpriteRenderer:
   m_ObjectHideFlags: 0

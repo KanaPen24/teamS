@@ -44,33 +44,35 @@ public class GameManager : MonoBehaviour
     public static GameMode  m_sGameMode;                 // 現在のゲームモード
     [SerializeField] private GameState m_CheckGameState; // 現在のゲーム状態(確認用)
     [SerializeField] private GameMode m_GameMode;        // 現在のゲームモード(変更用)
+    public static bool m_bDebugStart;                    // デバッグの開始時かどうか
 
     private void Awake()
     {
         m_sGameState = GameState.GameStart;
+        if(ON_HitDebug.instance == null)
+        {
+            ON_HitDebug.instance = new ON_HitDebug();
+        }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        //if(m_sGameMode != m_GameMode)
-        //{
-        //    if(m_GameMode == GameMode.Debug)
-        //    {
-        //        ON_HitDebug.instance.StartHitDebug();
-        //    }
-        //    else ON_HitDebug.instance.FinHitDebug();
-        //}
+        m_bDebugStart = false;
+
+        if (m_sGameMode != m_GameMode)
+        {
+            if (m_GameMode == GameMode.Debug)
+            {
+                ON_HitDebug.instance.StartHitDebug();
+                Debug.Log("DebugStart");
+                m_bDebugStart = true;
+            }
+            else ON_HitDebug.instance.FinHitDebug();
+        }
         m_CheckGameState = m_sGameState;
         m_sGameMode = m_GameMode;
-        if (m_GameMode == GameMode.Debug)
-        {
-            //Debug.Log(m_sGameState);
-        }
 
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            AudioManager.instance.PlaySE(SEType.SE_PROTO);
-        }
+        ON_HitDebug.instance.Update();
     }
 
     /**
@@ -94,6 +96,15 @@ public class GameManager : MonoBehaviour
     public static bool IsDebug()
     {
         if (m_sGameMode == GameMode.Debug)
+        {
+            return true;
+        }
+        else return false;
+    }
+
+    public static bool IsDebugStart()
+    {
+        if (m_bDebugStart)
         {
             return true;
         }
