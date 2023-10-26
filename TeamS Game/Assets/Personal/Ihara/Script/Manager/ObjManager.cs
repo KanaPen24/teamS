@@ -5,6 +5,8 @@
  * @date   2023/10/13
  * @Update 2023/10/13 作成
  * @Update 2023/10/19 当たり判定取得完了
+ * @Update 2023/10/24 攻撃判定取得完了(仮)
+ * @Update 2023/10/26 地面判定終了
  **/
 using System.Collections;
 using System.Collections.Generic;
@@ -39,35 +41,68 @@ public class ObjManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.m_sGameState != GameState.GamePlay)
+            return;
+
         // --- オブジェクトの更新処理 ---
         for(int i = 0; i < Objs.Count; ++i)
         {
-            // オブジェクトの更新 → オブジェクトの参照パラメーターを更新
+            // 更新処理 → 地面判定 → 移動量に速度を格納 →
+            // 速度調整 → 参照パラメーターを更新 → 座標更新
             Objs[i].UpdateObj();
+            Objs[i].CheckObjGround();
+            SaveObjSpeed(i);
+            Objs[i].GetSetMove = Objs[i].GetSetSpeed;
+            Objs[i].GetSetPos += new Vector3(Objs[i].GetSetMove.x, Objs[i].GetSetMove.y, 0f);
             Objs[i].UpdateCheckParam();
 
             // オブジェクトが移動した座標に当たり判定を移動させる
             ON_HitManager.instance.SetCenter(Objs[i].GetSetHitID, Objs[i].GetSetPos);
-            //ON_HitManager.instance.DebugHitID(Objs[i].GetSetHitID);
         }
-        // ------------------------------
-
 
         // --- 当たり判定処理 ---
+        CollisionUpdate();
+    }
+
+    // --- 速度調整処理 ---
+    // ※最大・最小速度を超えていたら、最大・最小速度に調整する
+    private void SaveObjSpeed(int i)
+    {
+        if (Objs[i].GetSetSpeed.x > Objs[i].GetSetMaxSpeed.x)
+        {
+            Objs[i].GetSetSpeed = new Vector2(Objs[i].GetSetMaxSpeed.x, Objs[i].GetSetSpeed.y);
+        }
+        if (Objs[i].GetSetSpeed.x < -Objs[i].GetSetMaxSpeed.x)
+        {
+            Objs[i].GetSetSpeed = new Vector2(-Objs[i].GetSetMaxSpeed.x, Objs[i].GetSetSpeed.y);
+        }
+        if (Objs[i].GetSetSpeed.y > Objs[i].GetSetMaxSpeed.y)
+        {
+            Objs[i].GetSetSpeed = new Vector2(Objs[i].GetSetSpeed.x, Objs[i].GetSetMaxSpeed.y);
+        }
+        if (Objs[i].GetSetSpeed.y < -Objs[i].GetSetMaxSpeed.y)
+        {
+            Objs[i].GetSetSpeed = new Vector2(Objs[i].GetSetSpeed.x, -Objs[i].GetSetMaxSpeed.y);
+        }
+    }
+
+    // --- 当たり判定反映関数 ---
+    private void CollisionUpdate()
+    {
         // 当たり判定更新(衝突時データをリストに格納している)
         ON_HitManager.instance.UpdateHit();
 
-        // 衝突時データ分を回す
-        for(int i = 0; i < ON_HitManager.instance.GetHitCombiCnt(); ++i)
+        // --- 衝突時データ分を回す ---
+        for (int i = 0; i < ON_HitManager.instance.GetHitCombiCnt(); ++i)
         {
             int myID = -1;
             int otherID = -1;
 
-            // 自身と相手のオブジェクトを当たり判定IDで検索
+            // --- 自身と相手のオブジェクトを当たり判定IDで検索 ---
             for (int j = 0; j < Objs.Count; ++j)
             {
                 // 自身のIDを検索
-                if(Objs[j].GetSetHitID == ON_HitManager.instance.GetData(i).myID)
+                if (Objs[j].GetSetHitID == ON_HitManager.instance.GetData(i).myID)
                 {
                     myID = j;
                 }
@@ -80,22 +115,28 @@ public class ObjManager : MonoBehaviour
                 // 両方の検索が終わっていたら終了する
                 if (myID != -1 && otherID != -1)
                 {
+                    // 自身のIDが相手のIDの大きさより大きかったら…
+                    // IDを入れ替える
                     if (myID > otherID)
                         (myID, otherID) = (otherID, myID);
-                        break;
+
+                    break;
                 }
             }
+            // -----------------------------------------------------
 
             // どちらかのIDが割り振られていないものだったらスキップする
             if (myID == -1 || otherID == -1) continue;
 
             // 確認用
-            Debug.Log("判定: " + ON_HitManager.instance.GetData(i).state +
+            if (GameManager.IsDebug())
+                Debug.Log("判定: " + ON_HitManager.instance.GetData(i).state +
                 " 衝突方向: " + ON_HitManager.instance.GetData(i).dir +
                 " 自身: " + myID +
                 " 相手: " + otherID);
 
-            // 衝突時データが地面接触の判定だったら
+            // --- 判定によってゲームに反映 ---
+            // 地面接触の判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.GRUOND)
             {
                 // 右に当たっていたら
@@ -142,28 +183,22 @@ public class ObjManager : MonoBehaviour
                     // 速度を0にする
                     Objs[myID].GetSetSpeed = new Vector3(Objs[myID].GetSetSpeed.x, 0f, 0f);
 
-                    Objs[myID].GetSetStand = true;
-                    Objs[myID].GetSetGndLen = new Vector2(Objs[otherID].GetSetScale.x, Objs[otherID].GetSetScale.y);
+                    // 地面の情報を格納
+                    Objs[myID].GetSetGround.GetSetStand = true;
+                    Objs[myID].GetSetGround.GetSetCenter = Objs[otherID].GetSetPos;
+                    Objs[myID].GetSetGround.GetSetSize = Objs[otherID].GetSetScale;
+
+                    if(GameManager.IsDebug())
+                        Debug.Log("地面に当たった");
                 }
             }
 
-            //攻撃判定
+            //攻撃の判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.DEFENCE)
             {
                 Objs[otherID].DamageAttack();
             }
+            // -------------------------------
         }
-
-        // ----------------------
-        
-
-        // --- 最終的な処理をここで行う ---
-        // 地面判定
-
-        // --------------------------------
-
-        // --- デバッグ表示 ---
-        // ---------------------
-
     }
 }
