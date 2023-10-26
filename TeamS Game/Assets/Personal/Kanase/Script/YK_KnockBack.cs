@@ -39,16 +39,6 @@ public class YK_KnockBack : MonoBehaviour
         m_fTargetStorage = m_Target;
         m_Target = m_Target + transform.position;
     }
-    private void FixedUpdate()
-    {
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            m_bAtkHit = true;
-            m_bGroundHit = false;
-            KnockBack(m_bDirection);
-        }
-    }
     public void KnockBack(ObjDir dir)
     {
         m_bDirection = dir;
@@ -126,14 +116,6 @@ public class YK_KnockBack : MonoBehaviour
             //テスト
             //地面に当たったらそれ以下に落ちないようにする
             //ObjBaseから地面に当たった判定をもらう
-            if (transform.position.y<0.0f/*それぞれのObjが地面に当たった時のY座標*/)
-            {
-                m_bGroundHit = true;
-                //地面の高さ(Y)に合わせる
-                Vector3 pos2 = transform.position;
-                pos2.y = m_fTargetStorage.y;
-                transform.position = pos2;
-            }
             t += 1 / distance / m_fSpeed * Time.deltaTime;
             //速度変化
             if (m_fSpeed < m_fLastSpeed) 
