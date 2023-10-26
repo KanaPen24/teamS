@@ -40,38 +40,53 @@ public enum GameMode
 
 public class GameManager : MonoBehaviour
 {
-    public static GameState m_sGameState;                // 現在のゲーム状態
-    public static GameMode  m_sGameMode;                 // 現在のゲームモード
+    public static GameState m_sGameState;                // 現在のゲーム状態(プログラム用)
+    public static GameMode  m_sGameMode;                 // 現在のゲームモード(プログラム用)
     [SerializeField] private GameState m_CheckGameState; // 現在のゲーム状態(確認用)
     [SerializeField] private GameMode m_GameMode;        // 現在のゲームモード(変更用)
     public static bool m_bDebugStart;                    // デバッグの開始時かどうか
+    public static float m_fTime = 3f;
 
     private void Awake()
     {
+        // ゲーム開始時はスタート状態
         m_sGameState = GameState.GameStart;
+
+        // 当たり判定デバッグ表示クラスがnullだったらnewで作成
         if(ON_HitDebug.instance == null)
         {
             ON_HitDebug.instance = new ON_HitDebug();
         }
     }
 
+    private void Update()
+    {
+        m_fTime -= Time.deltaTime;
+        if (m_fTime <= 0f)
+            m_sGameState = GameState.GamePlay;
+    }
+
     private void FixedUpdate()
     {
         m_bDebugStart = false;
 
+        // デバッグモード切替時は…
         if (m_sGameMode != m_GameMode)
         {
+            // デバッグの場合…
             if (m_GameMode == GameMode.Debug)
             {
+                // 当たり判定のデバッグ表示開始
                 ON_HitDebug.instance.StartHitDebug();
-                Debug.Log("DebugStart");
                 m_bDebugStart = true;
             }
+            // リリースの場合は当たり判定のデバッグ表示終了
             else ON_HitDebug.instance.FinHitDebug();
         }
         m_CheckGameState = m_sGameState;
         m_sGameMode = m_GameMode;
 
+        // 当たり判定デバッグ表示更新
         ON_HitDebug.instance.Update();
     }
 
