@@ -680,10 +680,10 @@ MonoBehaviour:
   InitParam:
     m_nHp: 10
     m_nMaxHp: 10
-    m_fAccel: 0.002
+    m_fAccel: 0
     m_fWeight: 1
-    m_vSpeed: {x: 0, y: -0.02}
-    m_vMaxSpeed: {x: 0.5, y: 0.3}
+    m_vSpeed: {x: 0, y: 0}
+    m_vMaxSpeed: {x: 0, y: 0.3}
     m_bExist: 1
     m_eDir: 1
     m_eType: 0
