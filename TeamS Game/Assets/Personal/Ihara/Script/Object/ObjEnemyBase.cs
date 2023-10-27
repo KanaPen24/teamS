@@ -17,7 +17,8 @@ public enum EnemyState
     Walk,       //歩く
     Jump,       //跳ぶ
     KnockBack,  //ノックバック
-    Atk         //攻撃
+    Atk,        //攻撃
+    Death       //死亡
 }
 
 //インスペクターでノックバック用の変数を見れるように
@@ -52,7 +53,9 @@ public class ObjEnemyBase : ObjBase
         //ノックバック中なら
         if (m_EnemyState == EnemyState.KnockBack)
         {
+            Debug.Log("連撃");
             //連撃の場合
+            GetSetSpeed = knockBack.m_fSpeed * 0.5f;
         }
         else
         {
@@ -71,11 +74,14 @@ public class ObjEnemyBase : ObjBase
         // 地面に立っている状態にする → 落下速度を0で終了
         if (m_EnemyState == EnemyState.KnockBack && m_Ground.GetSetStand) 
         {
+            //減衰処理
             GetSetSpeed = new Vector2(knockBack.m_fSpeed.x*knockBack.m_fDamping, knockBack.m_fSpeed.y *knockBack.m_fDamping);
             knockBack.m_fSpeed = GetSetSpeed;
+            //弾むのが0.1f以下になったら
             if (GetSetSpeed.y <= 0.1f)
-            {
-                GetSetSpeed = Vector2.zero;
+            {   
+                GetSetSpeed = Vector2.zero;     //止める
+                //if(体力がゼロなら)
                 m_EnemyState = EnemyState.Idle;
             }
             m_Ground.GetSetStand = false;
