@@ -50,7 +50,7 @@ public class ObjPlayer : ObjBase
                 Debug.Log("HitGenerate");
 
             ON_HitManager.instance.GenerateHit(this.gameObject.transform.position + new Vector3(1f, 0f, 0f),
-                new Vector3(1f, 1f, 1f), true, HitType.ATTACK, m_nObjID);
+                GetSetScale / 2f, true, HitType.ATTACK, m_nObjID);
         }
 
         if (Input.GetKeyDown(IS_XBoxInput.A) || Input.GetKeyDown(KeyCode.A))

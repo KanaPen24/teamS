@@ -590,6 +590,7 @@ GameObject:
   - component: {fileID: 1790556741}
   - component: {fileID: 1790556740}
   - component: {fileID: 1790556739}
+  - component: {fileID: 1790556742}
   m_Layer: 0
   m_Name: EnemyA
   m_TagString: Untagged
@@ -617,7 +618,7 @@ MonoBehaviour:
     m_vSpeed: {x: 0, y: 0}
     m_vMaxSpeed: {x: 0, y: 0.3}
     m_bExist: 0
-    m_eDir: 0
+    m_eDir: 2
     m_eType: 1
   CheckParam:
     m_nObjID: 0
@@ -696,13 +697,34 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790556738}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.4, y: 0.8, z: 0}
+  m_LocalPosition: {x: 1.5, y: 0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1790556742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790556738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87551f52dc81dbd46aa551377e6a6fe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Target: {x: 2.5, y: 0, z: 0}
+  m_fSpeed: 0.25
+  m_fRatio: 0.7
+  m_fP1Y: 2
+  m_fLastSpeed: 0.6
+  m_bDirection: 2
+  m_bAtkHit: 0
+  m_bGroundHit: 0
+  m_fHitStopTime: 0
 --- !u!1 &2043465270
 GameObject:
   m_ObjectHideFlags: 0
@@ -820,8 +842,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2043465270}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
