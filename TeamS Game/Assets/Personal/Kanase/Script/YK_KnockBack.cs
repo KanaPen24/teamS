@@ -122,7 +122,7 @@ public class YK_KnockBack : MonoBehaviour
             m_fSpeed += 0.017f;
             yield return null;
         }
-
+        //‘¬“x~”½ËŒW”
         
     }
 }
