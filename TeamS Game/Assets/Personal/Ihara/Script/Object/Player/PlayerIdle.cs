@@ -33,6 +33,13 @@ public class PlayerIdle : PlayerStrategy
             ObjPlayer.instance.GetSetGround.GetSetStand = false;
             return;
         }
+        // ˆÚ“® ¨ UŒ‚
+        if (Input.GetKeyDown(IS_XBoxInput.B))
+        {
+            ObjPlayer.instance.m_PlayerState = PlayerState.Atk;
+            ObjPlayer.m_bAtkFlg = true;
+            return;
+        }
     }
 
     public override void UpdatePlayer()
