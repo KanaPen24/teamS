@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameMode m_GameMode;        // 現在のゲームモード(変更用)
     public static bool m_bDebugStart;                    // デバッグの開始時かどうか
     public static float m_fTime = 3f;
+    public HitType hitType;
 
     private void Awake()
     {
@@ -87,7 +88,7 @@ public class GameManager : MonoBehaviour
         m_sGameMode = m_GameMode;
 
         // 当たり判定デバッグ表示更新
-        ON_HitDebug.instance.Update();
+        ON_HitDebug.instance.Update(hitType);
     }
 
     /**
