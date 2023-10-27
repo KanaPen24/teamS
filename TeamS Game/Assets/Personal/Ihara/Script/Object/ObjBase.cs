@@ -178,6 +178,12 @@ public class ObjBase : MonoBehaviour
     {
 
     }
+    
+    // --- ノックバック関数 ---
+    public virtual void KnockBackObj()
+    {
+
+    }
 
     //  ---- 当たり判定を生成した際の処理 ----
     public virtual void GenerateHit()
@@ -198,7 +204,7 @@ public class ObjBase : MonoBehaviour
         // 地面に立っている状態にする → 落下速度を0で終了
         if(m_eType == ObjType.Field)
         {
-            m_Ground.GetSetStand = false;
+            m_Ground.GetSetStand = true;
             m_vSpeed.y = 0f;
             return;
         }

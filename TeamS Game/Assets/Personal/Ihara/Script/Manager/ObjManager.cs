@@ -76,10 +76,10 @@ public class ObjManager : MonoBehaviour
         {
             Objs[i].GetSetSpeed = new Vector2(-Objs[i].GetSetMaxSpeed.x, Objs[i].GetSetSpeed.y);
         }
-        if (Objs[i].GetSetSpeed.y > Objs[i].GetSetMaxSpeed.y)
-        {
-            Objs[i].GetSetSpeed = new Vector2(Objs[i].GetSetSpeed.x, Objs[i].GetSetMaxSpeed.y);
-        }
+        //if (Objs[i].GetSetSpeed.y > Objs[i].GetSetMaxSpeed.y)
+        //{
+        //    Objs[i].GetSetSpeed = new Vector2(Objs[i].GetSetSpeed.x, Objs[i].GetSetMaxSpeed.y);
+        //}
         if (Objs[i].GetSetSpeed.y < -Objs[i].GetSetMaxSpeed.y)
         {
             Objs[i].GetSetSpeed = new Vector2(Objs[i].GetSetSpeed.x, -Objs[i].GetSetMaxSpeed.y);
