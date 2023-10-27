@@ -493,7 +493,7 @@ MonoBehaviour:
     m_vSpeed: {x: 0, y: 0}
     m_vMaxSpeed: {x: 0, y: 0.3}
     m_bExist: 0
-    m_eDir: 0
+    m_eDir: 2
     m_eType: 1
   CheckParam:
     m_nObjID: 0
@@ -506,12 +506,16 @@ MonoBehaviour:
     m_vMaxSpeed: {x: 0, y: 0}
     m_vMove: {x: 0, y: 0}
     m_bExist: 0
-    m_eDir: 0
+    m_eDir: 2
     m_eType: 1
   m_Ground:
     m_bStand: 0
     m_vCenter: {x: 0, y: 0}
     m_vSize: {x: 0, y: 0}
+  knockBack:
+    m_fSpeed: {x: 0, y: 0}
+    m_fDamping: 0
+  m_EnemyState: 0
 --- !u!212 &1264888852
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -590,7 +594,6 @@ GameObject:
   - component: {fileID: 1790556741}
   - component: {fileID: 1790556740}
   - component: {fileID: 1790556739}
-  - component: {fileID: 1790556742}
   m_Layer: 0
   m_Name: EnemyA
   m_TagString: Untagged
@@ -616,7 +619,7 @@ MonoBehaviour:
     m_fAccel: 0
     m_fWeight: 0
     m_vSpeed: {x: 0, y: 0}
-    m_vMaxSpeed: {x: 0, y: 0.3}
+    m_vMaxSpeed: {x: 1, y: 1}
     m_bExist: 0
     m_eDir: 2
     m_eType: 1
@@ -637,6 +640,10 @@ MonoBehaviour:
     m_bStand: 0
     m_vCenter: {x: 0, y: 0}
     m_vSize: {x: 0, y: 0}
+  knockBack:
+    m_fSpeed: {x: 0.1, y: 0.5}
+    m_fDamping: 0.7
+  m_EnemyState: 0
 --- !u!212 &1790556740
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -704,27 +711,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1790556742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1790556738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87551f52dc81dbd46aa551377e6a6fe0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Target: {x: 2.5, y: 0, z: 0}
-  m_fSpeed: 0.25
-  m_fRatio: 0.7
-  m_fP1Y: 2
-  m_fLastSpeed: 0.6
-  m_bDirection: 2
-  m_bAtkHit: 0
-  m_bGroundHit: 0
-  m_fHitStopTime: 0
 --- !u!1 &2043465270
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,6 +726,7 @@ GameObject:
   - component: {fileID: 2043465274}
   - component: {fileID: 2043465277}
   - component: {fileID: 2043465276}
+  - component: {fileID: 2043465278}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -791,6 +778,7 @@ MonoBehaviour:
   - {fileID: 2043465274}
   - {fileID: 2043465277}
   - {fileID: 2043465276}
+  - {fileID: 2043465278}
   m_PlayerState: 0
 --- !u!212 &2043465272
 SpriteRenderer:
@@ -853,7 +841,7 @@ Transform:
   m_GameObject: {fileID: 2043465270}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2, z: 0}
-  m_LocalScale: {x: 1, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -907,6 +895,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a01a5d306d48ce408687655878c97b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2043465278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043465270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8c8e2f81cdb204fb493661c9c01326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fInterval: 3
 --- !u!1001 &2713225374635996991
 PrefabInstance:
   m_ObjectHideFlags: 0
