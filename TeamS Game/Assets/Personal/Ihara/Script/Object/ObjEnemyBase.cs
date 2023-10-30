@@ -4,7 +4,7 @@
  * @author IharaShota
  * @date   2023/10/13
  * @Update 2023/10/13 作成
- * @Update 2023/10/27 ノックバックの処理追記
+ * @Update 2023/10/27 ノックバックの処理追記 Kanase
  **/
 using System.Collections;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ public enum EnemyState
 public class KnockBack
 {       
     public Vector2 m_fSpeed;    //速度
-    public float m_fDamping;     //減衰率
+    public float m_fDamping;    //減衰率
 }
 
 
@@ -53,9 +53,8 @@ public class ObjEnemyBase : ObjBase
         //ノックバック中なら
         if (m_EnemyState == EnemyState.KnockBack)
         {
-            Debug.Log("連撃");
             //連撃の場合
-            GetSetSpeed = knockBack.m_fSpeed * 0.5f;
+            GetSetSpeed = knockBack.m_fSpeed * 0.2f;
         }
         else
         {
