@@ -140,18 +140,6 @@ public class ON_HitManager
     {
         HitDir hitDir = HitDir.NONE;
 
-        // ‰E‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
-        if ((m_hits[i].GetCenter().x + m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
-             m_hits[i].GetCenter().x + m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x) &&
-            (m_hits[i].GetCenter().y + m_hits[i].GetSize().y / 2f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
-             m_hits[i].GetCenter().y - m_hits[i].GetSize().y / 2f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y ))
-            return hitDir = HitDir.RIGHT;
-        // ¶‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
-        if ((m_hits[i].GetCenter().x - m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
-             m_hits[i].GetCenter().x - m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x) &&
-            (m_hits[i].GetCenter().y + m_hits[i].GetSize().y / 2f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
-             m_hits[i].GetCenter().y - m_hits[i].GetSize().y / 2f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y))
-            return hitDir = HitDir.LEFT;
         // ã‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
         if ((m_hits[i].GetCenter().y + m_hits[i].GetSize().y > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
              m_hits[i].GetCenter().y + m_hits[i].GetSize().y < m_hits[j].GetCenter().y + m_hits[j].GetSize().y) &&
@@ -164,6 +152,18 @@ public class ON_HitManager
             (m_hits[i].GetCenter().x - m_hits[i].GetSize().x / 2f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
              m_hits[i].GetCenter().x + m_hits[i].GetSize().x / 2f > m_hits[j].GetCenter().x - m_hits[j].GetSize().x))
             return hitDir = HitDir.DOWN;
+        // ‰E‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
+        if ((m_hits[i].GetCenter().x + m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
+             m_hits[i].GetCenter().x + m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x) &&
+            (m_hits[i].GetCenter().y + m_hits[i].GetSize().y / 2f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
+             m_hits[i].GetCenter().y - m_hits[i].GetSize().y / 2f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y ))
+            return hitDir = HitDir.RIGHT;
+        // ¶‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
+        if ((m_hits[i].GetCenter().x - m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
+             m_hits[i].GetCenter().x - m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x) &&
+            (m_hits[i].GetCenter().y + m_hits[i].GetSize().y / 2f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
+             m_hits[i].GetCenter().y - m_hits[i].GetSize().y / 2f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y))
+            return hitDir = HitDir.LEFT;
 
         return hitDir;
     }

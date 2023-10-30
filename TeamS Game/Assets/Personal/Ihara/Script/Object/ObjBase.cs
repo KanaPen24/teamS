@@ -198,7 +198,7 @@ public class ObjBase : MonoBehaviour
     }
 
     // --- 地面判定処理 ---
-    public void CheckObjGround()
+    public virtual void CheckObjGround()
     {
         // オブジェクトのタイプが「FIELD」だったら
         // 地面に立っている状態にする → 落下速度を0で終了
