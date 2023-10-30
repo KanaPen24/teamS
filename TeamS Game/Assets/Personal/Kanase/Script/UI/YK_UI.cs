@@ -14,8 +14,8 @@ using UnityEngine;
 // ================================================
 public enum UIType
 {
-    Score        = 1, // スコア
-    
+    Score   = 1,    // スコア
+    Combo   = 2,    //コンボ
     MaxUIType
 }
 
