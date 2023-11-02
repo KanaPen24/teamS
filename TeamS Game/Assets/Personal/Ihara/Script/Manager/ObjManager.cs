@@ -47,11 +47,13 @@ public class ObjManager : MonoBehaviour
         // --- オブジェクトの更新処理 ---
         for(int i = 0; i < Objs.Count; ++i)
         {
-            // 更新処理 → 地面判定 → 移動量に速度を格納 →
-            // 速度調整 → 参照パラメーターを更新 → 座標更新
+            // 更新処理  → 地面判定 → 向き調整 → 移動量に速度を格納 → 速度調整 →
+            // 無敵時間更新 → 参照パラメーターを更新 → 座標更新
             Objs[i].UpdateObj();
             Objs[i].CheckObjGround();
             SaveObjSpeed(i);
+            FixObjDir(i);
+            UpdateInvincible(i);
             Objs[i].GetSetMove = Objs[i].GetSetSpeed;
             Objs[i].GetSetPos += new Vector3(Objs[i].GetSetMove.x, Objs[i].GetSetMove.y, 0f);
             Objs[i].UpdateCheckParam();
@@ -84,6 +86,34 @@ public class ObjManager : MonoBehaviour
         {
             Objs[i].GetSetSpeed = new Vector2(Objs[i].GetSetSpeed.x, -Objs[i].GetSetMaxSpeed.y);
         }
+    }
+
+    // --- 向き調整関数 ---
+    // ※X速度がプラスだと「Right」,マイナスだと「Left」
+    //   Fieldタイプのオブジェクトは「None」
+    private void FixObjDir(int i)
+    {
+        if(Objs[i].GetSetType == ObjType.Field)
+        {
+            Objs[i].GetSetDir = ObjDir.NONE;
+            return;
+        }
+
+        if (Objs[i].GetSetSpeed.x > 0f)
+            Objs[i].GetSetDir = ObjDir.RIGHT;
+        else if(Objs[i].GetSetSpeed.x < 0f)
+            Objs[i].GetSetDir = ObjDir.LEFT;
+    }
+
+    // --- 無敵時間更新 ---
+    private void UpdateInvincible(int i)
+    {
+        if (Objs[i].GetSetInvincible.m_fTime <= 0f)
+        {
+            Objs[i].GetSetInvincible.m_bInvincible = false;
+            Objs[i].GetSetInvincible.m_fTime = 0f;
+        }
+        else Objs[i].GetSetInvincible.m_fTime -= Time.deltaTime;
     }
 
     // --- 当たり判定反映関数 ---
@@ -184,9 +214,9 @@ public class ObjManager : MonoBehaviour
                     Objs[myID].GetSetSpeed = new Vector3(Objs[myID].GetSetSpeed.x, 0f, 0f);
 
                     // 地面の情報を格納
-                    Objs[myID].GetSetGround.GetSetStand = true;
-                    Objs[myID].GetSetGround.GetSetCenter = Objs[otherID].GetSetPos;
-                    Objs[myID].GetSetGround.GetSetSize = Objs[otherID].GetSetScale;
+                    Objs[myID].GetSetGround.m_bStand = true;
+                    Objs[myID].GetSetGround.m_vCenter = Objs[otherID].GetSetPos;
+                    Objs[myID].GetSetGround.m_vSize = Objs[otherID].GetSetScale;
 
                     if(GameManager.IsDebug())
                         Debug.Log("地面に当たった");
@@ -196,7 +226,11 @@ public class ObjManager : MonoBehaviour
             //攻撃の判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.DEFENCE)
             {
-                Objs[otherID].DamageAttack();
+                if(!Objs[otherID].GetSetInvincible.m_bInvincible)
+                {
+                    Objs[otherID].DamageAttack();
+                    Objs[otherID].GetSetInvincible.SetInvincible(0.2f);
+                }
             }
             // -------------------------------
         }

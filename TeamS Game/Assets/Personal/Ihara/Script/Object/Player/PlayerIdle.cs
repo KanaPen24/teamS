@@ -11,10 +11,10 @@ using UnityEngine;
 
 public class PlayerIdle : PlayerStrategy
 {
-    public override void UpdateInput()
+    public override void UpdateState()
     {
         // ë“Çø Å® óéâ∫
-        if (!ObjPlayer.instance.GetSetGround.GetSetStand)
+        if (!ObjPlayer.instance.GetSetGround.m_bStand)
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Drop;
             return;
@@ -30,11 +30,11 @@ public class PlayerIdle : PlayerStrategy
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Jump;
             ObjPlayer.instance.GetSetSpeed = new Vector2(ObjPlayer.instance.GetSetSpeed.x, 0.7f);
-            ObjPlayer.instance.GetSetGround.GetSetStand = false;
+            ObjPlayer.instance.GetSetGround.m_bStand = false;
             return;
         }
         // à⁄ìÆ Å® çUåÇ
-        if (Input.GetKeyDown(IS_XBoxInput.B))
+        if (Input.GetKey(IS_XBoxInput.B))
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Atk;
             ObjPlayer.m_bAtkFlg = true;
