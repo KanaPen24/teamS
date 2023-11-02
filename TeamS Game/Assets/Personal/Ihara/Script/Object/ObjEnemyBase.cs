@@ -5,6 +5,7 @@
  * @date   2023/10/13
  * @Update 2023/10/13 作成
  * @Update 2023/10/27 ノックバックの処理追記 Kanase
+ * @Update 2023/11/02 ノックバックの処理修正 Ihara
  **/
 using System.Collections;
 using System.Collections.Generic;
