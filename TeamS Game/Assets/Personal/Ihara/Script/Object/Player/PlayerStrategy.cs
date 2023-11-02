@@ -12,7 +12,7 @@ using UnityEngine;
 public class PlayerStrategy : MonoBehaviour
 {
     // Player‚Ì‘JˆÚó‘Ô‚Ì“ü—Íˆ—
-    public virtual void UpdateInput()
+    public virtual void UpdateState()
     {
 
     }
