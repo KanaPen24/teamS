@@ -3,24 +3,33 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-
-public class TestPostProcessRenderPass : ScriptableRenderPass
+public enum PostprocessTiming
 {
-    private const string RenderPassName = nameof(TestPostProcessRenderPass);
-    private const string ProfilingSamplerName = "SrcToDest";
+    AfterOpaque,
+    BeforePostprocess,
+    AfterPostprocess
+}
+
+public class FlareRenderPass : ScriptableRenderPass
+{
+    private const string RenderPassName = nameof(FlareRenderPass);
+    private const string ProfilingSamplerName = "ScrToDest";
 
     private readonly bool _applyToSceneView;
     private readonly int _mainTexPropertyId = Shader.PropertyToID("_MainTex");
     private readonly Material _material;
     private readonly ProfilingSampler _profilingSampler;
-    private readonly int _tintColorPropertyId = Shader.PropertyToID("_TintColor");
+    private readonly int _flareColorPropertyId = Shader.PropertyToID("_FlareColor");
+    private readonly int _flareVectorPropertyId = Shader.PropertyToID("_FlareVec");
+    private readonly int _paraColorPropertyId = Shader.PropertyToID("_ParaColor");
+    private readonly int _paraVectorPropertyId = Shader.PropertyToID("_ParaVec");
 
     private RenderTargetHandle _afterPostProcessTexture;
     private RenderTargetIdentifier _cameraColorTarget;
     private RenderTargetHandle _tempRenderTargetHandle;
-    private TestPostProcessVolume _volume;
+    private FlareVolume _volume;
 
-    public TestPostProcessRenderPass(bool applyToSceneView, Shader shader)
+    public FlareRenderPass(bool applyToSceneView, Shader shader)
     {
         if (shader == null)
         {
@@ -38,7 +47,6 @@ public class TestPostProcessRenderPass : ScriptableRenderPass
         _afterPostProcessTexture.Init("_AfterPostProcessTexture");
     }
 
-
     public void Setup(RenderTargetIdentifier cameraColorTarget, PostprocessTiming timing)
     {
         _cameraColorTarget = cameraColorTarget;
@@ -47,7 +55,7 @@ public class TestPostProcessRenderPass : ScriptableRenderPass
 
         // Volumeコンポーネントを取得
         var volumeStack = VolumeManager.instance.stack;
-        _volume = volumeStack.GetComponent<TestPostProcessVolume>();
+        _volume = volumeStack.GetComponent<FlareVolume>();
     }
 
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -69,10 +77,10 @@ public class TestPostProcessRenderPass : ScriptableRenderPass
             return;
         }
 
-        if (!_volume.IsActive())
-        {
-            return;
-        }
+        // if (!_volume.IsActive())
+        // {
+        //     return;
+        // }
 
         // renderPassEventがAfterRenderingの場合、カメラのカラーターゲットではなく_AfterPostProcessTextureを使う
         var source = renderPassEvent == RenderPassEvent.AfterRendering && renderingData.cameraData.resolveFinalTarget
@@ -91,7 +99,10 @@ public class TestPostProcessRenderPass : ScriptableRenderPass
         using (new ProfilingScope(cmd, _profilingSampler))
         {
             // VolumeからTintColorを取得して反映
-            _material.SetColor(_tintColorPropertyId, _volume.tintColor.value);
+            _material.SetColor(_flareColorPropertyId, _volume.flareColor.value);
+            _material.SetVector(_flareVectorPropertyId, new Vector4(_volume.flarePosition.value.x, _volume.flarePosition.value.y, _volume.flareSize.value, 0.0f));
+            _material.SetColor(_paraColorPropertyId, _volume.paraColor.value);
+            _material.SetVector(_paraVectorPropertyId, new Vector4(_volume.paraPosition.value.x, _volume.paraPosition.value.y, _volume.paraSize.value, 0.0f));
             cmd.SetGlobalTexture(_mainTexPropertyId, source);
 
             // 元のテクスチャから一時的なテクスチャにエフェクトを適用しつつ描画
