@@ -5,6 +5,7 @@
  * @date   2023/10/13
  * @Update 2023/10/13 作成
  * @Update 2023/10/27 ノックバックの処理追記 Kanase
+ * @Update 2023/11/02 ノックバックの処理修正 Ihara
  **/
 using System.Collections;
 using System.Collections.Generic;
@@ -24,9 +25,11 @@ public enum EnemyState
 //インスペクターでノックバック用の変数を見れるように
 [System.Serializable]
 public class KnockBack
-{       
-    public Vector2 m_fSpeed;    //速度
-    public float m_fDamping;    //減衰率
+{
+    [HideInInspector]
+    public Vector2 m_vSpeed;
+    public Vector2 m_vInitSpeed; //速度
+    public float m_fDamping;     //減衰率
 }
 
 
@@ -54,28 +57,33 @@ public class ObjEnemyBase : ObjBase
         if (m_EnemyState == EnemyState.KnockBack)
         {
             //連撃の場合
-            GetSetSpeed = knockBack.m_fSpeed * 0.2f;
+            //GetSetSpeed = knockBack.m_fSpeed * 0.2f;
+            GetSetSpeed = knockBack.m_vInitSpeed * 0.2f;
         }
         else
         {
             //最初のノックバック処理
             m_EnemyState = EnemyState.KnockBack; //ノックバックに変更
-            GetSetGround.GetSetStand = false;
-            GetSetSpeed = knockBack.m_fSpeed;
+            GetSetGround.m_bStand = false;
+            //GetSetSpeed = knockBack.m_fSpeed;
+            GetSetSpeed = knockBack.m_vInitSpeed;
         }
-        
 
+        // 初速度を速度に格納(Ihara)
+        knockBack.m_vSpeed = knockBack.m_vInitSpeed;
     }
 
     public override void CheckObjGround()
     {
         // オブジェクトのタイプが「FIELD」だったら
         // 地面に立っている状態にする → 落下速度を0で終了
-        if (m_EnemyState == EnemyState.KnockBack && m_Ground.GetSetStand) 
+        if (m_EnemyState == EnemyState.KnockBack && m_Ground.m_bStand) 
         {
             //減衰処理
-            GetSetSpeed = new Vector2(knockBack.m_fSpeed.x*knockBack.m_fDamping, knockBack.m_fSpeed.y *knockBack.m_fDamping);
-            knockBack.m_fSpeed = GetSetSpeed;
+            //GetSetSpeed = new Vector2(knockBack.m_fSpeed.x*knockBack.m_fDamping, knockBack.m_fSpeed.y *knockBack.m_fDamping);
+            //knockBack.m_fSpeed = GetSetSpeed;
+            GetSetSpeed = new Vector2(knockBack.m_vSpeed.x * knockBack.m_fDamping, knockBack.m_vSpeed.y * knockBack.m_fDamping);
+            knockBack.m_vSpeed = GetSetSpeed;
             //弾むのが0.1f以下になったら
             if (GetSetSpeed.y <= 0.1f)
             {   
@@ -83,17 +91,17 @@ public class ObjEnemyBase : ObjBase
                 //if(体力がゼロなら)
                 m_EnemyState = EnemyState.Idle;
             }
-            m_Ground.GetSetStand = false;
+            m_Ground.m_bStand = false;
             return;
         }
 
         // 今現在立っている地面を離れたら…
-        if (GetSetPos.x + GetSetScale.x / 2f < m_Ground.GetSetCenter.x - (m_Ground.GetSetSize.x / 2f) ||
-            GetSetPos.x - GetSetScale.x / 2f > m_Ground.GetSetCenter.x + (m_Ground.GetSetSize.x / 2f))
-            m_Ground.GetSetStand = false;
+        if (GetSetPos.x + GetSetScale.x / 2f < m_Ground.m_vCenter.x - (m_Ground.m_vSize.x / 2f) ||
+            GetSetPos.x - GetSetScale.x / 2f > m_Ground.m_vCenter.x + (m_Ground.m_vSize.x / 2f))
+            m_Ground.m_bStand = false;
 
         // 地面についていなかったら、落ちる
-        if (!GetSetGround.GetSetStand)
+        if (!GetSetGround.m_bStand)
         {
             if (GameManager.IsDebug())
                 Debug.Log("地面から離れた ObjID: " + m_nObjID);

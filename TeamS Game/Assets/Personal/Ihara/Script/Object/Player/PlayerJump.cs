@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class PlayerJump : PlayerStrategy
 {
-    public override void UpdateInput()
+    public override void UpdateState()
     {
         // 跳躍 → 落下
         if (ObjPlayer.instance.GetSetSpeed.y < 0f)
@@ -23,9 +23,11 @@ public class PlayerJump : PlayerStrategy
 
     public override void UpdatePlayer()
     {
-        // 速度はスティックの方向け具合で決まる
-        ObjPlayer.instance.GetSetSpeed
-            = new Vector2(IS_XBoxInput.LStick_H * ObjPlayer.instance.GetSetAccel / 2f, 
-                            ObjPlayer.instance.GetSetSpeed.y);
+        if (IS_XBoxInput.LStick_H > 0.2f || IS_XBoxInput.LStick_H < -0.2f)
+        {
+            ObjPlayer.instance.GetSetSpeed
+            += new Vector2(IS_XBoxInput.LStick_H * ObjPlayer.instance.GetSetAccel / 2f, 0f);
+        }
+        else ObjPlayer.instance.GetSetSpeed *= new Vector2(0.8f, 1f);
     }
 }
