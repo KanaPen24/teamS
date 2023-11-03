@@ -52,7 +52,7 @@ Shader "Unlit/Flare"
 				float para = (1 - saturate(length(uv - _ParaVec.xy))) * _ParaVec.z;
 				para = saturate(para);
 
-				col = col + lerp(half4(0, 0, 0, 0), _FlareColor, flare) * lerp(half4(1, 1, 1, 1), _ParaColor, para);//lerp( _FlareColor, half4(0, 0, 0, 0), flare);
+				col = col * lerp(half4(1, 1, 1, 1), _ParaColor, para) + lerp(half4(0, 0, 0, 0), _FlareColor, flare);//lerp( _FlareColor, half4(0, 0, 0, 0), flare);
 				return col;
 			}
 			ENDHLSL
