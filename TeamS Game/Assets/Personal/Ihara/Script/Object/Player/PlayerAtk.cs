@@ -11,8 +11,10 @@ using UnityEngine;
 
 public class PlayerAtk : PlayerStrategy
 {
-    public float m_fInterval;
-    public float m_fTime;
+    [SerializeField] private Vector3 m_vAtkArea;
+    [SerializeField] private float m_fLength;
+    [SerializeField] private float m_fInterval;
+    [SerializeField] private float m_fTime;
     private int atknum;
 
     private void Start()
@@ -47,27 +49,32 @@ public class PlayerAtk : PlayerStrategy
             // 攻撃の当たり判定生成(向きによって生成位置が変わる)
             if(ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
             {
-                atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos + new Vector3(1f, 0f, 0f),
-                ObjPlayer.instance.GetSetScale / 2f, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
+                atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f),
+                m_vAtkArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
+
+                ObjPlayer.instance.GetSetSpeed += new Vector2(5f, 0f);
             }
             else if(ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
             {
-                atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos - new Vector3(1f, 0f, 0f),
-                ObjPlayer.instance.GetSetScale / 2f, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
+                atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f),
+                m_vAtkArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
+
+                ObjPlayer.instance.GetSetSpeed += new Vector2(-5f, 0f);
             }
 
             m_fTime = m_fInterval;
+            AudioManager.instance.PlaySE(SEType.SE_PlayerAtk);
             ObjPlayer.m_bAtkFlg = false;
         }
         else m_fTime -= Time.deltaTime;
 
         // 攻撃の当たり判定の座標更新
         if(ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
-        ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos + new Vector3(1f, 0f, 0f));
+        ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
         else if(ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
-            ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos - new Vector3(1f, 0f, 0f));
+            ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f));
 
         // 速度は減速(仮)
-        ObjPlayer.instance.GetSetSpeed *= new Vector2(0.7f, 1f);
+        ObjPlayer.instance.GetSetSpeed *= new Vector2(0.8f, 1f);
     }
 }

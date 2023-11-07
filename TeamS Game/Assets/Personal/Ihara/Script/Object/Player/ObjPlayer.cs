@@ -23,11 +23,11 @@ public enum PlayerState
 
 public class ObjPlayer : ObjBase
 {
+    public static bool m_bWalkFlg = false;
     public static bool m_bJumpFlg = false;
     public static bool m_bDropFlg = false;
     public static bool m_bAtkFlg = false;
     public static bool m_bDefFlg = false;
-    public static bool m_bWalkFlg = false;
 
     public static ObjPlayer instance;
     public PlayerState m_PlayerState;

@@ -122,6 +122,8 @@ public class ObjBase : MonoBehaviour
 {
     // ----- 変数宣言 ------
     [SerializeField]
+    public SpriteRenderer texObj;     // オブジェクトの画像
+    [SerializeField]
     protected InitParam InitParam;    // 初期化用パラメータ
     [SerializeField]
     protected CheckParam CheckParam;  // 参照用パラメータ
@@ -197,6 +199,14 @@ public class ObjBase : MonoBehaviour
     public virtual void KnockBackObj(ObjDir dir)
     {
 
+    }
+
+    // --- オブジェクト消去 ---
+    public virtual void DestroyObj()
+    {
+        // 当たり判定削除 → オブジェクト消去
+        ON_HitManager.instance.DeleteHit(m_nHitID);
+        Destroy(this.gameObject);
     }
 
     //  ---- 当たり判定を生成した際の処理 ----
