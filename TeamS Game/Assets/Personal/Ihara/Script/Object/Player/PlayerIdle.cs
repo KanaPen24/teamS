@@ -17,12 +17,14 @@ public class PlayerIdle : PlayerStrategy
         if (!ObjPlayer.instance.GetSetGround.m_bStand)
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Drop;
+            ObjPlayer.m_bDropFlg = true;
             return;
         }
         // ‘Ò‚¿ ¨ ˆÚ“®
         if (IS_XBoxInput.LStick_H > 0.2f || IS_XBoxInput.LStick_H < -0.2f)
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Walk;
+            ObjPlayer.m_bWalkFlg = true;
             return;
         }
         // ‘Ò‚¿ ¨ ’µ–ô
@@ -31,6 +33,7 @@ public class PlayerIdle : PlayerStrategy
             ObjPlayer.instance.m_PlayerState = PlayerState.Jump;
             ObjPlayer.instance.GetSetSpeed = new Vector2(ObjPlayer.instance.GetSetSpeed.x, 0.7f);
             ObjPlayer.instance.GetSetGround.m_bStand = false;
+            ObjPlayer.m_bJumpFlg = true;
             return;
         }
         // ˆÚ“® ¨ UŒ‚

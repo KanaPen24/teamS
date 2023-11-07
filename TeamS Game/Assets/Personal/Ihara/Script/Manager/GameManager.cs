@@ -58,6 +58,8 @@ public class GameManager : MonoBehaviour
         {
             ON_HitDebug.instance = new ON_HitDebug();
         }
+
+        AudioManager.instance.PlayBGM(BGMType.BGM_GAME);
     }
 
     private void Update()

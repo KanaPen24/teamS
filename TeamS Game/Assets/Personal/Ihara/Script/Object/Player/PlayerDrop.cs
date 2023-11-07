@@ -17,12 +17,18 @@ public class PlayerDrop : PlayerStrategy
         if (ObjPlayer.instance.GetSetGround.m_bStand)
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Idle;
+            AudioManager.instance.PlaySE(SEType.SE_PlayerLanding);
             return;
         }
     }
 
     public override void UpdatePlayer()
     {
+        if (ObjPlayer.m_bDropFlg)
+        {
+            ObjPlayer.m_bDropFlg = false;
+        }
+
         // 速度はスティックの方向け具合で決まる
         if (IS_XBoxInput.LStick_H > 0.2f || IS_XBoxInput.LStick_H < -0.2f)
         {

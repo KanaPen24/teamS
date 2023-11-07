@@ -63,6 +63,7 @@ public class PlayerAtk : PlayerStrategy
             }
 
             m_fTime = m_fInterval;
+            AudioManager.instance.PlaySE(SEType.SE_PlayerAtk);
             ObjPlayer.m_bAtkFlg = false;
         }
         else m_fTime -= Time.deltaTime;

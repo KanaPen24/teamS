@@ -57,19 +57,34 @@ public class ObjManager : MonoBehaviour
         // --- オブジェクトの更新処理 ---
         for(int i = 0; i < Objs.Count; ++i)
         {
-            // 更新処理  → 地面判定 → 向き調整 → 移動量に速度を格納 → 速度調整 →
-            // 無敵時間更新 → 参照パラメーターを更新 → 座標更新
-            Objs[i].UpdateObj();
-            Objs[i].CheckObjGround();
-            SaveObjSpeed(i);
-            FixObjDir(i);
-            UpdateInvincible(i);
-            Objs[i].GetSetMove = Objs[i].GetSetSpeed;
-            Objs[i].GetSetPos += new Vector3(Objs[i].GetSetMove.x, Objs[i].GetSetMove.y, 0f);
-            Objs[i].UpdateCheckParam();
+            // --- オブジェクトが存在している場合 ---
+            if (Objs[i].GetSetExist)
+            {
+                // オブジェクトの表示
+                Objs[i].texObj.enabled = true;
 
-            // オブジェクトが移動した座標に当たり判定を移動させる
-            ON_HitManager.instance.SetCenter(Objs[i].GetSetHitID, Objs[i].GetSetPos);
+                // 更新処理  → 地面判定 → 向き調整 → 移動量に速度を格納 → 速度調整 →
+                // 無敵時間更新 → 座標更新
+                Objs[i].UpdateObj();
+                Objs[i].CheckObjGround();
+                SaveObjSpeed(i);
+                FixObjDir(i);
+                UpdateInvincible(i);
+                Objs[i].GetSetMove = Objs[i].GetSetSpeed;
+                Objs[i].GetSetPos += new Vector3(Objs[i].GetSetMove.x, Objs[i].GetSetMove.y, 0f);
+
+                // オブジェクトが移動した座標に当たり判定を移動させる
+                ON_HitManager.instance.SetCenter(Objs[i].GetSetHitID, Objs[i].GetSetPos);
+            }
+            // --- 存在していない場合 ---
+            else
+            {
+                // オブジェクトの非表示
+                Objs[i].texObj.enabled = false;
+            }
+
+            // オブジェクトのパラメーター更新
+            Objs[i].UpdateCheckParam();
         }
 
         // --- 当たり判定処理 ---
@@ -251,7 +266,11 @@ public class ObjManager : MonoBehaviour
                     Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack)
                 {
                     // 敵同士がくっつく処理を行う
+                    Objs[myID].GetSetExist = false;
+                    Objs[otherID].GetSetExist = false;
 
+                    ON_HitManager.instance.SetActive(myID,false);
+                    ON_HitManager.instance.SetActive(otherID,false);
                 }
             }
             // -------------------------------

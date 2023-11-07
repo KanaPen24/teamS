@@ -78,7 +78,10 @@ public class ON_HitManager
         // 当たり判定の計算
         for(int i = 0; i < m_hits.Count; ++i)
         {
-            for(int j = i; j < m_hits.Count; ++j)
+            // 当たり判定がoffだったらスキップする
+            if (m_hits[i].GetActive() == false) continue;
+
+            for (int j = i; j < m_hits.Count; ++j)
             {
                 // 当たり判定がoffだったらスキップする
                 if (m_hits[j].GetActive() == false) continue;
