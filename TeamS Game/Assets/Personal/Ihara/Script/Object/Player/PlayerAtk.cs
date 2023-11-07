@@ -22,7 +22,7 @@ public class PlayerAtk : PlayerStrategy
 
     public override void UpdateState()
     {
-        if (m_fTime <= 0)
+        if (m_fTime <= 0 && !ObjPlayer.m_bAtkFlg)
         {
             // UŒ‚ŽžŠÔ‚ð0‚É‚·‚é
             m_fTime = 0;
@@ -60,6 +60,12 @@ public class PlayerAtk : PlayerStrategy
             ObjPlayer.m_bAtkFlg = false;
         }
         else m_fTime -= Time.deltaTime;
+
+        // UŒ‚‚Ì“–‚½‚è”»’è‚ÌÀ•WXV
+        if(ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
+        ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos + new Vector3(1f, 0f, 0f));
+        else if(ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
+            ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos - new Vector3(1f, 0f, 0f));
 
         // ‘¬“x‚ÍŒ¸‘¬(‰¼)
         ObjPlayer.instance.GetSetSpeed *= new Vector2(0.7f, 1f);
