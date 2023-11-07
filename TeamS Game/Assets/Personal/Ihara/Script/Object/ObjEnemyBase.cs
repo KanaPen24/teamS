@@ -27,8 +27,8 @@ public enum EnemyState
 public class KnockBack
 {
     [HideInInspector]
-    public Vector2 m_vSpeed;
-    public Vector2 m_vInitSpeed; //速度
+    public Vector2 m_vSpeed;     // 現在の速度
+    public Vector2 m_vInitSpeed; //初速速度
     public float m_fDamping;     //減衰率
 }
 
@@ -48,29 +48,34 @@ public class ObjEnemyBase : ObjBase
     public override void DamageAttack()
     {
         //攻撃をくらったらノックバックする
-        KnockBackObj();
+        //KnockBackObj();
     }
 
-    public override void KnockBackObj()
+    public override void KnockBackObj(ObjDir dir)
     {
         //ノックバック中なら
         if (m_EnemyState == EnemyState.KnockBack)
         {
             //連撃の場合
             //GetSetSpeed = knockBack.m_fSpeed * 0.2f;
-            GetSetSpeed = knockBack.m_vInitSpeed * 0.2f;
+            GetSetSpeed += new Vector2(0f, knockBack.m_vInitSpeed.y);
+            Debug.Log("連撃発生");
         }
         else
         {
             //最初のノックバック処理
             m_EnemyState = EnemyState.KnockBack; //ノックバックに変更
-            GetSetGround.m_bStand = false;
-            //GetSetSpeed = knockBack.m_fSpeed;
-            GetSetSpeed = knockBack.m_vInitSpeed;
+            GetSetGround.m_bStand = false;       // 地面に立っていない状態にする
+
+            // 向きによって初速度を設定
+            if (dir == ObjDir.RIGHT)
+                GetSetSpeed = knockBack.m_vInitSpeed;
+            else if (dir == ObjDir.LEFT)
+                GetSetSpeed = new Vector2(-knockBack.m_vInitSpeed.x, knockBack.m_vInitSpeed.y);
         }
 
-        // 初速度を速度に格納(Ihara)
-        knockBack.m_vSpeed = knockBack.m_vInitSpeed;
+        // 現在の速度をノックバック計算用の速度に格納(Ihara)
+        knockBack.m_vSpeed = GetSetSpeed;
     }
 
     public override void CheckObjGround()
@@ -80,9 +85,8 @@ public class ObjEnemyBase : ObjBase
         if (m_EnemyState == EnemyState.KnockBack && m_Ground.m_bStand) 
         {
             //減衰処理
-            //GetSetSpeed = new Vector2(knockBack.m_fSpeed.x*knockBack.m_fDamping, knockBack.m_fSpeed.y *knockBack.m_fDamping);
-            //knockBack.m_fSpeed = GetSetSpeed;
-            GetSetSpeed = new Vector2(knockBack.m_vSpeed.x * knockBack.m_fDamping, knockBack.m_vSpeed.y * knockBack.m_fDamping);
+            GetSetSpeed = 
+                new Vector2(knockBack.m_vSpeed.x * knockBack.m_fDamping, knockBack.m_vSpeed.y * knockBack.m_fDamping);
             knockBack.m_vSpeed = GetSetSpeed;
             //弾むのが0.1f以下になったら
             if (GetSetSpeed.y <= 0.1f)

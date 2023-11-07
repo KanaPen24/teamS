@@ -34,7 +34,7 @@ public class PlayerIdle : PlayerStrategy
             return;
         }
         // ˆÚ“® ¨ UŒ‚
-        if (Input.GetKey(IS_XBoxInput.B))
+        if (Input.GetKeyDown(IS_XBoxInput.B))
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Atk;
             ObjPlayer.m_bAtkFlg = true;

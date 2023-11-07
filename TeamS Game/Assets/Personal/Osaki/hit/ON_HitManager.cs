@@ -37,6 +37,7 @@ public enum HitState
     GRUOND,     // ƒtƒB[ƒ‹ƒh‚É“–‚½‚Á‚½
     BODYS,      // ‘Ì“¯m‚ªÚG
     BALANCE,    // UŒ‚“¯m‚ª“–‚½‚é
+    ENEMY,      // “G“¯m‚ª“–‚½‚é
 
 
     MAX_STATE
@@ -116,6 +117,12 @@ public class ON_HitManager
         if(m_hits[i].GetHitType() == HitType.FIELD || m_hits[j].GetHitType() == HitType.FIELD)
         {
             state = HitState.GRUOND;
+            return state;
+        }
+        // “G“¯m‚ª“–‚½‚Á‚½
+        if(ObjManager.instance.GetObjs(m_hits[i].GetObjID()).GetComponent<ObjEnemyBase>() != null &&
+           ObjManager.instance.GetObjs(m_hits[j].GetObjID()).GetComponent<ObjEnemyBase>() != null){
+            state = HitState.ENEMY;
             return state;
         }
 
