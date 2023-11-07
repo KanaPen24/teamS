@@ -33,7 +33,7 @@ public class YK_Score : YK_UI
         //ƒeƒXƒg
         if (Input.GetKeyDown(KeyCode.B))
         {
-            AddScore(100);
+            AddScore(10);
         }
     }
 
