@@ -27,7 +27,6 @@ public class YK_Combo : YK_UI
     // -----------------------------------------------------------------------------------
 
     // --- 動的メンバ ---
-    [SerializeField] private Image ComboTxt;      // コンボの画像
     [SerializeField] private List<TextMeshProUGUI> ComboText; //コンボ演出の時に出すやつ
     private float f_colordown = 0.016f;           // コンボ表示のアルファ値減少量
     private int ComboS = 0;                       // 小コンボの閾値
@@ -37,6 +36,7 @@ public class YK_Combo : YK_UI
     [SerializeField] private int m_nCountDownTime;    // コンボが消えるまでの時間（秒単位）
     [SerializeField] private bool m_bOnce = true; // 1回のみのフラグ
     private Vector3 Combo_Scale;                  // コンボ表示の初期スケール
+    
     // ------------------------------------------------------------------------------------
 
     // Start is called before the first frame update
@@ -52,7 +52,6 @@ public class YK_Combo : YK_UI
         ComboNumber = GetComponentInChildren<Text>();
         GetSetUIPos = ComboNumber.GetComponent<RectTransform>().anchoredPosition;    // UIの座標取得
         GetSetUIScale = ComboNumber.transform.localScale;                           // UIのスケール取得
-        //Combo_Scale = ComboTxt.transform.localScale;                                // コンボ表示の初期スケール取得
         ComboNumber = GetComponent<Text>();                                         // Textコンポーネントの取得
         m_nCountDownTime *= 60;                                                     // 60FPSに合わせる
         a_color = 0.0f;                                                              // 最初は消しておく
@@ -61,7 +60,6 @@ public class YK_Combo : YK_UI
         {
             ComboText[i].DOFade(0.0f, 0.0f);
         }
-        //ComboTxt.color = new Color(0.5f, 0.5f, 1f, a_color);                          // コンボテキストの色を設定
     }
 
     // Update is called once per frame
@@ -102,13 +100,11 @@ public class YK_Combo : YK_UI
 
         //初期カラー
         ComboNumber.color = new Color(0.5f, 0.5f, 1f, a_color);    // コンボ表示の色を設定
-        //ComboTxt.color = new Color(0.5f, 0.5f, 1f, a_color);       // コンボテキストの色を設定
 
         // コンボがComboM以上ComboL未満の場合、色を変更する
         if (m_nCombo >= ComboM && m_nCombo < ComboL)
         {
             ComboNumber.color = new Color(1f, 1f, 0.5f, a_color);
-            // ComboTxt.color = new Color(1f, 1f, 0.5f, a_color);
             StampEff(ComboText[0]);            
             ComboText[0].color = new Color(1f, 1f, 0.5f, a_color);      // コンボテキスト表示の色を設定
         }
@@ -118,7 +114,6 @@ public class YK_Combo : YK_UI
         {
             ResetEff(ComboText[0]);
             ComboNumber.color = new Color(1f, 0.5f, 0.5f, a_color);
-            //   ComboTxt.color = new Color(1f, 0.5f, 0.5f, a_color);
             StampEff(ComboText[1]);
             ComboText[1].color = new Color(1f, 0.5f, 0.5f, a_color);      // コンボテキスト表示の色を設定
         }
@@ -130,7 +125,6 @@ public class YK_Combo : YK_UI
             StampEff(ComboText[2]);
             ComboText[2].color = Color.HSVToRGB(Time.time % 1, 1, 1);      // コンボテキスト表示の色を設定
             ComboNumber.color = Color.HSVToRGB(Time.time % 1, 1, 1);
-          //  ComboTxt.color = Color.HSVToRGB(Time.time % 1, 1, 1);
         }
     }
 
