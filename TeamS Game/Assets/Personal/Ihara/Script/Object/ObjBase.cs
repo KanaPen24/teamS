@@ -194,7 +194,7 @@ public class ObjBase : MonoBehaviour
     }
     
     // --- ノックバック関数 ---
-    public virtual void KnockBackObj()
+    public virtual void KnockBackObj(ObjDir dir)
     {
 
     }

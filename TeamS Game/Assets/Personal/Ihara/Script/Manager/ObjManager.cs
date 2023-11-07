@@ -15,9 +15,19 @@ using UnityEngine;
 public class ObjManager : MonoBehaviour
 {
     [SerializeField] private List<ObjBase> Objs; // オブジェクトを格納する配列
+    public static ObjManager instance;
+
+    public ObjBase GetObjs(int i)
+    {
+        return Objs[i];
+    }
 
     private void Start()
     {
+        if(instance == null)
+        {
+            instance = this;
+        }
         // 当たり判定管理クラスがnullだったら…
         if(ON_HitManager.instance == null)
         {
@@ -228,8 +238,20 @@ public class ObjManager : MonoBehaviour
             {
                 if(!Objs[otherID].GetSetInvincible.m_bInvincible)
                 {
-                    Objs[otherID].DamageAttack();
-                    Objs[otherID].GetSetInvincible.SetInvincible(0.2f);
+                    Objs[otherID].KnockBackObj(Objs[myID].GetSetDir);
+                    Objs[otherID].GetSetInvincible.SetInvincible(0.3f);
+                }
+            }
+
+            // 敵同士の判定だったら
+            if (ON_HitManager.instance.GetData(i).state == HitState.ENEMY)
+            {
+                // どちらかがノックバックの状態だったら
+                if(Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack ||
+                    Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack)
+                {
+                    // 敵同士がくっつく処理を行う
+
                 }
             }
             // -------------------------------
