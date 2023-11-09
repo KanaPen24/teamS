@@ -62,8 +62,8 @@ public class Invincible
 [System.Serializable]
 public class InitParam
 {
-    [SerializeField] private int m_nHp;           // 現在のHP
-    [SerializeField] private int m_nMaxHp;        // 最大HP
+    //[SerializeField] private int m_nHp;           // 現在のHP
+    //[SerializeField] private int m_nMaxHp;        // 最大HP
     [SerializeField] private float m_fAccel;      // 加速度
     [SerializeField] private float m_fWeight;     // 重さ
     [SerializeField] private Vector2 m_vMaxSpeed; // 最大速度
@@ -71,8 +71,8 @@ public class InitParam
     [SerializeField] private ObjDir m_eDir;       // 向き
     [SerializeField] private ObjType m_eType;     // タイプ
 
-    public int GetSetHp { get { return m_nHp; } set { m_nHp = value; } }
-    public int GetSetMaxHp { get { return m_nMaxHp; } set { m_nMaxHp = value; } }
+    //public int GetSetHp { get { return m_nHp; } set { m_nHp = value; } }
+    //public int GetSetMaxHp { get { return m_nMaxHp; } set { m_nMaxHp = value; } }
     public float GetSetAccel { get { return m_fAccel; } set { m_fAccel = value; } }
     public float GetSetWeight { get { return m_fWeight; } set { m_fWeight = value; } }
     public Vector2 GetSetMaxSpeed { get { return m_vMaxSpeed; } set { m_vMaxSpeed = value; } }
@@ -90,8 +90,8 @@ public class CheckParam
     [SerializeField] private Invincible m_Invincible; // 無敵情報
     [SerializeField] private int m_nObjID;        // objのID
     [SerializeField] private int m_nHitID;        // 当たり判定のID
-    [SerializeField] private int m_nHp;           // 現在のHP
-    [SerializeField] private int m_nMaxHp;        // 最大HP
+    //[SerializeField] private int m_nHp;           // 現在のHP
+    //[SerializeField] private int m_nMaxHp;        // 最大HP
     [SerializeField] private float m_fAccel;      // 加速度
     [SerializeField] private float m_fWeight;     // 重さ
     [SerializeField] private Vector2 m_vSpeed;    // 速度
@@ -103,8 +103,8 @@ public class CheckParam
 
     public int GetSetObjID { get { return m_nObjID; } set { m_nObjID = value; } }
     public int GetSetHitID { get { return m_nHitID; } set { m_nHitID = value; } }
-    public int GetSetHp { get { return m_nHp; } set { m_nHp = value; } }
-    public int GetSetMaxHp { get { return m_nMaxHp; } set { m_nMaxHp = value; } }
+    //public int GetSetHp { get { return m_nHp; } set { m_nHp = value; } }
+    //public int GetSetMaxHp { get { return m_nMaxHp; } set { m_nMaxHp = value; } }
     public float GetSetAccel { get { return m_fAccel; } set { m_fAccel = value; } }
     public float GetSetWeight { get { return m_fWeight; } set { m_fWeight = value; } }
     public Vector2 GetSetSpeed { get { return m_vSpeed; } set { m_vSpeed = value; } }
@@ -133,8 +133,8 @@ public class ObjBase : MonoBehaviour
     public Invincible m_Invincible;   // 無敵情報
     protected int m_nObjID;           // objのID
     protected int m_nHitID;           // 当たり判定のID
-    protected int m_nHp;              // 現在のHP
-    protected int m_nMaxHp;           // 最大HP
+    //protected int m_nHp;              // 現在のHP
+    //protected int m_nMaxHp;           // 最大HP
     protected float m_fAccel;         // 加速度
     protected float m_fWeight;        // 重さ
     protected Vector2 m_vSpeed;       // 現在の速度
@@ -149,8 +149,8 @@ public class ObjBase : MonoBehaviour
     // --- 初期化関数 ---
     public virtual void InitObj()
     {
-        m_nHp = InitParam.GetSetHp;
-        m_nMaxHp = InitParam.GetSetMaxHp;
+        //m_nHp = InitParam.GetSetHp;
+        //m_nMaxHp = InitParam.GetSetMaxHp;
         m_fAccel = InitParam.GetSetAccel;
         m_fWeight = InitParam.GetSetWeight;
         m_vMaxSpeed = InitParam.GetSetMaxSpeed;
@@ -164,8 +164,8 @@ public class ObjBase : MonoBehaviour
     {
         CheckParam.GetSetObjID = m_nObjID;
         CheckParam.GetSetHitID = m_nHitID;
-        CheckParam.GetSetHp = m_nHp;
-        CheckParam.GetSetMaxHp = m_nMaxHp;
+        //CheckParam.GetSetHp = m_nHp;
+        //CheckParam.GetSetMaxHp = m_nMaxHp;
         CheckParam.GetSetAccel = m_fAccel;
         CheckParam.GetSetWeight = m_fWeight;
         CheckParam.GetSetSpeed = m_vSpeed;
@@ -218,7 +218,8 @@ public class ObjBase : MonoBehaviour
         true, HitType.BODY, GetSetObjID);
 
         if (GameManager.IsDebug())
-            Debug.Log("当たり判定生成 HitID: " + GetSetHitID);
+            Debug.Log("当たり判定生成 HitID: " + GetSetHitID +
+                "scale: " + this.gameObject.transform.localScale / 2);
     }
 
     // --- 地面判定処理 ---
@@ -252,8 +253,8 @@ public class ObjBase : MonoBehaviour
     // --- プロパティ関数 ---------------------------------------------------------------------
     public int GetSetObjID { get { return m_nObjID; } set { m_nObjID = value; } }
     public int GetSetHitID { get { return m_nHitID; } set { m_nHitID = value; } }
-    public int GetSetHp { get { return m_nHp; } set { m_nHp = value; } }
-    public int GetSetMaxHp { get { return m_nMaxHp; } set { m_nMaxHp = value; } }
+    //public int GetSetHp { get { return m_nHp; } set { m_nHp = value; } }
+    //public int GetSetMaxHp { get { return m_nMaxHp; } set { m_nMaxHp = value; } }
     public float GetSetAccel { get { return m_fAccel; } set { m_fAccel = value; } }
     public float GetSetWeight { get { return m_fWeight; } set { m_fWeight = value; } }
     public Vector2 GetSetSpeed { get { return m_vSpeed; } set { m_vSpeed = value; } }

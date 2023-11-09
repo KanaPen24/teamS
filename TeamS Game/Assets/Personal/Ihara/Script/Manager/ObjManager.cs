@@ -16,6 +16,9 @@ public class ObjManager : MonoBehaviour
 {
     [SerializeField] private List<ObjBase> Objs; // オブジェクトを格納する配列
     public static ObjManager instance;
+    int myID;
+    int otherID ;
+    public ObjEnemyUnion unionObj;
 
     public ObjBase GetObjs(int i)
     {
@@ -103,10 +106,6 @@ public class ObjManager : MonoBehaviour
         {
             Objs[i].GetSetSpeed = new Vector2(-Objs[i].GetSetMaxSpeed.x, Objs[i].GetSetSpeed.y);
         }
-        //if (Objs[i].GetSetSpeed.y > Objs[i].GetSetMaxSpeed.y)
-        //{
-        //    Objs[i].GetSetSpeed = new Vector2(Objs[i].GetSetSpeed.x, Objs[i].GetSetMaxSpeed.y);
-        //}
         if (Objs[i].GetSetSpeed.y < -Objs[i].GetSetMaxSpeed.y)
         {
             Objs[i].GetSetSpeed = new Vector2(Objs[i].GetSetSpeed.x, -Objs[i].GetSetMaxSpeed.y);
@@ -150,8 +149,8 @@ public class ObjManager : MonoBehaviour
         // --- 衝突時データ分を回す ---
         for (int i = 0; i < ON_HitManager.instance.GetHitCombiCnt(); ++i)
         {
-            int myID = -1;
-            int otherID = -1;
+            myID = -1;
+            otherID = -1;
 
             // --- 自身と相手のオブジェクトを当たり判定IDで検索 ---
             for (int j = 0; j < Objs.Count; ++j)
@@ -167,14 +166,11 @@ public class ObjManager : MonoBehaviour
                     otherID = j;
                 }
 
-                // 両方の検索が終わっていたら終了する
+                // 両方の検索が終わっていたら…
                 if (myID != -1 && otherID != -1)
                 {
-                    // 自身のIDが相手のIDの大きさより大きかったら…
-                    // IDを入れ替える
-                    if (myID > otherID)
-                        (myID, otherID) = (otherID, myID);
-
+                    // 修正を行い終了する
+                    CollisionFix(i, ON_HitManager.instance.GetData(i).state);
                     break;
                 }
             }
@@ -265,15 +261,74 @@ public class ObjManager : MonoBehaviour
                 if(Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack ||
                     Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack)
                 {
-                    // 敵同士がくっつく処理を行う
+                    // 敵同士の存在を無くす
                     Objs[myID].GetSetExist = false;
                     Objs[otherID].GetSetExist = false;
 
+                    // 敵の当たり判定の存在を無くす
                     ON_HitManager.instance.SetActive(myID,false);
                     ON_HitManager.instance.SetActive(otherID,false);
+
+                    // 合体した敵を生成
+                    ObjEnemyUnion unionEnemy = Instantiate(unionObj,
+                        Objs[myID].GetSetPos + new Vector3(0f,5f,0f),
+                        Quaternion.Euler(new Vector3(0f,0f,0f)
+                        ));
+
+                    // 生成した敵の初期化
+                    Objs.Add(unionEnemy);
+                    unionEnemy.GetSetObjID = Objs.Count - 1;
+                    unionEnemy.GenerateHit();
+                    unionEnemy.InitObj();
                 }
             }
             // -------------------------------
+        }
+    }
+
+    // --- 当たり判定による修正関数 ---
+    private void CollisionFix(int dataNum, HitState hitState)
+    {
+        switch(hitState)
+        {
+            case HitState.ATTACK:
+                break;
+            case HitState.BALANCE:
+                break;
+            case HitState.BODYS:
+                break;
+            case HitState.DEFENCE:
+                if (Objs[myID].GetComponent<ObjEnemyBase>() != null)
+                    (myID, otherID) = (otherID, myID);
+                break;
+            case HitState.ENEMY:
+                break;
+            case HitState.GRUOND:
+                if (Objs[myID].GetComponent<ObjField>() != null)
+                {
+                    (myID, otherID) = (otherID, myID);
+                    if(ON_HitManager.instance.GetData(dataNum).dir == HitDir.UP)
+                    {
+                        ON_HitManager.instance.GetData(dataNum).dir = HitDir.DOWN;
+                        break;
+                    }
+                    if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.DOWN)
+                    {
+                        ON_HitManager.instance.GetData(dataNum).dir = HitDir.UP;
+                        break;
+                    }
+                    if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.RIGHT)
+                    {
+                        ON_HitManager.instance.GetData(dataNum).dir = HitDir.LEFT;
+                        break;
+                    }
+                    if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.LEFT)
+                    {
+                        ON_HitManager.instance.GetData(dataNum).dir = HitDir.RIGHT;
+                        break;
+                    }
+                }
+                break;
         }
     }
 }
