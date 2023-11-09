@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-1700037128082869645
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba8ff320cb7fe44a92bafc48a40f58a, type: 3}
+  m_Name: FlareVolume
+  m_EditorClassIdentifier: 
+  active: 0
+  flareColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.48337486, g: 0.8773585, b: 0.48337486, a: 1}
+  flarePosition:
+    m_OverrideState: 1
+    m_Value: {x: -0.61, y: 0.5}
+  flareSize:
+    m_OverrideState: 1
+    m_Value: 0.96
+  paraColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.10206478, g: 0.4433962, b: 0.18828826, a: 1}
+  paraPosition:
+    m_OverrideState: 1
+    m_Value: {x: 0.9, y: -0.83}
+  paraSize:
+    m_OverrideState: 1
+    m_Value: 1.56
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: 3468390729167758994}
+  - {fileID: -1700037128082869645}
 --- !u!114 &3468390729167758994
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -26,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a0dd04b7ca30b48a7dbc38006084af, type: 3}
   m_Name: TestPostProcessVolume
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   tintColor:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 1, g: 0.42830187, b: 0.42830187, a: 1}

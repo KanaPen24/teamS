@@ -13,7 +13,6 @@ public enum PlayerState
 {
     Idle,
     Walk,
-    //Dash,
     Jump,
     Drop,
     Atk,
@@ -24,15 +23,15 @@ public enum PlayerState
 
 public class ObjPlayer : ObjBase
 {
+    public static bool m_bWalkFlg = false;
     public static bool m_bJumpFlg = false;
     public static bool m_bDropFlg = false;
     public static bool m_bAtkFlg = false;
     public static bool m_bDefFlg = false;
-    public static bool m_bWalkFlg = false;
 
     public static ObjPlayer instance;
-    public List<PlayerStrategy> m_PlayerStrategys;
     public PlayerState m_PlayerState;
+    public List<PlayerStrategy> m_PlayerStrategys;
 
     public void Start()
     {
@@ -49,31 +48,25 @@ public class ObjPlayer : ObjBase
 
     public void Update()
     {
-        // --- 遷移状態による入力確認 ---
-        m_PlayerStrategys[(int)m_PlayerState].UpdateInput();
-
-        //if (Input.GetKeyDown(IS_XBoxInput.B))
-        //{
-        //    if(GameManager.IsDebug())
-        //        Debug.Log("HitGenerate");
-
-        //    ON_HitManager.instance.GenerateHit(this.gameObject.transform.position + new Vector3(1f, 0f, 0f),
-        //        GetSetScale / 2f, true, HitType.ATTACK, m_nObjID);
-        //}
+        // --- 遷移状態による状態更新 ---
+        m_PlayerStrategys[(int)m_PlayerState].UpdateState();
     }
 
     public override void UpdateObj()
     {
+        // --- 遷移状態による更新処理 ---
         m_PlayerStrategys[(int)m_PlayerState].UpdatePlayer();
     }
 
-    public override void UpdateDebug()
+    // 初期化関数
+    public override void InitObj()
     {
-        //Debug.Log("Player");
+        base.InitObj();
     }
 
-    public override void DamageAttack()
+    // オブジェクトの破壊
+    public override void DestroyObj()
     {
-
+        base.DestroyObj();
     }
 }

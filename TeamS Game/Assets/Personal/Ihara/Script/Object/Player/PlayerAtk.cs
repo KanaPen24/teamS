@@ -11,19 +11,31 @@ using UnityEngine;
 
 public class PlayerAtk : PlayerStrategy
 {
-    public float m_fInterval;
+    [SerializeField] private Vector3 m_vAtkArea;
+    [SerializeField] private float m_fLength;
+    [SerializeField] private float m_fInterval;
+    [SerializeField] private float m_fTime;
+    private int atknum;
 
-    public override void UpdateInput()
+    private void Start()
     {
-        m_fInterval -= Time.deltaTime;
-        if (m_fInterval > 0) return;
-        else m_fInterval = 0;
+        m_fTime = m_fInterval;
+    }
 
-        // UŒ‚ ¨ ‘Ò‚¿
-        if (ObjPlayer.instance.GetSetGround.GetSetStand)
+    public override void UpdateState()
+    {
+        if (m_fTime <= 0 && !ObjPlayer.m_bAtkFlg)
         {
-            ObjPlayer.instance.m_PlayerState = PlayerState.Idle;
-            return;
+            // UŒ‚ŠÔ‚ğ0‚É‚·‚é
+            m_fTime = 0;
+
+            // UŒ‚ ¨ ‘Ò‚¿
+            if (ObjPlayer.instance.GetSetGround.m_bStand)
+            {
+                ObjPlayer.instance.m_PlayerState = PlayerState.Idle;
+                ON_HitManager.instance.DeleteHit(atknum);
+                return;
+            }
         }
     }
 
@@ -34,14 +46,35 @@ public class PlayerAtk : PlayerStrategy
             if (GameManager.IsDebug())
                 Debug.Log("HitGenerate");
 
-            ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos + new Vector3(1f, 0f, 0f),
-                ObjPlayer.instance.GetSetScale / 2f, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
+            // UŒ‚‚Ì“–‚½‚è”»’è¶¬(Œü‚«‚É‚æ‚Á‚Ä¶¬ˆÊ’u‚ª•Ï‚í‚é)
+            if(ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
+            {
+                atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f),
+                m_vAtkArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
 
+                ObjPlayer.instance.GetSetSpeed += new Vector2(5f, 0f);
+            }
+            else if(ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
+            {
+                atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f),
+                m_vAtkArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
+
+                ObjPlayer.instance.GetSetSpeed += new Vector2(-5f, 0f);
+            }
+
+            m_fTime = m_fInterval;
+            AudioManager.instance.PlaySE(SEType.SE_PlayerAtk);
             ObjPlayer.m_bAtkFlg = false;
         }
+        else m_fTime -= Time.deltaTime;
 
-        // ‘¬“x‚Í0(‰¼)
-        ObjPlayer.instance.GetSetSpeed
-            = new Vector2(0f,0f);
+        // UŒ‚‚Ì“–‚½‚è”»’è‚ÌÀ•WXV
+        if(ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
+        ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
+        else if(ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
+            ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f));
+
+        // ‘¬“x‚ÍŒ¸‘¬(‰¼)
+        ObjPlayer.instance.GetSetSpeed *= new Vector2(0.8f, 1f);
     }
 }

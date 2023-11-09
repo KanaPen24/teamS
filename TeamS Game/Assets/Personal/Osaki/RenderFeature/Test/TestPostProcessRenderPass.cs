@@ -3,13 +3,6 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public enum PostprocessTiming
-{
-    AfterOpaque,
-    BeforePostprocess,
-    AfterPostprocess
-}
-
 
 public class TestPostProcessRenderPass : ScriptableRenderPass
 {
