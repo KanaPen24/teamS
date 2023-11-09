@@ -16,7 +16,13 @@ using UnityEngine;
 // ===============================================
 public enum SEType
 {
-    SE_PROTO,   // プロトSE
+    SE_PlayerWalk,   // Playerの歩行SE
+    SE_PlayerJump,   // Playerの跳躍SE
+    SE_PlayerLanding,// Playerの着地SE
+    SE_PlayerAtk,    // Playerの攻撃SE
+    SE_Avoidance,    // 回避の音
+    SE_GameClear,    // ゲームクリアSE
+    SE_Select,       // 選択SE
 
     MAX_SE
 }
@@ -27,7 +33,11 @@ public enum SEType
 // ===============================================
 public enum BGMType
 {
-    BGM_Game,  // ゲームBGM
+    BGM_TITLE, // タイトルBGM
+    BGM_GAME,  // ゲームBGM
+    BGM_END,   // エンドBGM
+    BGM_GAMEOVER,// ゲームオーバーBGM
+    BGM_BOSS,
     MAX_BGM
 }
 public class AudioManager : MonoBehaviour

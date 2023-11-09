@@ -23,11 +23,11 @@ public enum PlayerState
 
 public class ObjPlayer : ObjBase
 {
+    public static bool m_bWalkFlg = false;
     public static bool m_bJumpFlg = false;
     public static bool m_bDropFlg = false;
     public static bool m_bAtkFlg = false;
     public static bool m_bDefFlg = false;
-    public static bool m_bWalkFlg = false;
 
     public static ObjPlayer instance;
     public PlayerState m_PlayerState;
@@ -58,13 +58,15 @@ public class ObjPlayer : ObjBase
         m_PlayerStrategys[(int)m_PlayerState].UpdatePlayer();
     }
 
-    public override void UpdateDebug()
+    // 初期化関数
+    public override void InitObj()
     {
-        //Debug.Log("Player");
+        base.InitObj();
     }
 
-    public override void DamageAttack()
+    // オブジェクトの破壊
+    public override void DestroyObj()
     {
-
+        base.DestroyObj();
     }
 }

@@ -37,6 +37,7 @@ public enum HitState
     GRUOND,     // ƒtƒB[ƒ‹ƒh‚É“–‚½‚Á‚½
     BODYS,      // ‘Ì“¯m‚ªÚG
     BALANCE,    // UŒ‚“¯m‚ª“–‚½‚é
+    ENEMY,      // “G“¯m‚ª“–‚½‚é
 
 
     MAX_STATE
@@ -77,7 +78,10 @@ public class ON_HitManager
         // “–‚½‚è”»’è‚ÌŒvZ
         for(int i = 0; i < m_hits.Count; ++i)
         {
-            for(int j = i; j < m_hits.Count; ++j)
+            // “–‚½‚è”»’è‚ªoff‚¾‚Á‚½‚çƒXƒLƒbƒv‚·‚é
+            if (m_hits[i].GetActive() == false) continue;
+
+            for (int j = i; j < m_hits.Count; ++j)
             {
                 // “–‚½‚è”»’è‚ªoff‚¾‚Á‚½‚çƒXƒLƒbƒv‚·‚é
                 if (m_hits[j].GetActive() == false) continue;
@@ -118,6 +122,12 @@ public class ON_HitManager
             state = HitState.GRUOND;
             return state;
         }
+        // “G“¯m‚ª“–‚½‚Á‚½
+        if(ObjManager.instance.GetObjs(m_hits[i].GetObjID()).GetComponent<ObjEnemyBase>() != null &&
+           ObjManager.instance.GetObjs(m_hits[j].GetObjID()).GetComponent<ObjEnemyBase>() != null){
+            state = HitState.ENEMY;
+            return state;
+        }
 
         // ©•ª‚Ìó‘Ô‚É‚æ‚Á‚Äˆ—”h¶
         switch(m_hits[i].GetHitType())
@@ -143,26 +153,26 @@ public class ON_HitManager
         // ã‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
         if ((m_hits[i].GetCenter().y + m_hits[i].GetSize().y > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
              m_hits[i].GetCenter().y + m_hits[i].GetSize().y < m_hits[j].GetCenter().y + m_hits[j].GetSize().y) &&
-            (m_hits[i].GetCenter().x - m_hits[i].GetSize().x / 2f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
-             m_hits[i].GetCenter().x + m_hits[i].GetSize().x / 2f > m_hits[j].GetCenter().x - m_hits[j].GetSize().x))
+            (m_hits[i].GetCenter().x - m_hits[i].GetSize().x - 0.5f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
+             m_hits[i].GetCenter().x + m_hits[i].GetSize().x - 0.5f > m_hits[j].GetCenter().x - m_hits[j].GetSize().x))
             return hitDir = HitDir.UP;
         // ‰º‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
         if ((m_hits[i].GetCenter().y - m_hits[i].GetSize().y > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
              m_hits[i].GetCenter().y - m_hits[i].GetSize().y < m_hits[j].GetCenter().y + m_hits[j].GetSize().y) &&
-            (m_hits[i].GetCenter().x - m_hits[i].GetSize().x / 2f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
-             m_hits[i].GetCenter().x + m_hits[i].GetSize().x / 2f > m_hits[j].GetCenter().x - m_hits[j].GetSize().x))
+            (m_hits[i].GetCenter().x - m_hits[i].GetSize().x - 0.5f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
+             m_hits[i].GetCenter().x + m_hits[i].GetSize().x - 0.5f > m_hits[j].GetCenter().x - m_hits[j].GetSize().x))
             return hitDir = HitDir.DOWN;
         // ‰E‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
         if ((m_hits[i].GetCenter().x + m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
              m_hits[i].GetCenter().x + m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x) &&
-            (m_hits[i].GetCenter().y + m_hits[i].GetSize().y / 2f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
-             m_hits[i].GetCenter().y - m_hits[i].GetSize().y / 2f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y ))
+            (m_hits[i].GetCenter().y + m_hits[i].GetSize().y - 0.5f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
+             m_hits[i].GetCenter().y - m_hits[i].GetSize().y - 0.5f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y ))
             return hitDir = HitDir.RIGHT;
         // ¶‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
         if ((m_hits[i].GetCenter().x - m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
              m_hits[i].GetCenter().x - m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x) &&
-            (m_hits[i].GetCenter().y + m_hits[i].GetSize().y / 2f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
-             m_hits[i].GetCenter().y - m_hits[i].GetSize().y / 2f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y))
+            (m_hits[i].GetCenter().y + m_hits[i].GetSize().y - 0.5f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
+             m_hits[i].GetCenter().y - m_hits[i].GetSize().y - 0.5f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y))
             return hitDir = HitDir.LEFT;
 
         return hitDir;

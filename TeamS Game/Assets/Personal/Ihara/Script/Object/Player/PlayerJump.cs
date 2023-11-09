@@ -11,18 +11,28 @@ using UnityEngine;
 
 public class PlayerJump : PlayerStrategy
 {
+    public ParticleSystem jumpEffect;
     public override void UpdateState()
     {
         // íµñÙ Å® óéâ∫
         if (ObjPlayer.instance.GetSetSpeed.y < 0f)
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Drop;
+            ObjPlayer.m_bDropFlg = true;
             return;
         }
     }
 
     public override void UpdatePlayer()
     {
+        if (ObjPlayer.m_bJumpFlg)
+        {
+            AudioManager.instance.PlaySE(SEType.SE_PlayerJump);
+            jumpEffect.Play();
+            jumpEffect.transform.position = ObjPlayer.instance.GetSetPos + Vector3.down * 1.5f;
+            ObjPlayer.m_bJumpFlg = false;
+        }
+
         if (IS_XBoxInput.LStick_H > 0.2f || IS_XBoxInput.LStick_H < -0.2f)
         {
             ObjPlayer.instance.GetSetSpeed
