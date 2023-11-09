@@ -534,8 +534,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   texObj: {fileID: 1067610564}
   InitParam:
-    m_nHp: 0
-    m_nMaxHp: 0
     m_fAccel: 0
     m_fWeight: 0
     m_vMaxSpeed: {x: 0, y: 0}
@@ -552,8 +550,6 @@ MonoBehaviour:
       m_fTime: 0
     m_nObjID: 0
     m_nHitID: 0
-    m_nHp: 0
-    m_nMaxHp: 0
     m_fAccel: 0
     m_fWeight: 0
     m_vSpeed: {x: 0, y: 0}
@@ -600,8 +596,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   texObj: {fileID: 140490845}
   InitParam:
-    m_nHp: 0
-    m_nMaxHp: 0
     m_fAccel: 0
     m_fWeight: 0
     m_vMaxSpeed: {x: 1, y: 1}
@@ -618,8 +612,6 @@ MonoBehaviour:
       m_fTime: 0
     m_nObjID: 0
     m_nHitID: 0
-    m_nHp: 0
-    m_nMaxHp: 0
     m_fAccel: 0
     m_fWeight: 0
     m_vSpeed: {x: 0, y: 0}
@@ -648,7 +640,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1158414264}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8, y: 0.8, z: 0}
+  m_LocalPosition: {x: 9, y: 0.8, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -840,8 +832,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   texObj: {fileID: 2032876678}
   InitParam:
-    m_nHp: 0
-    m_nMaxHp: 0
     m_fAccel: 0
     m_fWeight: 0
     m_vMaxSpeed: {x: 1, y: 1}
@@ -858,8 +848,6 @@ MonoBehaviour:
       m_fTime: 0
     m_nObjID: 0
     m_nHitID: 0
-    m_nHp: 0
-    m_nMaxHp: 0
     m_fAccel: 0
     m_fWeight: 0
     m_vSpeed: {x: 0, y: 0}
@@ -1016,8 +1004,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   texObj: {fileID: 1675753895}
   InitParam:
-    m_nHp: 10
-    m_nMaxHp: 10
     m_fAccel: 0.3
     m_fWeight: 1
     m_vMaxSpeed: {x: 0.3, y: 0.7}
@@ -1034,8 +1020,6 @@ MonoBehaviour:
       m_fTime: 0
     m_nObjID: 0
     m_nHitID: 0
-    m_nHp: 0
-    m_nMaxHp: 0
     m_fAccel: 0
     m_fWeight: 0
     m_vSpeed: {x: 0, y: 0}
@@ -1208,7 +1192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3168357971326351190, guid: 93898c8887c687e4baf4df2e0c61548a, type: 3}
       propertyPath: m_GameMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3168357971326351191, guid: 93898c8887c687e4baf4df2e0c61548a, type: 3}
       propertyPath: m_RootOrder
@@ -1267,6 +1251,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ObjManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4476415907131447558, guid: aa47a004e60f1ca48813b55212130036, type: 3}
+      propertyPath: unionObj
+      value: 
+      objectReference: {fileID: 2956937062769446371, guid: 2d120c5758cd9074c9c1cbce91029f4b, type: 3}
     - target: {fileID: 4476415907131447558, guid: aa47a004e60f1ca48813b55212130036, type: 3}
       propertyPath: Objs.Array.size
       value: 4
