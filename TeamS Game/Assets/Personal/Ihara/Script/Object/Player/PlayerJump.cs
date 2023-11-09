@@ -11,6 +11,7 @@ using UnityEngine;
 
 public class PlayerJump : PlayerStrategy
 {
+    public ParticleSystem jumpEffect;
     public override void UpdateState()
     {
         // íµñÙ Å® óéâ∫
@@ -27,6 +28,8 @@ public class PlayerJump : PlayerStrategy
         if (ObjPlayer.m_bJumpFlg)
         {
             AudioManager.instance.PlaySE(SEType.SE_PlayerJump);
+            jumpEffect.Play();
+            jumpEffect.transform.position = ObjPlayer.instance.GetSetPos + Vector3.down * 1.5f;
             ObjPlayer.m_bJumpFlg = false;
         }
 
