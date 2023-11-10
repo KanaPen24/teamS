@@ -110,7 +110,7 @@ Transform:
   m_GameObject: {fileID: 5577336782405134485}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8, y: 0.8, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 4, y: 4, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 15791232893824955}
@@ -131,11 +131,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   texObj: {fileID: 639991252588246521}
   InitParam:
-    m_nHp: 0
-    m_nMaxHp: 0
     m_fAccel: 0
     m_fWeight: 1
-    m_vMaxSpeed: {x: 0, y: 0.05}
+    m_vMaxSpeed: {x: 1, y: 1}
     m_bExist: 1
     m_eDir: 2
     m_eType: 1
@@ -149,8 +147,6 @@ MonoBehaviour:
       m_fTime: 0
     m_nObjID: 0
     m_nHitID: 0
-    m_nHp: 0
-    m_nMaxHp: 0
     m_fAccel: 0
     m_fWeight: 0
     m_vSpeed: {x: 0, y: 0}

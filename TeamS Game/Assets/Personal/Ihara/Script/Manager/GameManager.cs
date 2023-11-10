@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     public static float m_fTime = 3f;
     public HitType hitType;
 
-    private void Awake()
+    private void Start()
     {
         // ゲーム開始時はスタート状態
         m_sGameState = GameState.GameStart;
