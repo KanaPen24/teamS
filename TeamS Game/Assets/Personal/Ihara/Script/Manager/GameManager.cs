@@ -64,6 +64,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();             //ゲーム終了処理
+        }
+
         m_fTime -= Time.deltaTime;
         if (m_fTime <= 0f)
             m_sGameState = GameState.GamePlay;
