@@ -16,6 +16,7 @@ public class PlayerAtk : PlayerStrategy
     [SerializeField] private float m_fInterval;
     [SerializeField] private float m_fTime;
     private int atknum;
+    private bool m_bAtk;
 
     private void Start()
     {
@@ -34,7 +35,17 @@ public class PlayerAtk : PlayerStrategy
             {
                 ObjPlayer.instance.m_PlayerState = PlayerState.Idle;
                 ON_HitManager.instance.DeleteHit(atknum);
+                m_bAtk = false;
                 return;
+            }
+
+            // 攻撃の当たり判定の座標更新
+            if (m_bAtk)
+            {
+                if (ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
+                    ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
+                else if (ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
+                    ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f));
             }
         }
     }
@@ -65,14 +76,9 @@ public class PlayerAtk : PlayerStrategy
             m_fTime = m_fInterval;
             AudioManager.instance.PlaySE(SEType.SE_PlayerAtk);
             ObjPlayer.m_bAtkFlg = false;
+            m_bAtk = true;
         }
         else m_fTime -= Time.deltaTime;
-
-        // 攻撃の当たり判定の座標更新
-        if(ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
-        ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
-        else if(ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
-            ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f));
 
         // 速度は減速(仮)
         ObjPlayer.instance.GetSetSpeed *= new Vector2(0.8f, 1f);
