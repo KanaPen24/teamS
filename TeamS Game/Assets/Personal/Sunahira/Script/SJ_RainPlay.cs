@@ -5,14 +5,14 @@ using UnityEngine.VFX;
 
 public class SJ_RainPlay : MonoBehaviour
 {
-    [SerializeField] public VisualEffect RainEff;
+    private VisualEffect RainEff;
     [SerializeField] private bool bOnOff;
     [SerializeField] private bool bPlay;
 
     // Start is called before the first frame update
     void Start()
     {
-        RainEff = GetComponent<VisualEffect>();
+        RainEff = this.gameObject.GetComponent<VisualEffect>();
         RainEff.Reinit();
         bOnOff = false;
         bPlay = false;
