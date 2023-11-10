@@ -330,7 +330,7 @@ MonoBehaviour:
   - {fileID: 4818748962105429248}
   - {fileID: 6691262029480933206}
   - {fileID: 9152297506071790532}
-  m_nCountDownTime: 5
+  m_nCountDownTime: 3
   m_bOnce: 1
 --- !u!1 &4818748960960528918
 GameObject:
