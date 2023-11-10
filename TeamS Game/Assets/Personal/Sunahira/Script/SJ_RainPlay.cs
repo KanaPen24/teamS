@@ -26,14 +26,24 @@ public class SJ_RainPlay : MonoBehaviour
 
         if (bOnOff && !bPlay)
         {
-            RainEff.Play();
+            RainPlay();
             bPlay = true;
         }
         else if (!bOnOff && bPlay)
         {
-            RainEff.Stop();
+            RainStop();
             bPlay = false;
         }
 
+    }
+    //雨のエフェクト再生
+    public void RainPlay()
+    {
+        RainEff.Play();
+    }
+    //雨のエフェクト停止
+    public void RainStop()
+    {
+        RainEff.Stop();
     }
 }
