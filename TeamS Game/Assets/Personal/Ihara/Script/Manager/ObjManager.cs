@@ -16,9 +16,11 @@ public class ObjManager : MonoBehaviour
 {
     [SerializeField] private List<ObjBase> Objs; // オブジェクトを格納する配列
     public static ObjManager instance;
-    int myID;
-    int otherID ;
     public ObjEnemyUnion unionObj;
+    public ParticleSystem hitEffect;
+
+    private int myID;
+    private int otherID;
 
     public ObjBase GetObjs(int i)
     {
@@ -251,6 +253,9 @@ public class ObjManager : MonoBehaviour
                 {
                     Objs[otherID].KnockBackObj(Objs[myID].GetSetDir);
                     Objs[otherID].GetSetInvincible.SetInvincible(0.3f);
+
+                    hitEffect.Play();
+                    hitEffect.transform.position = Objs[otherID].GetSetPos;
                 }
             }
 

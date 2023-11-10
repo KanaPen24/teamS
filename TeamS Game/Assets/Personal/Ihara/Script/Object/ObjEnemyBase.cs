@@ -58,7 +58,10 @@ public class ObjEnemyBase : ObjBase
         {
             //òAåÇÇÃèÍçá
             //GetSetSpeed = knockBack.m_fSpeed * 0.2f;
-            GetSetSpeed += new Vector2(0f, knockBack.m_vInitSpeed.y);
+            if (dir == ObjDir.RIGHT)
+                GetSetSpeed += knockBack.m_vInitSpeed;
+            else if (dir == ObjDir.LEFT)
+                GetSetSpeed += new Vector2(-knockBack.m_vInitSpeed.x, knockBack.m_vInitSpeed.y);
             Debug.Log("òAåÇî≠ê∂");
         }
         else
