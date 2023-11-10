@@ -16,19 +16,19 @@ public class NK_HitotumeWalk : NK_HitotumeStrategy
 
         if (s < 90)
         {
-            s += 0.5f;
+            s += acceleration;
         }
         t = s * Mathf.Deg2Rad;
-        //if (ObjPlayer.instance.GetSetPos.x > this.gameObject.transform.position.x)//←これでプレイヤーの座標わかる
-        //{
-        //    m_Hitotume.GetSetSpeed = new Vector2(Mathf.Sin(t) * 0.3f, 0.0f);
-        //    Debug.Log("a");
-        //}
-        //else
-        //{
+        if (ObjPlayer.instance.GetSetPos.x > m_Hitotume.GetSetPos.x)//←これでプレイヤーの座標わかる
+        {
+            m_Hitotume.GetSetSpeed = new Vector2(Mathf.Sin(t) * magnification, 0.0f);
+            Debug.Log("a");
+        }
+        else
+        {
             m_Hitotume.GetSetSpeed = new Vector2(-Mathf.Sin(t) * 0.3f, 0.0f);
             Debug.Log("b");
-        //}
-        //m_Hitotume.GetSetSpeed = new Vector2(5.0f,0.0f);
+        }
+            //m_Hitotume.GetSetSpeed = new Vector2(5.0f,0.0f);
     }
 }
