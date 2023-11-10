@@ -11,6 +11,7 @@ using UnityEngine;
 
 public class PlayerDrop : PlayerStrategy
 {
+    public ParticleSystem landingEffect;
     public override void UpdateState()
     {
         // óéâ∫ Å® ë“Çø
@@ -18,6 +19,8 @@ public class PlayerDrop : PlayerStrategy
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Idle;
             AudioManager.instance.PlaySE(SEType.SE_PlayerLanding);
+            landingEffect.Play();
+            landingEffect.transform.position = ObjPlayer.instance.GetSetPos + Vector3.down * 1.5f;
             return;
         }
     }
