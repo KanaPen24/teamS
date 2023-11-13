@@ -30,6 +30,7 @@ public class KnockBack
     public Vector2 m_vSpeed;     // 現在の速度
     public Vector2 m_vInitSpeed; //初速速度
     public float m_fDamping;     //減衰率
+    public float m_fGravity;     //重力
 }
 
 
@@ -58,11 +59,14 @@ public class ObjEnemyBase : ObjBase
         if (m_EnemyState == EnemyState.KnockBack)
         {
             //連撃の場合
-            //GetSetSpeed = knockBack.m_fSpeed * 0.2f;
+            GetSetSpeed = Vector2.zero; //リセットする
             if (dir == ObjDir.RIGHT)
-                GetSetSpeed += knockBack.m_vInitSpeed;
+                GetSetSpeed += new Vector2(knockBack.m_vInitSpeed.x * 0.53f, knockBack.m_vInitSpeed.y * 0.7f);
             else if (dir == ObjDir.LEFT)
-                GetSetSpeed += new Vector2(-knockBack.m_vInitSpeed.x, knockBack.m_vInitSpeed.y);
+                GetSetSpeed += new Vector2(-knockBack.m_vInitSpeed.x * 0.53f, knockBack.m_vInitSpeed.y * 0.7f);
+            //限界値は越えない
+            //if (GetSetMaxSpeed.x <= GetSetSpeed.x || GetSetMaxSpeed.y <= GetSetSpeed.y)
+            //    GetSetSpeed = GetSetMaxSpeed;
             Debug.Log("連撃発生");
         }
         else
@@ -96,7 +100,6 @@ public class ObjEnemyBase : ObjBase
             if (GetSetSpeed.y <= 0.1f)
             {   
                 GetSetSpeed = Vector2.zero;     //止める
-                //if(体力がゼロなら)
                 m_EnemyState = EnemyState.Idle;
             }
             m_Ground.m_bStand = false;
@@ -114,7 +117,7 @@ public class ObjEnemyBase : ObjBase
             if (GameManager.IsDebug())
                 Debug.Log("地面から離れた ObjID: " + m_nObjID);
 
-            m_vSpeed.y -= 0.05f;
+            m_vSpeed.y -= knockBack.m_fGravity;
         }        
     }
 
