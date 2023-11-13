@@ -63,7 +63,7 @@ VisualEffect:
       m_Array: []
     m_Int:
       m_Array:
-      - m_Value: 10000
+      - m_Value: 30000
         m_Name: Rate
         m_Overridden: 1
     m_Matrix4x4f:
