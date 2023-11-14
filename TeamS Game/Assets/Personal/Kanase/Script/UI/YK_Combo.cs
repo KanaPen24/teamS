@@ -20,10 +20,11 @@ public class YK_Combo : YK_UI
 {
     // --- 静的メンバ(AddComboを外部で使用するため) ---
     static private Text ComboNumber;   　      // コンボの数値表示テキスト
-    static private int m_nCombo;                // 現在のコンボ数
+    static private int m_nCombo;               // 現在のコンボ数
     static private float a_color = 0f;         // コンボ表示のアルファ値
     static private int m_nCountComboTime = 0;  // コンボが表示されている時間
     static private bool m_bHitFlg = false;     // コンボがヒットしたかどうかのフラグ
+    static private bool m_bVisible = false;   // コンボの下に表示する文字の表示フラグ
     // -----------------------------------------------------------------------------------
 
     // --- 動的メンバ ---
@@ -36,6 +37,7 @@ public class YK_Combo : YK_UI
     [SerializeField] private int m_nCountDownTime;    // コンボが消えるまでの時間（秒単位）
     [SerializeField] private bool m_bOnce = true; // 1回のみのフラグ
     private Vector3 Combo_Scale;                  // コンボ表示の初期スケール
+    
     
     // ------------------------------------------------------------------------------------
 
@@ -105,7 +107,11 @@ public class YK_Combo : YK_UI
         if (m_nCombo >= ComboM && m_nCombo < ComboL)
         {
             ComboNumber.color = new Color(1f, 1f, 0.5f, a_color);
-            StampEff(ComboText[0]);            
+            if (m_bVisible)
+            {
+                StampEff(ComboText[0]);
+                m_bVisible = false;
+            }
             ComboText[0].color = new Color(1f, 1f, 0.5f, a_color);      // コンボテキスト表示の色を設定
         }
 
@@ -114,7 +120,11 @@ public class YK_Combo : YK_UI
         {
             ResetEff(ComboText[0]);
             ComboNumber.color = new Color(1f, 0.5f, 0.5f, a_color);
-            StampEff(ComboText[1]);
+            if (m_bVisible)
+            {
+                StampEff(ComboText[1]);
+                m_bVisible = false;
+            }
             ComboText[1].color = new Color(1f, 0.5f, 0.5f, a_color);      // コンボテキスト表示の色を設定
         }
 
@@ -122,7 +132,11 @@ public class YK_Combo : YK_UI
         if (m_nCombo >= ComboXL)
         {
             ResetEff(ComboText[1]);
-            StampEff(ComboText[2]);
+            if (m_bVisible)
+            {
+                StampEff(ComboText[2]);
+                m_bVisible = false;
+            }
             ComboText[2].color = Color.HSVToRGB(Time.time % 1, 1, 1);      // コンボテキスト表示の色を設定
             ComboNumber.color = Color.HSVToRGB(Time.time % 1, 1, 1);
         }
@@ -136,6 +150,7 @@ public class YK_Combo : YK_UI
     {
         m_nCountComboTime = 0;
         m_bHitFlg = true;
+        m_bVisible = true;
         a_color = 1.0f;
         m_nCombo++;
         ComboNumber.text = m_nCombo + "";
@@ -154,7 +169,7 @@ public class YK_Combo : YK_UI
     {
         if (m_bOnce)
         {
-            text.DOFade(1.0f, 1.5f);
+            text.DOFade(1.0f, 0.0f);
             text.transform.DOScale(1.2f, 0.5f);
         }
     }

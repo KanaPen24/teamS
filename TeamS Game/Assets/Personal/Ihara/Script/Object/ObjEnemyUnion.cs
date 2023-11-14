@@ -11,4 +11,5 @@ using UnityEngine;
 
 public class ObjEnemyUnion : ObjEnemyBase
 {
+    public List<int> m_nEnemyIDs = new List<int>();
 }

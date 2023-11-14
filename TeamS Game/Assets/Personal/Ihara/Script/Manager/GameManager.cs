@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     public static float m_fTime = 3f;
     public HitType hitType;
 
-    private void Awake()
+    private void Start()
     {
         // ゲーム開始時はスタート状態
         m_sGameState = GameState.GameStart;
@@ -64,6 +64,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();             //ゲーム終了処理
+        }
+
         m_fTime -= Time.deltaTime;
         if (m_fTime <= 0f)
             m_sGameState = GameState.GamePlay;

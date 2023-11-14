@@ -16,9 +16,11 @@ public class ObjManager : MonoBehaviour
 {
     [SerializeField] private List<ObjBase> Objs; // オブジェクトを格納する配列
     public static ObjManager instance;
-    int myID;
-    int otherID ;
     public ObjEnemyUnion unionObj;
+    public ParticleSystem hitEffect;
+
+    private int myID;
+    private int otherID;
 
     public ObjBase GetObjs(int i)
     {
@@ -156,12 +158,12 @@ public class ObjManager : MonoBehaviour
             for (int j = 0; j < Objs.Count; ++j)
             {
                 // 自身のIDを検索
-                if (Objs[j].GetSetHitID == ON_HitManager.instance.GetData(i).myID)
+                if (Objs[j].GetSetObjID == ON_HitManager.instance.GetData(i).myID)
                 {
                     myID = j;
                 }
                 // 相手のIDを検索
-                if (Objs[j].GetSetHitID == ON_HitManager.instance.GetData(i).otherID)
+                if (Objs[j].GetSetObjID == ON_HitManager.instance.GetData(i).otherID)
                 {
                     otherID = j;
                 }
@@ -249,8 +251,16 @@ public class ObjManager : MonoBehaviour
             {
                 if(!Objs[otherID].GetSetInvincible.m_bInvincible)
                 {
+                    // 敵にノックバック処理 → 無敵時間設定
                     Objs[otherID].KnockBackObj(Objs[myID].GetSetDir);
                     Objs[otherID].GetSetInvincible.SetInvincible(0.3f);
+
+                    // ヒットエフェクト再生
+                    hitEffect.Play();
+                    hitEffect.transform.position = Objs[otherID].GetSetPos;
+
+                    // コンボ発生
+                    YK_Combo.AddCombo();
                 }
             }
 
@@ -278,6 +288,10 @@ public class ObjManager : MonoBehaviour
                     // 生成した敵の初期化
                     Objs.Add(unionEnemy);
                     unionEnemy.GetSetObjID = Objs.Count - 1;
+                    unionEnemy.m_nEnemyCnt = Objs[myID].GetComponent<ObjEnemyBase>().m_nEnemyCnt +
+                                             Objs[otherID].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
+                    unionEnemy.m_nEnemyIDs.Add(Objs[myID].GetSetObjID);
+                    unionEnemy.m_nEnemyIDs.Add(Objs[otherID].GetSetObjID);
                     unionEnemy.GenerateHit();
                     unionEnemy.InitObj();
                 }

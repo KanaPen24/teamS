@@ -41,7 +41,7 @@ public class YK_Score : YK_UI
      * @brief スコアに指定された数を加算
      * @param num スコアに加算する数。
      */
-    private void AddScore(int num)
+    public void AddScore(int num)
     {
         //スコア+num m_fTimeすすめる
         StartCoroutine(ScoreAnimation(num, m_fTime));
@@ -50,7 +50,7 @@ public class YK_Score : YK_UI
     /**
      * @brief スコアを0にリセット
      */
-    private void ResetScore()
+    public void ResetScore()
     {
         m_nScore = 0;
     }
