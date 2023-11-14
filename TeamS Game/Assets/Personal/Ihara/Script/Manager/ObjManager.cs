@@ -27,6 +27,11 @@ public class ObjManager : MonoBehaviour
         return Objs[i];
     }
 
+    public List<ObjBase> GetObj()
+    {
+        return Objs;
+    }
+
     private void Start()
     {
         if(instance == null)
@@ -268,12 +273,15 @@ public class ObjManager : MonoBehaviour
             if (ON_HitManager.instance.GetData(i).state == HitState.ENEMY)
             {
                 // ‚Ç‚¿‚ç‚©‚ªƒmƒbƒNƒoƒbƒN‚Ìó‘Ô‚¾‚Á‚½‚ç
-                if(Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack ||
+                if(Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack &&
                     Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack)
                 {
                     // “G“¯m‚Ì‘¶İ‚ğ–³‚­‚·
                     Objs[myID].GetSetExist = false;
                     Objs[otherID].GetSetExist = false;
+
+                    Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.Idle;
+                    Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.Idle;
 
                     // “G‚Ì“–‚½‚è”»’è‚Ì‘¶İ‚ğ–³‚­‚·
                     ON_HitManager.instance.SetActive(myID,false);
