@@ -26,11 +26,12 @@ public class ObjEnemyUnion : ObjEnemyBase
 
             for (int j = 0; j < ObjManager.instance.GetObj().Count; ++j)
             {
-                if (ObjManager.instance.GetObjs(j).gameObject != null)
+                if (ObjManager.instance.GetObjs(j).gameObject != gameObject)
                 {
                     //ObjManager.instance.GetObj().Remove(this.gameObject.GetComponent<ObjBase>());
                     //ON_HitManager.instance.DeleteHit(GetSetHitID);
                     GetSetExist = false;
+                    ON_HitManager.instance.SetActive(ObjManager.instance.GetObjs(j).GetSetObjID, false);
                     //Destroy(this.gameObject);
                     break;
                 }
