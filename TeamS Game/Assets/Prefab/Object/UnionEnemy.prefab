@@ -134,7 +134,7 @@ MonoBehaviour:
     m_fAccel: 0
     m_fWeight: 1
     m_vMaxSpeed: {x: 1, y: 1}
-    m_bExist: 1
+    m_bExist: 0
     m_eDir: 2
     m_eType: 1
   CheckParam:

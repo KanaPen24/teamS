@@ -96,7 +96,7 @@ public class ON_HitDebug
 
                     // ìñÇΩÇËîªíËÇ™îÒActiveÇÃèÍçáÅAêFÇïœâª
                     if (!ON_HitManager.instance.GetHit(i).GetActive())
-                        hitDebugs[j].obj.GetComponent<SpriteRenderer>().color = new Color(0.1f, 0.1f, 0.1f, 0.5f);
+                        hitDebugs[j].obj.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.6f);
 
                     SetActive(type, ON_HitManager.instance.GetHit(i).GetHitType(), hitDebugs[j].obj);
 
@@ -146,13 +146,13 @@ public class ON_HitDebug
         switch (type)
         {
             case HitType.ATTACK:
-                col = new Color(1.0f, 0.0f, 0.0f, 0.2f);
+                col = new Color(1.0f, 0.0f, 0.0f, 0.6f);
                 break;
             case HitType.BODY:
-                col = new Color(0.0f, 0.0f, 1.0f, 0.2f);
+                col = new Color(1.0f, 1.0f, 0.0f, 0.6f);
                 break;
             case HitType.FIELD:
-                col = new Color(0.0f, 1.0f, 0.0f, 0.2f);
+                col = new Color(0.0f, 1.0f, 0.0f, 0.6f);
                 break;
         }
         return col;
