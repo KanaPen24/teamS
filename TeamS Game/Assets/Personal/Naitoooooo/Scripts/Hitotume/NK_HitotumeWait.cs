@@ -8,12 +8,24 @@ public class NK_HitotumeWait : NK_HitotumeStrategy
     private float c;
     [SerializeField] private HitotumeProto m_HitotumeProto;
     [SerializeField] private float DashTiming;      //‘–‚èŽn‚ß‚étiming
-    public override void UpdateStrategy()
+
+    public override void UpdateState()
     {
         c++;
+        //‘Ò‚¿¨—Ž‰º
+        if(!m_HitotumeProto.GetSetGround.m_bStand)
+        {
+            m_HitotumeProto.GetSetEnemyState = EnemyState.Drop;
+        }
+        //‘Ò‚¿¨ˆÚ“®
         if (c > DashTiming)
         {
             m_HitotumeProto.GetSetEnemyState = EnemyState.Walk;
+            c = 0;
         }
+    }
+    public override void UpdateStrategy()
+    {
+
     }
 }
