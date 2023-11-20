@@ -140,7 +140,7 @@ public class ObjBase : MonoBehaviour
     protected Vector2 m_vSpeed;       // 現在の速度
     protected Vector2 m_vMaxSpeed;    // 最大速度
     protected Vector2 m_vMove;        // 移動量
-    protected bool m_bStand;          // 地面に立っているか
+    //protected bool m_bStand;          // 地面に立っているか
     protected bool m_bExist;          // 存在しているか
     protected ObjDir m_eDir;          // 向き
     protected ObjType m_eType;        // タイプ

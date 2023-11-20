@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 947573661304249197}
-  - component: {fileID: 947573661304249196}
+  - component: {fileID: 5592233090963609519}
   m_Layer: 0
   m_Name: FPS
   m_TagString: Untagged
@@ -25,14 +25,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 947573661304249195}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 68.32709, y: 1.2293174, z: 43.01468}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &947573661304249196
+--- !u!114 &5592233090963609519
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,6 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 947573661304249195}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38f172bfdc097654788621db46525b60, type: 3}
+  m_Script: {fileID: 11500000, guid: 93de8cedbbee3ba49ad804b7de950c35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nFont: 0

@@ -164,6 +164,8 @@ MonoBehaviour:
     m_fTime: 0
   knockBack:
     m_vSpeed: {x: 0, y: 0}
-    m_vInitSpeed: {x: 0.07, y: 0.4}
+    m_vInitSpeed: {x: 0.075, y: 0.28}
     m_fDamping: 0.7
+    m_fGravity: 0.014
   m_EnemyState: 0
+  m_nEnemyCnt: 1
