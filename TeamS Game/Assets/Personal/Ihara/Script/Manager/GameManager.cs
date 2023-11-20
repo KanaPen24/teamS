@@ -70,8 +70,8 @@ public class GameManager : MonoBehaviour
         }
 
         m_fTime -= Time.deltaTime;
-        if (m_fTime <= 0f)
-            m_sGameState = GameState.GamePlay;
+        //if (m_fTime <= 0f)
+        //    m_sGameState = GameState.GamePlay;
     }
 
     private void FixedUpdate()
