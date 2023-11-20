@@ -16,6 +16,7 @@ public enum EnemyState
 {
     Idle,       //待機
     Walk,       //歩く
+    Drop,       //落ちる
     Jump,       //跳ぶ
     Drop,       //落下
     KnockBack,  //ノックバック
