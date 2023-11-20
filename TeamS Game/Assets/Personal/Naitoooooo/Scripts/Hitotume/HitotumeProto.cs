@@ -24,8 +24,6 @@ public class HitotumeProto : ObjEnemyBase
             GetSetDir = ObjDir.LEFT;
         }
 
-        oldDir = GetSetDir;
-
         m_HitotumeStrategy[(int)m_EnemyState].UpdateState();
         m_HitotumeStrategy[(int)m_EnemyState].UpdateStrategy();
         //m_vSpeed.x = 3.0f;
