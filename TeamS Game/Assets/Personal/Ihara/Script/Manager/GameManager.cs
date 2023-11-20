@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     public static bool m_bDebugStart;                    // デバッグの開始時かどうか
     public static float m_fTime = 3f;
     public HitType hitType;
+    private bool m_bOnce = false;
 
     private void Start()
     {
@@ -70,8 +71,11 @@ public class GameManager : MonoBehaviour
         }
 
         m_fTime -= Time.deltaTime;
-        //if (m_fTime <= 0f)
-        //    m_sGameState = GameState.GamePlay;
+        if (m_fTime <= 0f && !m_bOnce)
+        {
+            m_sGameState = GameState.GamePlay;
+            m_bOnce = true;
+        }
     }
 
     private void FixedUpdate()
