@@ -15,7 +15,26 @@ public class YK_Score : YK_UI
     [SerializeField] private int m_nScore; //スコアの値を格納するためのプライベートな整数
     [SerializeField] private float m_fTime; //スコアの加算時間
     [SerializeField] private int m_nDbgNum; //デバック用の敵の数値
+    public static YK_Score instance;         // YK_Scoreのインスタンス
 
+    /**
+     * @fn
+     * 初期化処理(外部参照を除く)
+     * @brief  メンバ初期化処理
+     * @detail 特に無し
+     */
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Debug.Log("AudioManagerはすでに存在しています");
+            Destroy(gameObject);
+        }
+    }
     /**
      * @brief Startは最初のフレームの前に呼び出されます。
      */
