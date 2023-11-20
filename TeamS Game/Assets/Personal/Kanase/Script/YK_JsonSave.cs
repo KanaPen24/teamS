@@ -63,8 +63,8 @@ public class YK_JsonSave : MonoBehaviour
     // jsonとしてデータを保存
     void Save(SaveData data)
     {
-     //   data.pos = Player.GetSetPlayerPos;          // dataの座標保存
-        //data.Score = GameManager.instance.GetSetSceneState; //スコアの保存
+       // data.pos = Player.GetSetPlayerPos;          // プレイヤーの座標保存
+        data.Score = YK_Score.instance.GetSetScore; //スコアの保存
         string json = JsonUtility.ToJson(data);                 // jsonとして変換
         StreamWriter wr = new StreamWriter(filepath, false);    // ファイル書き込み指定
         wr.WriteLine(json);                                     // json変換した情報を書き込み
@@ -105,7 +105,7 @@ public class YK_JsonSave : MonoBehaviour
 
         //データを反映
       //  Player.GetSetPlayerPos = data.pos;
-        //GameManager.instance.GetSetSceneState = data.Score;
+        YK_Score.instance.GetSetScore = data.Score;
     }
 
     //ゲーム終了時

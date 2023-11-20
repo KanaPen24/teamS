@@ -170,4 +170,10 @@ public class YK_Score : YK_UI
         //ÉXÉRÉA+score m_fTimeÇ∑Ç∑ÇﬂÇÈ
         StartCoroutine(ScoreAnimation((int)score, m_fTime));
     }
+
+    public int GetSetScore
+    {
+        get { return m_nScore; }
+        set { m_nScore = value; }
+    }
 }
