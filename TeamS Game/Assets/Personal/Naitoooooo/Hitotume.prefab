@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 8922192720101417169}
   - component: {fileID: 8922192720101417174}
   - component: {fileID: 8922192720101417175}
+  - component: {fileID: 9067292263333297109}
   m_Layer: 0
   m_Name: Hitotume
   m_TagString: Untagged
@@ -169,9 +170,11 @@ MonoBehaviour:
     m_vInitSpeed: {x: 0, y: 0}
     m_fDamping: 0
   m_EnemyState: 0
+  m_nEnemyCnt: 1
   m_HitotumeStrategy:
   - {fileID: 8922192720101417175}
   - {fileID: 8922192720101417174}
+  - {fileID: 9067292263333297109}
 --- !u!114 &8922192720101417174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,3 +206,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HitotumeProto: {fileID: 8922192720101417169}
   DashTiming: 30
+--- !u!114 &9067292263333297109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8922192720101417172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1c87411defbced41bfcc2193c828a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HitotumeProto: {fileID: 8922192720101417169}
