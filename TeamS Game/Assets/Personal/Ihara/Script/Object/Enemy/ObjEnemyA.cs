@@ -13,6 +13,8 @@ public class ObjEnemyA : ObjEnemyBase
 {
     public override void UpdateObj()
     {
+        if (m_EnemyState == EnemyState.Idle)
+            m_vSpeed = new Vector2(0f, 0f);
     }
 
     public override void UpdateDebug()

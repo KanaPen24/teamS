@@ -27,6 +27,11 @@ public class ObjManager : MonoBehaviour
         return Objs[i];
     }
 
+    public List<ObjBase> GetObj()
+    {
+        return Objs;
+    }
+
     private void Start()
     {
         if(instance == null)
@@ -267,33 +272,55 @@ public class ObjManager : MonoBehaviour
             // “G“¯m‚Ì”»’è‚¾‚Á‚½‚ç
             if (ON_HitManager.instance.GetData(i).state == HitState.ENEMY)
             {
-                // ‚Ç‚¿‚ç‚©‚ªƒmƒbƒNƒoƒbƒN‚Ìó‘Ô‚¾‚Á‚½‚ç
-                if(Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack ||
+                // ‚Ç‚¿‚ç‚àƒmƒbƒNƒoƒbƒN‚Ìó‘Ô‚¾‚Á‚½‚ç
+                if(Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack &&
                     Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack)
                 {
-                    // “G“¯m‚Ì‘¶İ‚ğ–³‚­‚·
+                    // “G“¯m‚Ì‘¶İ,“–‚½‚è”»’è‚ğÁ‚·
                     Objs[myID].GetSetExist = false;
                     Objs[otherID].GetSetExist = false;
-
-                    // “G‚Ì“–‚½‚è”»’è‚Ì‘¶İ‚ğ–³‚­‚·
+                    Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.Drop;
+                    Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.Drop;
                     ON_HitManager.instance.SetActive(myID,false);
                     ON_HitManager.instance.SetActive(otherID,false);
 
-                    // ‡‘Ì‚µ‚½“G‚ğ¶¬
-                    ObjEnemyUnion unionEnemy = Instantiate(unionObj,
-                        Objs[myID].GetSetPos + new Vector3(0f,5f,0f),
-                        Quaternion.Euler(new Vector3(0f,0f,0f)
-                        ));
+                    // g‚¦‚éƒf[ƒ^‚ª‚ ‚é‚©’T‚·
+                    bool m_bGenerate = false;
+                    for(int t = 0; t < Objs.Count; ++t)
+                    {
+                        // ‘¶İ‚ª‚È‚¢EnemyUnion‚ª‚ ‚Á‚½ê‡A‚»‚Ìƒf[ƒ^‚ğ—˜—p‚·‚é
+                        if(Objs[t].GetComponent<ObjEnemyUnion>() != null && !Objs[t].GetSetExist)
+                        {
+                            Objs[t].GetSetExist = true;
+                            ON_HitManager.instance.SetActive(Objs[t].GetSetObjID, true);
+                            Objs[t].GetSetPos = Objs[myID].GetSetPos + new Vector3(0f, 5f, 0f);
+                            Objs[t].GetComponent<ObjEnemyUnion>().m_nEnemyCnt 
+                                = Objs[myID].GetComponent<ObjEnemyBase>().m_nEnemyCnt +
+                                  Objs[otherID].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
 
-                    // ¶¬‚µ‚½“G‚Ì‰Šú‰»
-                    Objs.Add(unionEnemy);
-                    unionEnemy.GetSetObjID = Objs.Count - 1;
-                    unionEnemy.m_nEnemyCnt = Objs[myID].GetComponent<ObjEnemyBase>().m_nEnemyCnt +
-                                             Objs[otherID].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
-                    unionEnemy.m_nEnemyIDs.Add(Objs[myID].GetSetObjID);
-                    unionEnemy.m_nEnemyIDs.Add(Objs[otherID].GetSetObjID);
-                    unionEnemy.GenerateHit();
-                    unionEnemy.InitObj();
+                            m_bGenerate = true;
+                            break;
+                        }
+                    }
+
+                    if(!m_bGenerate)
+                    {
+                        // ‡‘Ì‚µ‚½“G‚ğ¶¬
+                        ObjEnemyUnion unionEnemy = Instantiate(unionObj,
+                            Objs[myID].GetSetPos + new Vector3(0f, 5f, 0f),
+                            Quaternion.Euler(new Vector3(0f, 0f, 0f)
+                            ));
+
+                        // ¶¬‚µ‚½“G‚Ì‰Šú‰»
+                        Objs.Add(unionEnemy);
+                        unionEnemy.GetSetObjID = Objs.Count - 1;
+                        unionEnemy.m_nEnemyCnt = Objs[myID].GetComponent<ObjEnemyBase>().m_nEnemyCnt +
+                                                 Objs[otherID].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
+                        unionEnemy.m_nEnemyIDs.Add(Objs[myID].GetSetObjID);
+                        unionEnemy.m_nEnemyIDs.Add(Objs[otherID].GetSetObjID);
+                        unionEnemy.GenerateHit();
+                        unionEnemy.InitObj();
+                    }
                 }
             }
             // -------------------------------

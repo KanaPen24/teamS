@@ -14,6 +14,7 @@ public class YK_Score : YK_UI
     Text scoreText; // スコアを表示するためのTextコンポーネントへの参照
     [SerializeField] private int m_nScore; //スコアの値を格納するためのプライベートな整数
     [SerializeField] private float m_fTime; //スコアの加算時間
+    [SerializeField] private int m_nDbgNum; //デバック用の敵の数値
 
     /**
      * @brief Startは最初のフレームの前に呼び出されます。
@@ -31,9 +32,24 @@ public class YK_Score : YK_UI
     void Update()
     {
         //テスト
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.F9))
         {
             AddScore(10);
+        }
+        //テスト
+        if (Input.GetKeyDown(KeyCode.F10))
+        {
+            FieldAddScore(m_nDbgNum);
+        }
+        //テスト
+        if (Input.GetKeyDown(KeyCode.F11))
+        {
+            SkyAddScore(m_nDbgNum);
+        }
+        //テスト
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            FarAddScore(m_nDbgNum);
         }
     }
 
@@ -73,13 +89,66 @@ public class YK_Score : YK_UI
             int num;
             num = (int)(befor + (after - befor) * rate);
             // テキストの更新
-            scoreText.text = "Score:" + num.ToString("D5");
+            scoreText.text = "Score:" + num.ToString("D7");
 
             elapsedTime += Time.deltaTime;
             // 0.01秒待つ
             yield return new WaitForSeconds(0.01f);
         }
         // 最終的な着地のスコア
-        scoreText.text = "Score:" + m_nScore.ToString("D5");
+        scoreText.text = "Score:" + m_nScore.ToString("D7");
+    }
+    /**
+     * @brief スコアに指定された数を加算
+     * @param num 敵の数
+     */
+    public void FieldAddScore(int num)
+    {
+        float score;
+        if (num == 1) 
+            score = 100;
+        else
+        score = 100.0f * num * (1.1f + 0.05f * num);
+        //スコア+score m_fTimeすすめる
+        StartCoroutine(ScoreAnimation((int)score, m_fTime));
+    }
+    /**
+     * @brief スコアに指定された数を加算
+     * @param num 敵の数
+     */
+    public void SkyAddScore(int num)
+    {
+        float score;
+        if (num == 1)
+            score = 120;
+        else
+            score = 120.0f * num * (1.1f + 0.05f * num);
+        //スコア+score m_fTimeすすめる
+        StartCoroutine(ScoreAnimation((int)score, m_fTime));
+    }
+    /**
+     * @brief スコアに指定された数を加算
+     * @param num 敵の数
+     */
+    public void FarAddScore(int num)
+    {
+        float score;
+        if (num == 1)
+            score = 150;
+        else
+            score = 150.0f * num * (1.1f + 0.05f * num);
+        //スコア+score m_fTimeすすめる
+        StartCoroutine(ScoreAnimation((int)score, m_fTime));
+    }
+    /**
+     * @brief スコアに指定された数を加算
+     * @param num 敵の数
+     */
+    public void BlowAddScore(int num)
+    {
+        float score;
+        score = 100.0f * num * (1.1f + 0.05f * num);
+        //スコア+score m_fTimeすすめる
+        StartCoroutine(ScoreAnimation((int)score, m_fTime));
     }
 }
