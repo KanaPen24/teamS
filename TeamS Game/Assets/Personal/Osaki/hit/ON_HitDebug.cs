@@ -94,11 +94,14 @@ public class ON_HitDebug
                     hitDebugs[j].obj.transform.position = ON_HitManager.instance.GetHit(i).GetCenter();
                     hitDebugs[j].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize() * 2f;
 
+                    SetActive(type, ON_HitManager.instance.GetHit(i).GetHitType(), hitDebugs[j].obj);
+
+                    hitDebugs[j].obj.GetComponent<SpriteRenderer>().color = SetColor(ON_HitManager.instance.GetHit(i).GetHitType());
+
                     // 当たり判定が非Activeの場合、色を変化
                     if (!ON_HitManager.instance.GetHit(i).GetActive())
                         hitDebugs[j].obj.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.6f);
 
-                    SetActive(type, ON_HitManager.instance.GetHit(i).GetHitType(), hitDebugs[j].obj);
 
                     // 使用済み
                     keys[hitDebugs[j].hitID] = false;
