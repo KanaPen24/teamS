@@ -11,6 +11,17 @@ public class NK_HitotumeWalk : NK_HitotumeStrategy
     [SerializeField] private float acceleration;
     //速度倍率
     [SerializeField] private float magnification;
+    //前の向きを保存
+    private ObjDir oldDir;
+
+    public override void UpdateState()
+    {
+        //落下→待ち
+        if (!m_Hitotume.GetSetGround.m_bStand)
+        {
+            m_Hitotume.GetSetEnemyState = EnemyState.Drop;
+        }
+    }
     public override void UpdateStrategy()
     {
 
@@ -18,17 +29,20 @@ public class NK_HitotumeWalk : NK_HitotumeStrategy
         {
             s += acceleration;
         }
+        if(oldDir!=m_Hitotume.GetSetDir)
+        {
+            s = 0;
+        }
         t = s * Mathf.Deg2Rad;
-        if (ObjPlayer.instance.GetSetPos.x > m_Hitotume.GetSetPos.x)//←これでプレイヤーの座標わかる
+        if (m_Hitotume.GetSetDir==ObjDir.RIGHT)
         {
             m_Hitotume.GetSetSpeed = new Vector2(Mathf.Sin(t) * magnification, 0.0f);
-            Debug.Log("a");
         }
         else
         {
-            m_Hitotume.GetSetSpeed = new Vector2(-Mathf.Sin(t) * 0.3f, 0.0f);
-            Debug.Log("b");
+            m_Hitotume.GetSetSpeed = new Vector2(-Mathf.Sin(t) * magnification, 0.0f);
         }
-            //m_Hitotume.GetSetSpeed = new Vector2(5.0f,0.0f);
+        //m_Hitotume.GetSetSpeed = new Vector2(5.0f,0.0f);
+        oldDir = m_Hitotume.GetSetDir;
     }
 }

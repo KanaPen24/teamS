@@ -16,7 +16,6 @@ public class ObjManager : MonoBehaviour
 {
     [SerializeField] private List<ObjBase> Objs; // オブジェクトを格納する配列
     public static ObjManager instance;
-    public ObjEnemyUnion unionObj;
     public ParticleSystem hitEffect;
 
     private int myID;
@@ -25,6 +24,11 @@ public class ObjManager : MonoBehaviour
     public ObjBase GetObjs(int i)
     {
         return Objs[i];
+    }
+
+    public List<ObjBase> GetObj()
+    {
+        return Objs;
     }
 
     private void Start()
@@ -267,33 +271,36 @@ public class ObjManager : MonoBehaviour
             // 敵同士の判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.ENEMY)
             {
-                // どちらかがノックバックの状態だったら
-                if(Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack ||
+                // どちらもノックバックの状態だったら
+                if(Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack &&
                     Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack)
                 {
-                    // 敵同士の存在を無くす
+                    // 敵同士の存在,当たり判定を消す
                     Objs[myID].GetSetExist = false;
                     Objs[otherID].GetSetExist = false;
-
-                    // 敵の当たり判定の存在を無くす
+                    Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.Drop;
+                    Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.Drop;
                     ON_HitManager.instance.SetActive(myID,false);
                     ON_HitManager.instance.SetActive(otherID,false);
 
-                    // 合体した敵を生成
-                    ObjEnemyUnion unionEnemy = Instantiate(unionObj,
-                        Objs[myID].GetSetPos + new Vector3(0f,5f,0f),
-                        Quaternion.Euler(new Vector3(0f,0f,0f)
-                        ));
-
-                    // 生成した敵の初期化
-                    Objs.Add(unionEnemy);
-                    unionEnemy.GetSetObjID = Objs.Count - 1;
-                    unionEnemy.m_nEnemyCnt = Objs[myID].GetComponent<ObjEnemyBase>().m_nEnemyCnt +
-                                             Objs[otherID].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
-                    unionEnemy.m_nEnemyIDs.Add(Objs[myID].GetSetObjID);
-                    unionEnemy.m_nEnemyIDs.Add(Objs[otherID].GetSetObjID);
-                    unionEnemy.GenerateHit();
-                    unionEnemy.InitObj();
+                    // 使えるデータがあるか探す
+                    for(int t = 0; t < Objs.Count; ++t)
+                    {
+                        // 存在がないEnemyUnionがあった場合、そのデータを利用する
+                        if(Objs[t].GetComponent<ObjEnemyUnion>() != null && !Objs[t].GetSetExist)
+                        {
+                            ObjEnemyUnion unionEnemy = Objs[t].GetComponent<ObjEnemyUnion>();
+                            unionEnemy.GetSetExist = true;
+                            ON_HitManager.instance.SetActive(unionEnemy.GetSetObjID, true);
+                            unionEnemy.GetSetPos = Objs[myID].GetSetPos + new Vector3(0f, 5f, 0f);
+                            unionEnemy.m_nEnemyCnt 
+                                = Objs[myID].GetComponent<ObjEnemyBase>().m_nEnemyCnt +
+                                  Objs[otherID].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
+                            unionEnemy.m_nEnemyIDs.Add(Objs[myID].GetSetObjID);
+                            unionEnemy.m_nEnemyIDs.Add(Objs[otherID].GetSetObjID);
+                            break;
+                        }
+                    }
                 }
             }
             // -------------------------------

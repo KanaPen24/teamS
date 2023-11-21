@@ -27,12 +27,14 @@ public class PlayerDrop : PlayerStrategy
 
     public override void UpdatePlayer()
     {
+        // 落下開始時に何かするかも??
         if (ObjPlayer.m_bDropFlg)
         {
             ObjPlayer.m_bDropFlg = false;
         }
 
-        // 速度はスティックの方向け具合で決まる
+        // 速度はスティックの傾け具合で決まる(傾けていない場合は減速していく)
+        // X軸移動
         if (IS_XBoxInput.LStick_H > 0.2f || IS_XBoxInput.LStick_H < -0.2f)
         {
             ObjPlayer.instance.GetSetSpeed
