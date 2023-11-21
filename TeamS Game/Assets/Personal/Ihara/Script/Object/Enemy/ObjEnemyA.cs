@@ -15,6 +15,8 @@ public class ObjEnemyA : ObjEnemyBase
     {
         if (m_EnemyState == EnemyState.Idle)
             m_vSpeed = new Vector2(0f, 0f);
+        if (m_EnemyState == EnemyState.Drop && GetSetGround.m_bStand)
+            m_EnemyState = EnemyState.Idle;
     }
 
     public override void UpdateDebug()
