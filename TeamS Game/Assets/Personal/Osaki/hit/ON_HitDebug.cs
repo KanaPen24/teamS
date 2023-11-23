@@ -72,7 +72,7 @@ public class ON_HitDebug
     }
 
     // 指定されたHitTypeのみ表示(NONEはすべて表示
-    public void Update(HitType type = HitType.NONE)
+    public void Update(HitType type = HitType.NONE, bool notActive = false)
     {
         // デバックが開始されたか確認
         if (hitDebugs.Count < 1) return;
@@ -97,10 +97,15 @@ public class ON_HitDebug
                     SetActive(type, ON_HitManager.instance.GetHit(i).GetHitType(), hitDebugs[j].obj);
 
                     hitDebugs[j].obj.GetComponent<SpriteRenderer>().color = SetColor(ON_HitManager.instance.GetHit(i).GetHitType());
+                    hitDebugs[j].obj.SetActive(true);
 
                     // 当たり判定が非Activeの場合、色を変化
                     if (!ON_HitManager.instance.GetHit(i).GetActive())
+                    {
                         hitDebugs[j].obj.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.6f);
+                        if (notActive)
+                            hitDebugs[j].obj.SetActive(false);
+                    }
 
 
                     // 使用済み
