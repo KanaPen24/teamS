@@ -118,7 +118,7 @@ public class ObjEnemyBase : ObjBase
         {
             if (GameManager.IsDebug())
                 Debug.Log("’n–Ê‚©‚ç—£‚ê‚½ ObjID: " + m_nObjID);
-
+            //d—Í‚ğg‚Á‚Ä—‚Æ‚·
             m_vSpeed.y -= knockBack.m_fGravity;
         }        
     }
