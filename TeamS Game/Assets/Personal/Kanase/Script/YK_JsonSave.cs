@@ -14,8 +14,7 @@ public class YK_JsonSave : MonoBehaviour
     public static YK_JsonSave instance;         // インスタンス化
     [HideInInspector] public SaveData data;     // json変換するデータのクラス
     string filepath;                            // jsonファイルのパス
-    string fileName = "SaveData.json";          // jsonファイル名
-    public int m_Score;            // 保存するためのスコア
+    string fileName = "SaveData.json";          // jsonファイル名s
 //    [SerializeField] private IS_Player Player;    //プレイヤー
     private bool m_bOne = true;
 
@@ -30,13 +29,7 @@ public class YK_JsonSave : MonoBehaviour
         if (File.Exists(filepath))
         {
             DelFile();                     // セーブデータの削除
-        }
-        // ファイルがないとき、ファイル作成
-        else
-        {
-            Save(false);
-        }
-        Load();
+        }        
     }
 
     private void FixedUpdate()
@@ -45,6 +38,10 @@ public class YK_JsonSave : MonoBehaviour
         {
             //GameManager.instance.GetSetGameState = GameState.GamePlay;
             m_bOne = false;
+        }
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            Save(false);
         }
     }
     private void Start()
