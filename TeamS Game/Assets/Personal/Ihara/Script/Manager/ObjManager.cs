@@ -16,7 +16,6 @@ public class ObjManager : MonoBehaviour
 {
     [SerializeField] private List<ObjBase> Objs; // オブジェクトを格納する配列
     public static ObjManager instance;
-    public ObjEnemyUnion unionObj;
     public ParticleSystem hitEffect;
 
     private int myID;
@@ -285,41 +284,22 @@ public class ObjManager : MonoBehaviour
                     ON_HitManager.instance.SetActive(otherID,false);
 
                     // 使えるデータがあるか探す
-                    bool m_bGenerate = false;
                     for(int t = 0; t < Objs.Count; ++t)
                     {
                         // 存在がないEnemyUnionがあった場合、そのデータを利用する
                         if(Objs[t].GetComponent<ObjEnemyUnion>() != null && !Objs[t].GetSetExist)
                         {
-                            Objs[t].GetSetExist = true;
-                            ON_HitManager.instance.SetActive(Objs[t].GetSetObjID, true);
-                            Objs[t].GetSetPos = Objs[myID].GetSetPos + new Vector3(0f, 5f, 0f);
-                            Objs[t].GetComponent<ObjEnemyUnion>().m_nEnemyCnt 
+                            ObjEnemyUnion unionEnemy = Objs[t].GetComponent<ObjEnemyUnion>();
+                            unionEnemy.GetSetExist = true;
+                            ON_HitManager.instance.SetActive(unionEnemy.GetSetObjID, true);
+                            unionEnemy.GetSetPos = Objs[myID].GetSetPos + new Vector3(0f, 5f, 0f);
+                            unionEnemy.m_nEnemyCnt 
                                 = Objs[myID].GetComponent<ObjEnemyBase>().m_nEnemyCnt +
                                   Objs[otherID].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
-
-                            m_bGenerate = true;
+                            unionEnemy.m_nEnemyIDs.Add(Objs[myID].GetSetObjID);
+                            unionEnemy.m_nEnemyIDs.Add(Objs[otherID].GetSetObjID);
                             break;
                         }
-                    }
-
-                    if(!m_bGenerate)
-                    {
-                        // 合体した敵を生成
-                        ObjEnemyUnion unionEnemy = Instantiate(unionObj,
-                            Objs[myID].GetSetPos + new Vector3(0f, 5f, 0f),
-                            Quaternion.Euler(new Vector3(0f, 0f, 0f)
-                            ));
-
-                        // 生成した敵の初期化
-                        Objs.Add(unionEnemy);
-                        unionEnemy.GetSetObjID = Objs.Count - 1;
-                        unionEnemy.m_nEnemyCnt = Objs[myID].GetComponent<ObjEnemyBase>().m_nEnemyCnt +
-                                                 Objs[otherID].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
-                        unionEnemy.m_nEnemyIDs.Add(Objs[myID].GetSetObjID);
-                        unionEnemy.m_nEnemyIDs.Add(Objs[otherID].GetSetObjID);
-                        unionEnemy.GenerateHit();
-                        unionEnemy.InitObj();
                     }
                 }
             }

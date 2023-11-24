@@ -72,7 +72,7 @@ public class ON_HitDebug
     }
 
     // 指定されたHitTypeのみ表示(NONEはすべて表示
-    public void Update(HitType type = HitType.NONE)
+    public void Update(HitType type = HitType.NONE, bool notActive = false)
     {
         // デバックが開始されたか確認
         if (hitDebugs.Count < 1) return;
@@ -94,11 +94,19 @@ public class ON_HitDebug
                     hitDebugs[j].obj.transform.position = ON_HitManager.instance.GetHit(i).GetCenter();
                     hitDebugs[j].obj.transform.localScale = ON_HitManager.instance.GetHit(i).GetSize() * 2f;
 
+                    SetActive(type, ON_HitManager.instance.GetHit(i).GetHitType(), hitDebugs[j].obj);
+
+                    hitDebugs[j].obj.GetComponent<SpriteRenderer>().color = SetColor(ON_HitManager.instance.GetHit(i).GetHitType());
+                    hitDebugs[j].obj.SetActive(true);
+
                     // 当たり判定が非Activeの場合、色を変化
                     if (!ON_HitManager.instance.GetHit(i).GetActive())
-                        hitDebugs[j].obj.GetComponent<SpriteRenderer>().color = new Color(0.1f, 0.1f, 0.1f, 0.5f);
+                    {
+                        hitDebugs[j].obj.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 0.6f);
+                        if (notActive)
+                            hitDebugs[j].obj.SetActive(false);
+                    }
 
-                    SetActive(type, ON_HitManager.instance.GetHit(i).GetHitType(), hitDebugs[j].obj);
 
                     // 使用済み
                     keys[hitDebugs[j].hitID] = false;
@@ -146,13 +154,13 @@ public class ON_HitDebug
         switch (type)
         {
             case HitType.ATTACK:
-                col = new Color(1.0f, 0.0f, 0.0f, 0.2f);
+                col = new Color(1.0f, 0.0f, 0.0f, 0.6f);
                 break;
             case HitType.BODY:
-                col = new Color(0.0f, 0.0f, 1.0f, 0.2f);
+                col = new Color(1.0f, 1.0f, 0.0f, 0.6f);
                 break;
             case HitType.FIELD:
-                col = new Color(0.0f, 1.0f, 0.0f, 0.2f);
+                col = new Color(0.0f, 1.0f, 0.0f, 0.6f);
                 break;
         }
         return col;
