@@ -171,18 +171,19 @@ MonoBehaviour:
     m_fTime: 0
   knockBack:
     m_vSpeed: {x: 0, y: 0}
-    m_vInitSpeed: {x: 0, y: 0}
-    m_fDamping: 0
-    m_fGravity: 1
+    m_vInitSpeed: {x: 0.04, y: 0.45}
+    m_fDamping: 0.7
+    m_fGravity: 0.02
   m_EnemyState: 0
   m_nEnemyCnt: 1
   m_HitotumeStrategy:
   - {fileID: 8922192720101417175}
   - {fileID: 8922192720101417174}
   - {fileID: 9067292263333297109}
-  - {fileID: -734301994961539978}
   - {fileID: -5926171475353775666}
+  - {fileID: -734301994961539978}
   - {fileID: 6143102141299549457}
+  - {fileID: 5689686424278852699}
   - {fileID: 5689686424278852699}
 --- !u!114 &8922192720101417174
 MonoBehaviour:

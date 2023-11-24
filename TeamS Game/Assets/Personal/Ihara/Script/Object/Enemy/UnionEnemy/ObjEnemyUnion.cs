@@ -9,12 +9,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyUnion_Idle))]
+[RequireComponent(typeof(EnemyUnion_Walk))]
+[RequireComponent(typeof(EnemyUnion_Drop))]
+[RequireComponent(typeof(EnemyUnion_Jump))]
+[RequireComponent(typeof(EnemyUnion_KnockBack))]
+[RequireComponent(typeof(EnemyUnion_Atk))]
+[RequireComponent(typeof(EnemyUnion_Death))]
+[RequireComponent(typeof(EnemyUnion_RePop))]
+
 public class ObjEnemyUnion : ObjEnemyBase
 {
+    [SerializeField] private List<EnemyStrategy> enemyStrategys;
     public List<int> m_nEnemyIDs = new List<int>();
 
     public override void UpdateObj()
     {
+        enemyStrategys[(int)m_EnemyState].UpdateState();
+        enemyStrategys[(int)m_EnemyState].UpdateStrategy();
+
         if(Input.GetKey(KeyCode.Space))
         {
             // çáê¨ÇµÇƒÇ¢ÇΩìGÇï\é¶Ç≥ÇπÇÈ
