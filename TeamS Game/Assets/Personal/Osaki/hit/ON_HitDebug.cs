@@ -33,10 +33,12 @@ public class ON_HitDebug
 
     // デバック表示用テクスチャ
     private Sprite image = null;
+    private Material unlit = null;
 
     public ON_HitDebug()
     {
         image = (Sprite)Resources.Load("Square", typeof(Sprite));
+        unlit = (Material)Resources.Load("Sprite-Unlit", typeof(Material));
         hitDebugs.Clear();
     }
     
@@ -57,6 +59,7 @@ public class ON_HitDebug
             sprite.color = SetColor(ON_HitManager.instance.GetHit(i).GetHitType());
             sprite.sprite = image;
             sprite.sortingOrder = 1000;
+            sprite.material = unlit;
         }
     }
 
@@ -131,6 +134,7 @@ public class ON_HitDebug
                 sprite.color = SetColor(ON_HitManager.instance.GetHit(i).GetHitType());
                 sprite.sprite = image;
                 sprite.sortingOrder = 1000;
+                sprite.material = unlit;
 
                 SetActive(type, ON_HitManager.instance.GetHit(i).GetHitType(), hitDebugs[idx].obj);
             }
