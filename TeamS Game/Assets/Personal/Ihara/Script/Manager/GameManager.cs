@@ -24,6 +24,7 @@ public enum GameState
     GamePause,
     GameGoal,
     GameOver,
+    ReturnDeath,
 
     MaxGameState
 }
