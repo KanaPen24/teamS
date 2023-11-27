@@ -30,6 +30,24 @@ public class Fade : MonoBehaviour
     public bool StartFade;      //トランジション用変数
     [SerializeField] private float FadeSpeed = 0.02f;
     [SerializeField] private YK_JsonSave Json;
+    public static Fade instance;         // Fadeのインスタンス
+     /**
+     * @fn
+     * 初期化処理(外部参照を除く)
+     * @brief  メンバ初期化処理
+     * @detail 特に無し
+     */
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     public void Start ()
 	{
         Init();
