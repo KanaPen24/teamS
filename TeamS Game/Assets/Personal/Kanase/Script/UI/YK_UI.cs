@@ -16,6 +16,9 @@ public enum UIType
 {
     Score   = 1,    // スコア
     Combo   = 2,    //コンボ
+    BossBar = 3,    //ボスHPバー
+    Start   = 4,    //スタート
+    End     = 5,    //エンド
     MaxUIType
 }
 
