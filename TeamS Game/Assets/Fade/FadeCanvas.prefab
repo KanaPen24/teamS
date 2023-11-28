@@ -82,6 +82,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartFade: 0
+  FadeSpeed: 0.02
+  Json: {fileID: 0}
 --- !u!114 &-721400641995957407
 MonoBehaviour:
   m_ObjectHideFlags: 0

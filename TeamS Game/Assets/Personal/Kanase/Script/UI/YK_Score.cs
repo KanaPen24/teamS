@@ -31,7 +31,6 @@ public class YK_Score : YK_UI
         }
         else
         {
-            Debug.Log("AudioManagerはすでに存在しています");
             Destroy(gameObject);
         }
     }
@@ -89,6 +88,15 @@ public class YK_Score : YK_UI
     {
         m_nScore = 0;
     }
+    /**
+     * @brief スコアを読みこみなおす
+     */
+    public void LoadScore()
+    {
+        // テキストの更新
+        scoreText.text = "Score:" + m_nScore.ToString("D7");
+    }
+
     // スコアをアニメーションさせる
     IEnumerator ScoreAnimation(int addScore, float time)
     {

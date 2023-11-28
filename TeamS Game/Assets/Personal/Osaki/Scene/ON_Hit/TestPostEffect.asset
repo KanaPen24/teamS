@@ -46,6 +46,7 @@ MonoBehaviour:
   components:
   - {fileID: 3468390729167758994}
   - {fileID: -1700037128082869645}
+  - {fileID: 6852297517783937965}
 --- !u!114 &3468390729167758994
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -62,3 +63,19 @@ MonoBehaviour:
   tintColor:
     m_OverrideState: 0
     m_Value: {r: 1, g: 0.42830187, b: 0.42830187, a: 1}
+--- !u!114 &6852297517783937965
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dabe33b2c6f6c7b47bbc25decd09e3a0, type: 3}
+  m_Name: ON_GaussianVolume
+  m_EditorClassIdentifier: 
+  active: 1
+  rate:
+    m_OverrideState: 1
+    m_Value: 0
