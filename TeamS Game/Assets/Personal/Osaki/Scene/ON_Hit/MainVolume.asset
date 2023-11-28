@@ -52,25 +52,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cba8ff320cb7fe44a92bafc48a40f58a, type: 3}
   m_Name: FlareVolume
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   flareColor:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 0.754717, g: 0.56532574, b: 0.56532574, a: 1}
   flarePosition:
-    m_OverrideState: 0
-    m_Value: {x: 0, y: 0}
+    m_OverrideState: 1
+    m_Value: {x: -0.37, y: -0.33}
   flareSize:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.61
   paraColor:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 0.35158226, g: 0.22627269, b: 0.5283019, a: 1}
   paraPosition:
-    m_OverrideState: 0
-    m_Value: {x: 0, y: 0}
+    m_OverrideState: 1
+    m_Value: {x: 0.18, y: -0.04}
   paraSize:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.72
 --- !u!114 &-6204809596990474611
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -86,7 +86,7 @@ MonoBehaviour:
   active: 1
   rate:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

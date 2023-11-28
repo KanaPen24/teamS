@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 576061032509345957}
   - component: {fileID: 8642261693029795587}
   - component: {fileID: 4114222985121750809}
+  - component: {fileID: 1934120107}
   m_Layer: 0
   m_Name: SJ_Rain_Eff
   m_TagString: Untagged
@@ -123,6 +124,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00837cf91a36c434885030dd3b78f38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RainEff: {fileID: 0}
   bOnOff: 0
   bPlay: 0
+--- !u!114 &1934120107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5220672282066172930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8801e0ea4b47184fa8c9e0428526f93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  rate: 1
