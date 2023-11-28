@@ -24,11 +24,11 @@ public class FlyWalk : FlyStrategy
 
     public override void UpdateStrategy()
     {
-        if(oldDir!=m_Fly.GetSetDir)
-        {
-            m_MoveSpeed = 0;
-            Invoke("ReMove",m_ReMoveTime);
-        }
+        //if(oldDir!=m_Fly.GetSetDir)
+        //{
+        //    m_MoveSpeed = 0;
+        //    Invoke("ReMove",m_ReMoveTime);
+        //}
         if(m_Fly.GetSetDir==ObjDir.RIGHT)
         {
             m_Fly.GetSetSpeed = new Vector2(m_MoveSpeed, 0.0f);
@@ -37,10 +37,11 @@ public class FlyWalk : FlyStrategy
         {
             m_Fly.GetSetSpeed = new Vector2(-m_MoveSpeed, 0.0f);
         }
+        //oldDir = m_Fly.GetSetDir;
     }
 
-    private void ReMove()
-    {
-        m_MoveSpeed = m_SpeedHolder;
-    }
+    //private void ReMove()
+    //{
+    //    m_MoveSpeed = m_SpeedHolder;
+    //}
 }
