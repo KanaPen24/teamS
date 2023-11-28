@@ -127,7 +127,7 @@ public class YK_Score : YK_UI
     }
     /**
      * @brief スコアに指定された数を加算
-     * @param num 敵の数
+     * @param num 地上敵の数
      */
     public void FieldAddScore(int num)
     {
@@ -141,7 +141,7 @@ public class YK_Score : YK_UI
     }
     /**
      * @brief スコアに指定された数を加算
-     * @param num 敵の数
+     * @param num 空中敵の数
      */
     public void SkyAddScore(int num)
     {
@@ -155,7 +155,7 @@ public class YK_Score : YK_UI
     }
     /**
      * @brief スコアに指定された数を加算
-     * @param num 敵の数
+     * @param num 遠距離敵の数
      */
     public void FarAddScore(int num)
     {
@@ -169,7 +169,7 @@ public class YK_Score : YK_UI
     }
     /**
      * @brief スコアに指定された数を加算
-     * @param num 敵の数
+     * @param num 吹っ飛ばした敵の数
      */
     public void BlowAddScore(int num)
     {
