@@ -20,11 +20,12 @@ public class EnemyUnion_KnockBack : EnemyStrategy
     }
     public override void UpdateState()
     {
-        // 「落下 → 待ち」
+        // 「落下 → 待ち」(分裂)
         if (endFlg)
         {
             enemyUnion.GetSetEnemyState = EnemyState.Idle;
             endFlg = false;
+            enemyUnion.DivisionEnemy();
             return;
         }
     }

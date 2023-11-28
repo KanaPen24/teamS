@@ -21,16 +21,6 @@ public class ObjManager : MonoBehaviour
     private int myID;
     private int otherID;
 
-    public ObjBase GetObjs(int i)
-    {
-        return Objs[i];
-    }
-
-    public List<ObjBase> GetObj()
-    {
-        return Objs;
-    }
-
     private void Start()
     {
         if(instance == null)
@@ -271,39 +261,55 @@ public class ObjManager : MonoBehaviour
             // 敵同士の判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.ENEMY)
             {
-                // どちらもノックバックの状態だったら
-                if(Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack &&
-                    Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack)
+                // 合体敵同士だったらスキップする(仮)
+                if (Objs[myID].GetComponent<ObjEnemyUnion>() == null &&
+                    Objs[otherID].GetComponent<ObjEnemyUnion>() == null)
                 {
-                    // 敵同士の存在,当たり判定を消す
-                    Objs[myID].GetSetExist = false;
-                    Objs[otherID].GetSetExist = false;
-                    Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.Drop;
-                    Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.Drop;
-                    ON_HitManager.instance.SetActive(myID,false);
-                    ON_HitManager.instance.SetActive(otherID,false);
-
-                    // 使えるデータがあるか探す
-                    for(int t = 0; t < Objs.Count; ++t)
+                    // どちらもノックバックの状態だったら
+                    if (Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack &&
+                    Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack)
                     {
-                        // 存在がないEnemyUnionがあった場合、そのデータを利用する
-                        if(Objs[t].GetComponent<ObjEnemyUnion>() != null && !Objs[t].GetSetExist)
-                        {
-                            ObjEnemyUnion unionEnemy = Objs[t].GetComponent<ObjEnemyUnion>();
-                            unionEnemy.GetSetExist = true;
-                            ON_HitManager.instance.SetActive(unionEnemy.GetSetObjID, true);
-                            unionEnemy.GetSetPos = Objs[myID].GetSetPos + new Vector3(0f, 5f, 0f);
-                            unionEnemy.m_nEnemyCnt 
-                                = Objs[myID].GetComponent<ObjEnemyBase>().m_nEnemyCnt +
-                                  Objs[otherID].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
-                            unionEnemy.m_nEnemyIDs.Add(Objs[myID].GetSetObjID);
-                            unionEnemy.m_nEnemyIDs.Add(Objs[otherID].GetSetObjID);
-                            break;
-                        }
+                        // --- 敵の合成 ---
+                        UnionEnemy(myID, otherID);
                     }
                 }
             }
             // -------------------------------
+        }
+    }
+
+    // --- 敵の合体処理 ---
+    private void UnionEnemy(int id_1,int id_2)
+    {
+        // 敵同士の存在,当たり判定を消す
+        Objs[id_1].GetSetExist = false;
+        Objs[id_2].GetSetExist = false;
+        Objs[id_1].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.RePop;
+        Objs[id_2].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.RePop;
+        Objs[id_1].GetSetSpeed = new Vector2(Random.RandomRange(-0.1f, 0.1f), Random.RandomRange(0.3f, 0.5f));
+        Objs[id_2].GetSetSpeed = new Vector2(Random.RandomRange(-0.1f, 0.1f), Random.RandomRange(0.3f, 0.5f));
+        ON_HitManager.instance.SetActive(id_1, false);
+        ON_HitManager.instance.SetActive(id_2, false);
+
+        // 使えるデータがあるか探す
+        for (int i = 0; i < Objs.Count; ++i)
+        {
+            // 存在がないEnemyUnionがあった場合、そのデータを利用する
+            if (Objs[i].GetComponent<ObjEnemyUnion>() != null && !Objs[i].GetSetExist)
+            {
+                ObjEnemyUnion unionEnemy = Objs[i].GetComponent<ObjEnemyUnion>();
+                unionEnemy.GetSetExist = true;
+                ON_HitManager.instance.SetActive(unionEnemy.GetSetObjID, true);
+                unionEnemy.GetSetPos = Objs[id_1].GetSetPos + new Vector3(0f, 5f, 0f);
+                unionEnemy.m_nEnemyCnt
+                    = Objs[id_1].GetComponent<ObjEnemyBase>().m_nEnemyCnt +
+                      Objs[id_2].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
+                unionEnemy.m_nEnemyIDs.Add(Objs[id_1].GetSetObjID);
+                unionEnemy.m_nEnemyIDs.Add(Objs[id_2].GetSetObjID);
+                unionEnemy.GetSetEnemyState = EnemyState.Drop;
+                unionEnemy.m_Ground.ResetGroundData();
+                break;
+            }
         }
     }
 
@@ -351,5 +357,15 @@ public class ObjManager : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    public ObjBase GetObj(int i)
+    {
+        return Objs[i];
+    }
+
+    public List<ObjBase> GetObjList()
+    {
+        return Objs;
     }
 }

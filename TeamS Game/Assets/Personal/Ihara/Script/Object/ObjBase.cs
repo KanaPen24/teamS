@@ -41,6 +41,14 @@ public class Ground
     [SerializeField] public bool m_bStand;    // 地面に立っているか
     [SerializeField] public Vector2 m_vCenter;// 中心座標 
     [SerializeField] public Vector2 m_vSize;  // 大きさ
+
+    // --- 地面情報リセット ---
+    public void ResetGroundData()
+    {
+        m_bStand = false;
+        m_vCenter = Vector2.zero;
+        m_vSize = Vector2.zero;
+    }
 }
 // ----------------------------------------------------------------------------------------
 
