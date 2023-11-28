@@ -951,14 +951,26 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 2096068037}
+    - target: {fileID: 1042610282, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1521971684, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 2096068037}
+    - target: {fileID: 1521971684, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1590484040, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 2096068037}
+    - target: {fileID: 1590484040, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1966966498, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
       propertyPath: cam
       value: 

@@ -604,6 +604,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1563257642}
     m_Modifications:
+    - target: {fileID: 1934120107, guid: 574e71135538f6a4db483bda9e3a9b0b, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 519420028}
     - target: {fileID: 1469041359673833072, guid: 574e71135538f6a4db483bda9e3a9b0b, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -671,11 +675,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2421346865799147530, guid: 9c96d95861871c74e8a10293435515f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -22.34
+      value: -10.97
       objectReference: {fileID: 0}
     - target: {fileID: 2421346865799147530, guid: 9c96d95861871c74e8a10293435515f3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2
+      value: -4.37
       objectReference: {fileID: 0}
     - target: {fileID: 2421346865799147530, guid: 9c96d95861871c74e8a10293435515f3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1597,6 +1601,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2054825384}
   - component: {fileID: 2054825383}
+  - component: {fileID: 2054825385}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -1636,6 +1641,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2054825385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054825382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2065a6fa8d5c1684dbfeda0cc48c4231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &771157076329876990
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1643,6 +1660,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1042610282, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 519420028}
+    - target: {fileID: 1521971684, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 519420028}
+    - target: {fileID: 1590484040, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 519420028}
+    - target: {fileID: 1966966498, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 519420028}
     - target: {fileID: 461897807268556279, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
       propertyPath: m_Name
       value: BackGround

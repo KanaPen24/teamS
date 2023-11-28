@@ -18,6 +18,11 @@ public class TitleManager : MonoBehaviour
     [SerializeField] AudioClip selectSE;           //選択音
     private GameObject SelectObj;                           //選択しているオブジェクト格納用
 
+    private void Awake()
+    {
+        //タイトル画面の最初にステートをタイトルにする
+        GameManager.GetSetGameState = GameState.Title;
+    }
     // Start is called before the first frame update
     void Start()
     {

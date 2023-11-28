@@ -15,12 +15,15 @@ public class ON_VolumeManager : MonoBehaviour
     {
         _volume = GetComponent<Volume>();
     }
-    private void Update()
+    private void FixedUpdate()
     {
-        uvX -= 0.05f;
+        if (GameManager.m_sGameState != GameState.Title)
+            return;
+        float randX = Random.Range(-1.9f, -10.1f); // ※ -2.0～-10.0の範囲でランダムな値が返る)
+        uvX -= 0.04f;
         SetFlarePosX(uvX);
-        if (uvX <= -3.0f)
-            uvX = 3.0f;
+        if (uvX <= randX) // ※ -2.0～-5.0の範囲でランダムな値が返る)
+        uvX = 3.0f;
     }
     // フレアの遷移
     public void SetFlarePosX(float x)
