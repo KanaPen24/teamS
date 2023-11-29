@@ -35,17 +35,18 @@ public class FlyDrop : FlyStrategy
             {
                 transform.rotation = Quaternion.AngleAxis(-m_angle, new Vector3(0, 0, 1));
             }
+            m_fly.GetSetSpeed = new Vector2(0.0f, 0.0f);
         }
         else
         {
             
             if (transform.rotation.z < 0)
             {
-                m_fly.GetSetSpeed = new Vector2(-m_XmoveSpeed, -m_YmoveSpeed);
+                m_fly.GetSetSpeed = new Vector2(m_XmoveSpeed, -m_YmoveSpeed);
             }
             else
             {
-                m_fly.GetSetSpeed = new Vector2(m_XmoveSpeed, -m_YmoveSpeed);
+                m_fly.GetSetSpeed = new Vector2(-m_XmoveSpeed, -m_YmoveSpeed);
             }
         }
     }
