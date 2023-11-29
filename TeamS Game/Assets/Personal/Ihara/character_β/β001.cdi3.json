@@ -1,0 +1,293 @@
+{
+	"Version": 3,
+	"Parameters": [
+		{
+			"Id": "Param",
+			"GroupId": "",
+			"Name": "ジャンプ"
+		},
+		{
+			"Id": "Param4",
+			"GroupId": "",
+			"Name": "攻撃"
+		},
+		{
+			"Id": "Param6",
+			"GroupId": "",
+			"Name": "横向く"
+		},
+		{
+			"Id": "Param7",
+			"GroupId": "ParamGroup",
+			"Name": "あ～^^心がぴょんぴょんするんじゃ～"
+		},
+		{
+			"Id": "Param11",
+			"GroupId": "ParamGroup",
+			"Name": "髪揺れ"
+		},
+		{
+			"Id": "Param8",
+			"GroupId": "ParamGroup",
+			"Name": "走り袴揺れ"
+		},
+		{
+			"Id": "Param9",
+			"GroupId": "ParamGroup",
+			"Name": "←走り腕"
+		},
+		{
+			"Id": "Param10",
+			"GroupId": "ParamGroup",
+			"Name": "→走り腕"
+		},
+		{
+			"Id": "Param3",
+			"GroupId": "ParamGroup",
+			"Name": "←走り"
+		},
+		{
+			"Id": "Param5",
+			"GroupId": "ParamGroup",
+			"Name": "→走り"
+		},
+		{
+			"Id": "Param2",
+			"GroupId": "",
+			"Name": "上体傾き"
+		}
+	],
+	"ParameterGroups": [
+		{
+			"Id": "ParamGroup",
+			"GroupId": "",
+			"Name": "走り制御パラメータ"
+		}
+	],
+	"Parts": [
+		{
+			"Id": "Part",
+			"Name": "インテーク"
+		},
+		{
+			"Id": "Part2",
+			"Name": "前髪"
+		},
+		{
+			"Id": "Part9",
+			"Name": "顔パーツ"
+		},
+		{
+			"Id": "Part10",
+			"Name": "頭部"
+		},
+		{
+			"Id": "Part11",
+			"Name": "←耳"
+		},
+		{
+			"Id": "Part13",
+			"Name": "体"
+		},
+		{
+			"Id": "Part12",
+			"Name": "後頭部"
+		},
+		{
+			"Id": "Part56",
+			"Name": "ポニテ"
+		},
+		{
+			"Id": "Part3",
+			"Name": "前髪３"
+		},
+		{
+			"Id": "Part4",
+			"Name": "前髪４"
+		},
+		{
+			"Id": "Part5",
+			"Name": "前髪２"
+		},
+		{
+			"Id": "Part6",
+			"Name": "前髪１"
+		},
+		{
+			"Id": "Part7",
+			"Name": "前髪５"
+		},
+		{
+			"Id": "Part8",
+			"Name": "前髪６"
+		},
+		{
+			"Id": "Part14",
+			"Name": "胴"
+		},
+		{
+			"Id": "Part15",
+			"Name": "鎧腕←"
+		},
+		{
+			"Id": "Part32",
+			"Name": "下半身"
+		},
+		{
+			"Id": "Part53",
+			"Name": "トルソー１"
+		},
+		{
+			"Id": "Part54",
+			"Name": "機械腕→"
+		},
+		{
+			"Id": "Part16",
+			"Name": "上腕"
+		},
+		{
+			"Id": "Part25",
+			"Name": "前腕"
+		},
+		{
+			"Id": "Part33",
+			"Name": "帯"
+		},
+		{
+			"Id": "Part42",
+			"Name": "前掛け"
+		},
+		{
+			"Id": "Part45",
+			"Name": "袴"
+		},
+		{
+			"Id": "Part48",
+			"Name": "下肢"
+		},
+		{
+			"Id": "Part52",
+			"Name": "袴裏"
+		},
+		{
+			"Id": "Part55",
+			"Name": "胴BL"
+		},
+		{
+			"Id": "Part17",
+			"Name": "肘鎧"
+		},
+		{
+			"Id": "Part18",
+			"Name": "肘鎧後ろ"
+		},
+		{
+			"Id": "Part19",
+			"Name": "鎧３"
+		},
+		{
+			"Id": "Part20",
+			"Name": "鎧３後ろ"
+		},
+		{
+			"Id": "Part21",
+			"Name": "鎧２"
+		},
+		{
+			"Id": "Part22",
+			"Name": "鎧２後ろ"
+		},
+		{
+			"Id": "Part23",
+			"Name": "鎧１"
+		},
+		{
+			"Id": "Part24",
+			"Name": "鎧１後ろ"
+		},
+		{
+			"Id": "Part26",
+			"Name": "縄１"
+		},
+		{
+			"Id": "Part27",
+			"Name": "縄2"
+		},
+		{
+			"Id": "Part28",
+			"Name": "縄3"
+		},
+		{
+			"Id": "Part29",
+			"Name": "前腕鎧"
+		},
+		{
+			"Id": "Part30",
+			"Name": "手の甲鎧"
+		},
+		{
+			"Id": "Part31",
+			"Name": "手パー"
+		},
+		{
+			"Id": "Part34",
+			"Name": "帯結び"
+		},
+		{
+			"Id": "Part35",
+			"Name": "帯紐タレ←表"
+		},
+		{
+			"Id": "Part36",
+			"Name": "帯紐タレ←表裏"
+		},
+		{
+			"Id": "Part37",
+			"Name": "帯紐タレ→表"
+		},
+		{
+			"Id": "Part38",
+			"Name": "帯紐タレ→表裏"
+		},
+		{
+			"Id": "Part39",
+			"Name": "帯紐"
+		},
+		{
+			"Id": "Part40",
+			"Name": "←"
+		},
+		{
+			"Id": "Part41",
+			"Name": "→"
+		},
+		{
+			"Id": "Part43",
+			"Name": "前掛け黒"
+		},
+		{
+			"Id": "Part44",
+			"Name": "前掛けライン"
+		},
+		{
+			"Id": "Part46",
+			"Name": "袴←"
+		},
+		{
+			"Id": "Part47",
+			"Name": "袴→"
+		},
+		{
+			"Id": "Part49",
+			"Name": "←脚"
+		},
+		{
+			"Id": "Part51",
+			"Name": "→脚"
+		},
+		{
+			"Id": "Part50",
+			"Name": "走り"
+		}
+	]
+}

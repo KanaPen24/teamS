@@ -90,24 +90,6 @@ public class ObjEnemyBase : ObjBase
 
     public override void CheckObjGround()
     {
-        //// オブジェクトのタイプが「FIELD」だったら
-        //// 地面に立っている状態にする → 落下速度を0で終了
-        //if (m_EnemyState == EnemyState.KnockBack && m_Ground.m_bStand) 
-        //{
-        //    //減衰処理
-        //    GetSetSpeed = 
-        //        new Vector2(knockBack.m_vSpeed.x * knockBack.m_fDamping, knockBack.m_vSpeed.y * knockBack.m_fDamping);
-        //    knockBack.m_vSpeed = GetSetSpeed;
-        //    //弾むのが0.1f以下になったら
-        //    if (GetSetSpeed.y <= 0.1f)
-        //    {   
-        //        GetSetSpeed = Vector2.zero;     //止める
-        //        m_EnemyState = EnemyState.Idle;
-        //    }
-        //    m_Ground.m_bStand = false;
-        //    return;
-        //}
-
         // 今現在立っている地面を離れたら…
         if (GetSetPos.x + GetSetScale.x / 2f < m_Ground.m_vCenter.x - (m_Ground.m_vSize.x / 2f) ||
             GetSetPos.x - GetSetScale.x / 2f > m_Ground.m_vCenter.x + (m_Ground.m_vSize.x / 2f))
