@@ -60,6 +60,7 @@ public class ObjManager : MonoBehaviour
             if (Objs[i].GetSetExist)
             {
                 // オブジェクトの表示
+                if (Objs[i].texObj != null)
                 Objs[i].texObj.enabled = true;
 
                 // 更新処理  → 地面判定 → 向き調整 → 移動量に速度を格納 → 速度調整 →
@@ -79,7 +80,8 @@ public class ObjManager : MonoBehaviour
             else
             {
                 // オブジェクトの非表示
-                Objs[i].texObj.enabled = false;
+                if (Objs[i].texObj != null)
+                    Objs[i].texObj.enabled = false;
             }
 
             // オブジェクトのパラメーター更新

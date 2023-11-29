@@ -36,8 +36,8 @@ public class PlayerIdle : PlayerStrategy
             ObjPlayer.m_bJumpFlg = true;
             return;
         }
-        // 移動 → 攻撃
-        if (Input.GetKeyDown(IS_XBoxInput.B))
+        // 待ち → 攻撃
+        if (Input.GetKeyDown(IS_XBoxInput.X))
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Atk;
             ObjPlayer.m_bAtkFlg = true;
@@ -47,6 +47,9 @@ public class PlayerIdle : PlayerStrategy
 
     public override void UpdatePlayer()
     {
+        // アニメ―ション
+        ObjPlayer.instance.Anim.ChangeAnim(PlayerAnimState.Idle);
+
         // 速度は0に一定
         ObjPlayer.instance.GetSetSpeed = new Vector2(0f, 0f);
     }

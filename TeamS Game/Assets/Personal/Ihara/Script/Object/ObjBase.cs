@@ -286,3 +286,15 @@ public class ObjBase : MonoBehaviour
     public Invincible GetSetInvincible { get { return m_Invincible; } set { m_Invincible = value; } }
     // ----------------------------------------------------------------------------------------
 }
+
+
+//“–‚½‚è”»’è‚ğ¶¬ ¨ ‚»‚ÌÀ•W‚ğ“®‚©‚· ¨ ÅŒã‚ÍÁ‹
+
+//int ID = ON_HitManager.instance.GenerateHit();
+
+//ON_HitManager.instance.SetCenter(ID, w’è‚µ‚½À•W‚ÉˆÚ“®‚·‚é);
+//ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
+
+//ON_HitManager.instance.DeleteHit(ID);
+
+
