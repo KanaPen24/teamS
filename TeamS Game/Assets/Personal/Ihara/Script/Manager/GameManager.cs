@@ -19,6 +19,7 @@ using UnityEngine.SceneManagement;
 // ===============================================
 public enum GameState
 {
+    Title,
     GameStart,
     GamePlay,
     GamePause,

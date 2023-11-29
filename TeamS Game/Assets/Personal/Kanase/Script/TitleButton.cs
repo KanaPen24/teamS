@@ -25,6 +25,7 @@ public class TitleButton : MonoBehaviour
         //トランジションを掛けてシーン遷移する
         Fade.instance.FadeIn(1f, () =>
         {
+            GameManager.GetSetGameState = GameState.GameStart;
             SceneManager.LoadScene("GameScene");
         });
     }
