@@ -31,7 +31,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d4c867f6b72b714dbb5fd1780afe208, type: 3}
-  m_Name: "VFX_Neon_\u9B5A"
+  m_Name: "VFX_Neon_\u63D0\u706F"
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
@@ -102,7 +102,7 @@ VisualEffectResource:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "VFX_Neon_\u9B5A"
+  m_Name: "VFX_Neon_\u63D0\u706F"
   m_Graph: {fileID: 114350483966674976}
   m_Infos:
     m_RendererSettings:
@@ -2281,7 +2281,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614667}
   - {fileID: 8926484042661614668}
   - {fileID: 8926484042661614669}
-  Asset: {fileID: -3256353808211938606, guid: 5ad4bca41181beb40a7e67e8dbb38701, type: 3}
+  Asset: {fileID: -3256353808211938606, guid: 5c8ca4a4126fbfd4cbed6be83316221b, type: 3}
 --- !u!114 &8926484042661614667
 MonoBehaviour:
   m_ObjectHideFlags: 0
