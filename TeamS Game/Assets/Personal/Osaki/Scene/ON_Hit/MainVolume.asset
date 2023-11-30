@@ -52,25 +52,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cba8ff320cb7fe44a92bafc48a40f58a, type: 3}
   m_Name: FlareVolume
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   flareColor:
     m_OverrideState: 1
-    m_Value: {r: 0.754717, g: 0.56532574, b: 0.56532574, a: 1}
+    m_Value: {r: 1, g: 0, b: 0, a: 1}
   flarePosition:
     m_OverrideState: 1
-    m_Value: {x: -0.37, y: -0.33}
+    m_Value: {x: 0.08, y: 0}
   flareSize:
     m_OverrideState: 1
-    m_Value: 0.61
+    m_Value: 0.28
   paraColor:
     m_OverrideState: 1
-    m_Value: {r: 0.35158226, g: 0.22627269, b: 0.5283019, a: 1}
+    m_Value: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
   paraPosition:
     m_OverrideState: 1
     m_Value: {x: 0.18, y: -0.04}
   paraSize:
     m_OverrideState: 1
-    m_Value: 0.72
+    m_Value: 0.56
 --- !u!114 &-6204809596990474611
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dabe33b2c6f6c7b47bbc25decd09e3a0, type: 3}
   m_Name: ON_GaussianVolume
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   rate:
     m_OverrideState: 1
     m_Value: 0

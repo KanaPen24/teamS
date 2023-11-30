@@ -41,6 +41,14 @@ public class Ground
     [SerializeField] public bool m_bStand;    // 地面に立っているか
     [SerializeField] public Vector2 m_vCenter;// 中心座標 
     [SerializeField] public Vector2 m_vSize;  // 大きさ
+
+    // --- 地面情報リセット ---
+    public void ResetGroundData()
+    {
+        m_bStand = false;
+        m_vCenter = Vector2.zero;
+        m_vSize = Vector2.zero;
+    }
 }
 // ----------------------------------------------------------------------------------------
 
@@ -278,3 +286,15 @@ public class ObjBase : MonoBehaviour
     public Invincible GetSetInvincible { get { return m_Invincible; } set { m_Invincible = value; } }
     // ----------------------------------------------------------------------------------------
 }
+
+
+//当たり判定を生成 → その座標を動かす → 最後は消去
+
+//int ID = ON_HitManager.instance.GenerateHit();
+
+//ON_HitManager.instance.SetCenter(ID, 指定した座標に移動する);
+//ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
+
+//ON_HitManager.instance.DeleteHit(ID);
+
+

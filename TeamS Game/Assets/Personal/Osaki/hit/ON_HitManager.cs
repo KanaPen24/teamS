@@ -123,8 +123,8 @@ public class ON_HitManager
             return state;
         }
         // “G“¯Žm‚ª“–‚½‚Á‚½Žž
-        if(ObjManager.instance.GetObjs(m_hits[i].GetObjID()).GetComponent<ObjEnemyBase>() != null &&
-           ObjManager.instance.GetObjs(m_hits[j].GetObjID()).GetComponent<ObjEnemyBase>() != null){
+        if(ObjManager.instance.GetObj(m_hits[i].GetObjID()).GetComponent<ObjEnemyBase>() != null &&
+           ObjManager.instance.GetObj(m_hits[j].GetObjID()).GetComponent<ObjEnemyBase>() != null){
             state = HitState.ENEMY;
             return state;
         }

@@ -16,7 +16,7 @@ public enum PlayerState
     Jump,
     Drop,
     Atk,
-    //Def,
+    //Special,
 
     MaxPlayerState
 }
@@ -32,6 +32,8 @@ public class ObjPlayer : ObjBase
     public static ObjPlayer instance;
     public PlayerState m_PlayerState;
     public List<PlayerStrategy> m_PlayerStrategys;
+    //[HideInInspector]
+    public PlayerAnim Anim;
 
     public void Start()
     {

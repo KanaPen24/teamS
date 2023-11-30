@@ -27,6 +27,9 @@ public class PlayerDrop : PlayerStrategy
 
     public override void UpdatePlayer()
     {
+        // アニメ―ション
+        ObjPlayer.instance.Anim.ChangeAnim(PlayerAnimState.Drop);
+
         // 落下開始時に何かするかも??
         if (ObjPlayer.m_bDropFlg)
         {

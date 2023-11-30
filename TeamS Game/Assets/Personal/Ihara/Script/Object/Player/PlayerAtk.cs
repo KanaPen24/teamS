@@ -13,22 +13,23 @@ public class PlayerAtk : PlayerStrategy
 {
     [SerializeField] private Vector3 m_vAtkArea;
     [SerializeField] private float m_fLength;
-    [SerializeField] private float m_fInterval;
-    [SerializeField] private float m_fTime;
+    //[SerializeField] private float m_fInterval;
+    //[SerializeField] private float m_fTime;
     private int atknum;
     private bool m_bAtk;
 
-    private void Start()
-    {
-        m_fTime = m_fInterval;
-    }
+    //private void Start()
+    //{
+    //    m_fTime = m_fInterval;
+    //}
 
     public override void UpdateState()
     {
-        if (m_fTime <= 0 && !ObjPlayer.m_bAtkFlg)
+        //if (m_fTime <= 0 && !ObjPlayer.m_bAtkFlg)
+        if (ObjPlayer.instance.Anim.GetAnimNormalizeTime(PlayerAnimState.Atk,1f) && !ObjPlayer.m_bAtkFlg)
         {
-            // UŒ‚ŽžŠÔ‚ð0‚É‚·‚é
-            m_fTime = 0;
+            //// UŒ‚ŽžŠÔ‚ð0‚É‚·‚é
+            //m_fTime = 0;
 
             // UŒ‚ ¨ ‘Ò‚¿
             if (ObjPlayer.instance.GetSetGround.m_bStand)
@@ -43,16 +44,19 @@ public class PlayerAtk : PlayerStrategy
             if (m_bAtk)
             {
                 if (ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
-                    ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
+                ON_HitManager.instance.SetCenter(atknum,ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
                 else if (ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
-                    ON_HitManager.instance.GetHit(atknum).SetCenter(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f));
+                    ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f));
             }
         }
     }
 
     public override void UpdatePlayer()
     {
-        if(ObjPlayer.m_bAtkFlg)
+        // ƒAƒjƒ\ƒVƒ‡ƒ“
+        ObjPlayer.instance.Anim.ChangeAnim(PlayerAnimState.Atk);
+
+        if (ObjPlayer.m_bAtkFlg)
         {
             if (GameManager.IsDebug())
                 Debug.Log("HitGenerate");
@@ -73,12 +77,12 @@ public class PlayerAtk : PlayerStrategy
                 ObjPlayer.instance.GetSetSpeed += new Vector2(-5f, 0f);
             }
 
-            m_fTime = m_fInterval;
+            //m_fTime = m_fInterval;
             AudioManager.instance.PlaySE(SEType.SE_PlayerAtk);
             ObjPlayer.m_bAtkFlg = false;
             m_bAtk = true;
         }
-        else m_fTime -= Time.deltaTime;
+        //else m_fTime -= Time.deltaTime;
 
         // ‘¬“x‚ÍŒ¸‘¬(‰¼)
         ObjPlayer.instance.GetSetSpeed *= new Vector2(0.8f, 1f);
