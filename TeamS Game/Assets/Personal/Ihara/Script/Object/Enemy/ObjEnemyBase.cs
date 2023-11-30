@@ -45,17 +45,13 @@ public class ObjEnemyBase : ObjBase
     {
     }
 
-    public override void UpdateDebug()
-    {
-        //Debug.Log("EnemyBase");
-    }
     public override void DamageAttack()
     {
         //攻撃をくらったらノックバックする
         //KnockBackObj();
     }
 
-    public override void KnockBackObj(ObjDir dir)
+    public override void KnockBackObj(ObjDir dir = ObjDir.NONE)
     {
         //ノックバック中なら
         if (m_EnemyState == EnemyState.KnockBack)
