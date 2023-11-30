@@ -163,14 +163,6 @@ public class ObjManager : MonoBehaviour
                 {
                     otherID = j;
                 }
-
-                // —¼•û‚ÌŒŸõ‚ªI‚í‚Á‚Ä‚¢‚½‚çc
-                if (myID != -1 && otherID != -1)
-                {
-                    // C³‚ğs‚¢I—¹‚·‚é
-                    CollisionFix(i, ON_HitManager.instance.GetData(i).state);
-                    break;
-                }
             }
             // -----------------------------------------------------
 
@@ -185,7 +177,85 @@ public class ObjManager : MonoBehaviour
                 " ‘Šè: " + otherID);
 
             // --- ”»’è‚É‚æ‚Á‚ÄƒQ[ƒ€‚É”½‰f ---
-            // ’n–ÊÚG‚Ì”»’è‚¾‚Á‚½‚ç
+            // UŒ‚‚ğ“–‚Ä‚½”»’è‚¾‚Á‚½‚ç
+            if (ON_HitManager.instance.GetData(i).state == HitState.ATTACK)
+            {
+                if (!Objs[otherID].GetSetInvincible.m_bInvincible)
+                {
+                    //Player‚Ìê‡‚Í
+                    if (Objs[myID].GetComponent<ObjPlayer>() != null)
+                    {
+                        // ƒRƒ“ƒ{‰ÁZ
+                        YK_Combo.AddCombo();
+
+                        // ƒqƒbƒgƒGƒtƒFƒNƒgÄ¶
+                        hitEffect.Play();
+                        hitEffect.transform.position = Objs[otherID].GetSetPos;
+                    }
+                }
+            }
+            // UŒ‚‚ğó‚¯‚½”»’è‚¾‚Á‚½‚ç
+            if (ON_HitManager.instance.GetData(i).state == HitState.DEFENCE)
+            {
+                // ©g‚ª–³“G‚Å‚È‚¯‚ê‚Îc
+                if (!Objs[myID].GetSetInvincible.m_bInvincible)
+                {
+                    // ©g‚ª“G‚¾‚Á‚½‚ç
+                    if(Objs[myID].GetComponent<ObjEnemyBase>() != null)
+                    {
+                        // ƒmƒbƒNƒoƒbƒNˆ— ¨ –³“GŠÔİ’è
+                        Objs[myID].KnockBackObj(Objs[otherID].GetSetDir);
+                        Objs[myID].GetSetInvincible.SetInvincible(0.3f);
+                    }
+                }
+            }
+            // ‘Ì“¯m‚ÌÚG”»’è‚¾‚Á‚½‚ç
+            if (ON_HitManager.instance.GetData(i).state == HitState.BODYS)
+            {
+            }
+            // UŒ‚“¯m‚ÌÚG”»’è‚¾‚Á‚½‚ç
+            if (ON_HitManager.instance.GetData(i).state == HitState.BALANCE)
+            {
+            }
+            // “G“¯m‚Ì”»’è‚¾‚Á‚½‚ç
+            if (ON_HitManager.instance.GetData(i).state == HitState.ENEMY)
+            {
+                ObjEnemyBase Enemy_1 = Objs[myID].GetComponent<ObjEnemyBase>();
+                ObjEnemyBase Enemy_2 = Objs[otherID].GetComponent<ObjEnemyBase>();
+
+                // Œİ‚¢‚É“G‚ª‘¶İ‚µ‚Ä‚¢‚½‚çc
+                if(Enemy_1.GetSetExist && Enemy_2.GetSetExist)
+                {
+                    // ‚Ç‚¿‚ç‚àƒmƒbƒNƒoƒbƒN‚Ìó‘Ô‚¾‚Á‚½‚ç
+                    if (Enemy_1.GetSetEnemyState == EnemyState.KnockBack &&
+                        Enemy_2.GetSetEnemyState == EnemyState.KnockBack)
+                    {
+                        // --- “G‚Ì‡¬ ---
+                        UnionEnemy(Enemy_1.GetSetObjID, Enemy_2.GetSetObjID);
+                    }
+                }
+            }
+            // •KE‹Z‚ğ“–‚Ä‚½”»’è‚¾‚Á‚½‚ç
+            if (ON_HitManager.instance.GetData(i).state == HitState.SPECIAL)
+            {
+            }
+            // •KE‹Z‚ğó‚¯‚½”»’è‚¾‚Á‚½‚ç
+            if (ON_HitManager.instance.GetData(i).state == HitState.DEFSPECIAL)
+            {
+            }
+            // ’e‚ğ“–‚Ä‚½”»’è‚¾‚Á‚½‚ç
+            if (ON_HitManager.instance.GetData(i).state == HitState.BULLET)
+            {
+            }
+            // ’e‚ğó‚¯‚½”»’è‚¾‚Á‚½‚ç
+            if (ON_HitManager.instance.GetData(i).state == HitState.DEFBULLET)
+            {
+            }
+            // ’e‚ğ”j‰ó‚·‚é”»’è‚¾‚Á‚½‚ç
+            if (ON_HitManager.instance.GetData(i).state == HitState.BULLET2DESTROY)
+            {
+            }
+            // ’n–Ê‚É“–‚½‚Á‚½”»’è‚¾‚Á‚½‚ç
             if (ON_HitManager.instance.GetData(i).state == HitState.GRUOND)
             {
                 // ‰E‚É“–‚½‚Á‚Ä‚¢‚½‚ç
@@ -241,41 +311,11 @@ public class ObjManager : MonoBehaviour
                         Debug.Log("’n–Ê‚É“–‚½‚Á‚½");
                 }
             }
-
-            //UŒ‚‚Ì”»’è‚¾‚Á‚½‚ç
-            if (ON_HitManager.instance.GetData(i).state == HitState.DEFENCE)
+            // ’n–Ê‚©‚çŒ©‚Ä‰½‚©‚É“–‚Ä‚ç‚ê‚½”»’è‚¾‚Á‚½‚ç
+            if (ON_HitManager.instance.GetData(i).state == HitState.DEFGRUOND)
             {
-                if(!Objs[otherID].GetSetInvincible.m_bInvincible)
-                {
-                    // “G‚ÉƒmƒbƒNƒoƒbƒNˆ— ¨ –³“GŠÔİ’è
-                    Objs[otherID].KnockBackObj(Objs[myID].GetSetDir);
-                    Objs[otherID].GetSetInvincible.SetInvincible(0.3f);
-
-                    // ƒqƒbƒgƒGƒtƒFƒNƒgÄ¶
-                    hitEffect.Play();
-                    hitEffect.transform.position = Objs[otherID].GetSetPos;
-
-                    // ƒRƒ“ƒ{”­¶
-                    YK_Combo.AddCombo();
-                }
             }
 
-            // “G“¯m‚Ì”»’è‚¾‚Á‚½‚ç
-            if (ON_HitManager.instance.GetData(i).state == HitState.ENEMY)
-            {
-                // ‡‘Ì“G“¯m‚¾‚Á‚½‚çƒXƒLƒbƒv‚·‚é(‰¼)
-                if (Objs[myID].GetComponent<ObjEnemyUnion>() == null &&
-                    Objs[otherID].GetComponent<ObjEnemyUnion>() == null)
-                {
-                    // ‚Ç‚¿‚ç‚àƒmƒbƒNƒoƒbƒN‚Ìó‘Ô‚¾‚Á‚½‚ç
-                    if (Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack &&
-                    Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack)
-                    {
-                        // --- “G‚Ì‡¬ ---
-                        UnionEnemy(myID, otherID);
-                    }
-                }
-            }
             // -------------------------------
         }
     }
@@ -315,51 +355,51 @@ public class ObjManager : MonoBehaviour
         }
     }
 
-    // --- “–‚½‚è”»’è‚É‚æ‚éC³ŠÖ” ---
-    private void CollisionFix(int dataNum, HitState hitState)
-    {
-        switch(hitState)
-        {
-            case HitState.ATTACK:
-                break;
-            case HitState.BALANCE:
-                break;
-            case HitState.BODYS:
-                break;
-            case HitState.DEFENCE:
-                if (Objs[myID].GetComponent<ObjEnemyBase>() != null)
-                    (myID, otherID) = (otherID, myID);
-                break;
-            case HitState.ENEMY:
-                break;
-            case HitState.GRUOND:
-                if (Objs[myID].GetComponent<ObjField>() != null)
-                {
-                    (myID, otherID) = (otherID, myID);
-                    if(ON_HitManager.instance.GetData(dataNum).dir == HitDir.UP)
-                    {
-                        ON_HitManager.instance.GetData(dataNum).dir = HitDir.DOWN;
-                        break;
-                    }
-                    if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.DOWN)
-                    {
-                        ON_HitManager.instance.GetData(dataNum).dir = HitDir.UP;
-                        break;
-                    }
-                    if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.RIGHT)
-                    {
-                        ON_HitManager.instance.GetData(dataNum).dir = HitDir.LEFT;
-                        break;
-                    }
-                    if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.LEFT)
-                    {
-                        ON_HitManager.instance.GetData(dataNum).dir = HitDir.RIGHT;
-                        break;
-                    }
-                }
-                break;
-        }
-    }
+    //// --- “–‚½‚è”»’è‚É‚æ‚éC³ŠÖ” ---
+    //private void CollisionFix(int dataNum, HitState hitState)
+    //{
+    //    switch(hitState)
+    //    {
+    //        case HitState.ATTACK:
+    //            break;
+    //        case HitState.BALANCE:
+    //            break;
+    //        case HitState.BODYS:
+    //            break;
+    //        case HitState.DEFENCE:
+    //            if (Objs[myID].GetComponent<ObjEnemyBase>() != null)
+    //                (myID, otherID) = (otherID, myID);
+    //            break;
+    //        case HitState.ENEMY:
+    //            break;
+    //        case HitState.GRUOND:
+    //            if (Objs[myID].GetComponent<ObjField>() != null)
+    //            {
+    //                (myID, otherID) = (otherID, myID);
+    //                if(ON_HitManager.instance.GetData(dataNum).dir == HitDir.UP)
+    //                {
+    //                    ON_HitManager.instance.GetData(dataNum).dir = HitDir.DOWN;
+    //                    break;
+    //                }
+    //                if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.DOWN)
+    //                {
+    //                    ON_HitManager.instance.GetData(dataNum).dir = HitDir.UP;
+    //                    break;
+    //                }
+    //                if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.RIGHT)
+    //                {
+    //                    ON_HitManager.instance.GetData(dataNum).dir = HitDir.LEFT;
+    //                    break;
+    //                }
+    //                if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.LEFT)
+    //                {
+    //                    ON_HitManager.instance.GetData(dataNum).dir = HitDir.RIGHT;
+    //                    break;
+    //                }
+    //            }
+    //            break;
+    //    }
+    //}
 
     public ObjBase GetObj(int i)
     {

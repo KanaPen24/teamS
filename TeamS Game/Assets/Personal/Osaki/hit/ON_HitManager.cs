@@ -34,11 +34,20 @@ public enum HitState
 
     ATTACK,     // 攻撃する
     DEFENCE,    // 攻撃される
-    GRUOND,     // フィールドに当たった
+
     BODYS,      // 体同士が接触
     BALANCE,    // 攻撃同士が当たる
     ENEMY,      // 敵同士が当たる
 
+    SPECIAL,    // 必殺技が当たる
+    DEFSPECIAL, // 必殺技を受ける
+
+    BULLET,     // 弾が当たる
+    DEFBULLET,  // 弾を受ける
+    BULLET2DESTROY, // 弾を破壊する
+
+    GRUOND,     // フィールドに当たった
+    DEFGRUOND,  // フィールド側が受ける
 
     MAX_STATE
 }
@@ -78,10 +87,14 @@ public class ON_HitManager
         // 当たり判定の計算
         for(int i = 0; i < m_hits.Count; ++i)
         {
+            // 基準が「地面」だったらスキップする
+            if (m_hits[i].GetHitType() == HitType.FIELD) continue;
+
             // 当たり判定がoffだったらスキップする
             if (m_hits[i].GetActive() == false) continue;
 
-            for (int j = i; j < m_hits.Count; ++j)
+            //for (int j = i; j < m_hits.Count; ++j)
+            for (int j = 0; j < m_hits.Count; ++j)
             {
                 // 当たり判定がoffだったらスキップする
                 if (m_hits[j].GetActive() == false) continue;
@@ -95,10 +108,6 @@ public class ON_HitManager
 
                 // 同一オブジェクトか
                 if (m_hits[i].GetObjID() == m_hits[j].GetObjID()) continue;
-
-                // 攻撃と地面の判定かどうか(基本的には何もしない)
-                if ((m_hits[i].GetHitType() == HitType.ATTACK && m_hits[j].GetHitType() == HitType.FIELD) &&
-                    (m_hits[j].GetHitType() == HitType.ATTACK && m_hits[i].GetHitType() == HitType.FIELD)) continue;
 
                 // 当たっている
                 // 当たり判定の状態判定し、追加
@@ -116,29 +125,38 @@ public class ON_HitManager
     private HitState DecideState(int i, int j)
     {
         HitState state = HitState.NONE;
-        // 地面と当たっているか
-        if(m_hits[i].GetHitType() == HitType.FIELD || m_hits[j].GetHitType() == HitType.FIELD)
-        {
-            state = HitState.GRUOND;
-            return state;
-        }
+
         // 敵同士が当たった時
-        if(ObjManager.instance.GetObj(m_hits[i].GetObjID()).GetComponent<ObjEnemyBase>() != null &&
-           ObjManager.instance.GetObj(m_hits[j].GetObjID()).GetComponent<ObjEnemyBase>() != null){
+        if (ObjManager.instance.GetObj(m_hits[i].GetObjID()).GetComponent<ObjEnemyBase>() != null &&
+           ObjManager.instance.GetObj(m_hits[j].GetObjID()).GetComponent<ObjEnemyBase>() != null)
+        {
             state = HitState.ENEMY;
             return state;
         }
 
         // 自分の状態によって処理派生
-        switch(m_hits[i].GetHitType())
+        switch (m_hits[i].GetHitType())
         {
             case HitType.ATTACK:
-                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.BALANCE;
-                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.ATTACK;
+                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.BALANCE;       // 相殺
+                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.ATTACK;          // 攻撃が当たる
+                if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.NONE;         // 必殺技は相殺しない
+                if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.NONE;          // 何もしない
+                if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.NONE;           // 何もしない
                 break;
             case HitType.BODY:
-                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.DEFENCE;
-                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.BODYS;
+                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.DEFENCE;     // 攻撃を受ける
+                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.BODYS;         // 体同士の接触
+                if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.DEFSPECIAL; // 必殺技を受ける 
+                if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.DEFBULLET;   // 弾を受ける
+                if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.GRUOND;       // 地面に当たる
+                break;
+            case HitType.BULLET:
+                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.BULLET2DESTROY; // 弾を破壊
+                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.BULLET;           // 弾が当たる
+                if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.NONE;          // 何もしない 
+                if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.NONE;           // 何もしない
+                if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.BULLET2DESTROY;  // 弾を破壊
                 break;
         }
 

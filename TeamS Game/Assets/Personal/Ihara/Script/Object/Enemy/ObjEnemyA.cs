@@ -18,9 +18,4 @@ public class ObjEnemyA : ObjEnemyBase
         if (m_EnemyState == EnemyState.Drop && GetSetGround.m_bStand)
             m_EnemyState = EnemyState.Idle;
     }
-
-    public override void UpdateDebug()
-    {
-        //Debug.Log("EnemyA");
-    }
 }

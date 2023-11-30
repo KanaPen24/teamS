@@ -11,6 +11,9 @@ using UnityEngine;
 
 public class PlayerStrategy : MonoBehaviour
 {
+    //public bool m_bStartFlg;
+    //public bool m_bEndFlg;
+
     // Player‚Ì‘JˆÚó‘Ô‚Ì“ü—Íˆ—
     public virtual void UpdateState()
     {

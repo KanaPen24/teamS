@@ -28,9 +28,4 @@ public class HitotumeProto : ObjEnemyBase
         m_HitotumeStrategy[(int)m_EnemyState].UpdateStrategy();
         //m_vSpeed.x = 3.0f;
     }
-
-    public override void UpdateDebug()
-    {
-        //Debug.Log("EnemyA");
-    }
 }
