@@ -19,7 +19,7 @@ public class ON_BackGround : MonoBehaviour
     [SerializeField] private GameObject cam;
     [SerializeField] private float rate = 1;
     private float currentX;
-    private bool inScene = false;
+    private bool inScene = true;
     private bool oldinScene;
     private Vector3 start;
     // Start is called before the first frame update
@@ -43,24 +43,10 @@ public class ON_BackGround : MonoBehaviour
             transform.position = new Vector3(start.x + Mathf.Lerp(0, cam.transform.position.x, rate) , start.y, start.z);
         }
 
-        if(!inScene && oldinScene || false/*一定の範囲外の場合*/)
-        {
-            // 再配置
-        }
-
+        
         // 更新
         if(currentX != cam.transform.position.x)
             currentX = cam.transform.position.x;
         oldinScene = inScene;
-    }
-
-    private void OnBecameVisible()
-    {
-        inScene = true;
-    }
-
-    private void OnBecameInvisible()
-    {
-        inScene = false;
     }
 }
