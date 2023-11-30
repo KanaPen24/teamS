@@ -40,7 +40,7 @@ public class PlayerWalk : PlayerStrategy
             return;
         }
         // 移動 → 攻撃
-        if (Input.GetKeyDown(IS_XBoxInput.B))
+        if (Input.GetKeyDown(IS_XBoxInput.X))
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Atk;
             AudioManager.instance.StopSE(SEType.SE_PlayerWalk);
@@ -51,7 +51,10 @@ public class PlayerWalk : PlayerStrategy
 
     public override void UpdatePlayer()
     {
-        if(ObjPlayer.m_bWalkFlg)
+        // アニメ―ション
+        ObjPlayer.instance.Anim.ChangeAnim(PlayerAnimState.Walk);
+
+        if (ObjPlayer.m_bWalkFlg)
         {
             AudioManager.instance.PlaySE(SEType.SE_PlayerWalk);
             AudioManager.instance.GetSE(SEType.SE_PlayerWalk).loop = true;

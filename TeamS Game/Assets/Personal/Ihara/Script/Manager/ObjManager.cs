@@ -21,16 +21,6 @@ public class ObjManager : MonoBehaviour
     private int myID;
     private int otherID;
 
-    public ObjBase GetObjs(int i)
-    {
-        return Objs[i];
-    }
-
-    public List<ObjBase> GetObj()
-    {
-        return Objs;
-    }
-
     private void Start()
     {
         if(instance == null)
@@ -70,6 +60,7 @@ public class ObjManager : MonoBehaviour
             if (Objs[i].GetSetExist)
             {
                 // オブジェクトの表示
+                if (Objs[i].texObj != null)
                 Objs[i].texObj.enabled = true;
 
                 // 更新処理  → 地面判定 → 向き調整 → 移動量に速度を格納 → 速度調整 →
@@ -89,7 +80,8 @@ public class ObjManager : MonoBehaviour
             else
             {
                 // オブジェクトの非表示
-                Objs[i].texObj.enabled = false;
+                if (Objs[i].texObj != null)
+                    Objs[i].texObj.enabled = false;
             }
 
             // オブジェクトのパラメーター更新
@@ -171,14 +163,6 @@ public class ObjManager : MonoBehaviour
                 {
                     otherID = j;
                 }
-
-                // 両方の検索が終わっていたら…
-                if (myID != -1 && otherID != -1)
-                {
-                    // 修正を行い終了する
-                    CollisionFix(i, ON_HitManager.instance.GetData(i).state);
-                    break;
-                }
             }
             // -----------------------------------------------------
 
@@ -193,7 +177,85 @@ public class ObjManager : MonoBehaviour
                 " 相手: " + otherID);
 
             // --- 判定によってゲームに反映 ---
-            // 地面接触の判定だったら
+            // 攻撃を当てた判定だったら
+            if (ON_HitManager.instance.GetData(i).state == HitState.ATTACK)
+            {
+                if (!Objs[otherID].GetSetInvincible.m_bInvincible)
+                {
+                    //Playerの場合は
+                    if (Objs[myID].GetComponent<ObjPlayer>() != null)
+                    {
+                        // コンボ加算
+                        YK_Combo.AddCombo();
+
+                        // ヒットエフェクト再生
+                        hitEffect.Play();
+                        hitEffect.transform.position = Objs[otherID].GetSetPos;
+                    }
+                }
+            }
+            // 攻撃を受けた判定だったら
+            if (ON_HitManager.instance.GetData(i).state == HitState.DEFENCE)
+            {
+                // 自身が無敵でなければ…
+                if (!Objs[myID].GetSetInvincible.m_bInvincible)
+                {
+                    // 自身が敵だったら
+                    if(Objs[myID].GetComponent<ObjEnemyBase>() != null)
+                    {
+                        // ノックバック処理 → 無敵時間設定
+                        Objs[myID].KnockBackObj(Objs[otherID].GetSetDir);
+                        Objs[myID].GetSetInvincible.SetInvincible(0.3f);
+                    }
+                }
+            }
+            // 体同士の接触判定だったら
+            if (ON_HitManager.instance.GetData(i).state == HitState.BODYS)
+            {
+            }
+            // 攻撃同士の接触判定だったら
+            if (ON_HitManager.instance.GetData(i).state == HitState.BALANCE)
+            {
+            }
+            // 敵同士の判定だったら
+            if (ON_HitManager.instance.GetData(i).state == HitState.ENEMY)
+            {
+                ObjEnemyBase Enemy_1 = Objs[myID].GetComponent<ObjEnemyBase>();
+                ObjEnemyBase Enemy_2 = Objs[otherID].GetComponent<ObjEnemyBase>();
+
+                // 互いに敵が存在していたら…
+                if(Enemy_1.GetSetExist && Enemy_2.GetSetExist)
+                {
+                    // どちらもノックバックの状態だったら
+                    if (Enemy_1.GetSetEnemyState == EnemyState.KnockBack &&
+                        Enemy_2.GetSetEnemyState == EnemyState.KnockBack)
+                    {
+                        // --- 敵の合成 ---
+                        UnionEnemy(Enemy_1.GetSetObjID, Enemy_2.GetSetObjID);
+                    }
+                }
+            }
+            // 必殺技を当てた判定だったら
+            if (ON_HitManager.instance.GetData(i).state == HitState.SPECIAL)
+            {
+            }
+            // 必殺技を受けた判定だったら
+            if (ON_HitManager.instance.GetData(i).state == HitState.DEFSPECIAL)
+            {
+            }
+            // 弾を当てた判定だったら
+            if (ON_HitManager.instance.GetData(i).state == HitState.BULLET)
+            {
+            }
+            // 弾を受けた判定だったら
+            if (ON_HitManager.instance.GetData(i).state == HitState.DEFBULLET)
+            {
+            }
+            // 弾を破壊する判定だったら
+            if (ON_HitManager.instance.GetData(i).state == HitState.BULLET2DESTROY)
+            {
+            }
+            // 地面に当たった判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.GRUOND)
             {
                 // 右に当たっていたら
@@ -249,107 +311,103 @@ public class ObjManager : MonoBehaviour
                         Debug.Log("地面に当たった");
                 }
             }
-
-            //攻撃の判定だったら
-            if (ON_HitManager.instance.GetData(i).state == HitState.DEFENCE)
+            // 地面から見て何かに当てられた判定だったら
+            if (ON_HitManager.instance.GetData(i).state == HitState.DEFGRUOND)
             {
-                if(!Objs[otherID].GetSetInvincible.m_bInvincible)
-                {
-                    // 敵にノックバック処理 → 無敵時間設定
-                    Objs[otherID].KnockBackObj(Objs[myID].GetSetDir);
-                    Objs[otherID].GetSetInvincible.SetInvincible(0.3f);
-
-                    // ヒットエフェクト再生
-                    hitEffect.Play();
-                    hitEffect.transform.position = Objs[otherID].GetSetPos;
-
-                    // コンボ発生
-                    YK_Combo.AddCombo();
-                }
             }
 
-            // 敵同士の判定だったら
-            if (ON_HitManager.instance.GetData(i).state == HitState.ENEMY)
-            {
-                // どちらもノックバックの状態だったら
-                if(Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack &&
-                    Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack)
-                {
-                    // 敵同士の存在,当たり判定を消す
-                    Objs[myID].GetSetExist = false;
-                    Objs[otherID].GetSetExist = false;
-                    Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.Drop;
-                    Objs[otherID].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.Drop;
-                    ON_HitManager.instance.SetActive(myID,false);
-                    ON_HitManager.instance.SetActive(otherID,false);
-
-                    // 使えるデータがあるか探す
-                    for(int t = 0; t < Objs.Count; ++t)
-                    {
-                        // 存在がないEnemyUnionがあった場合、そのデータを利用する
-                        if(Objs[t].GetComponent<ObjEnemyUnion>() != null && !Objs[t].GetSetExist)
-                        {
-                            ObjEnemyUnion unionEnemy = Objs[t].GetComponent<ObjEnemyUnion>();
-                            unionEnemy.GetSetExist = true;
-                            ON_HitManager.instance.SetActive(unionEnemy.GetSetObjID, true);
-                            unionEnemy.GetSetPos = Objs[myID].GetSetPos + new Vector3(0f, 5f, 0f);
-                            unionEnemy.m_nEnemyCnt 
-                                = Objs[myID].GetComponent<ObjEnemyBase>().m_nEnemyCnt +
-                                  Objs[otherID].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
-                            unionEnemy.m_nEnemyIDs.Add(Objs[myID].GetSetObjID);
-                            unionEnemy.m_nEnemyIDs.Add(Objs[otherID].GetSetObjID);
-                            break;
-                        }
-                    }
-                }
-            }
             // -------------------------------
         }
     }
 
-    // --- 当たり判定による修正関数 ---
-    private void CollisionFix(int dataNum, HitState hitState)
+    // --- 敵の合体処理 ---
+    private void UnionEnemy(int id_1,int id_2)
     {
-        switch(hitState)
+        // 敵同士の存在,当たり判定を消す
+        Objs[id_1].GetSetExist = false;
+        Objs[id_2].GetSetExist = false;
+        Objs[id_1].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.RePop;
+        Objs[id_2].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.RePop;
+        Objs[id_1].GetSetSpeed = new Vector2(Random.RandomRange(-0.1f, 0.1f), Random.RandomRange(0.3f, 0.5f));
+        Objs[id_2].GetSetSpeed = new Vector2(Random.RandomRange(-0.1f, 0.1f), Random.RandomRange(0.3f, 0.5f));
+        ON_HitManager.instance.SetActive(id_1, false);
+        ON_HitManager.instance.SetActive(id_2, false);
+
+        // 使えるデータがあるか探す
+        for (int i = 0; i < Objs.Count; ++i)
         {
-            case HitState.ATTACK:
+            // 存在がないEnemyUnionがあった場合、そのデータを利用する
+            if (Objs[i].GetComponent<ObjEnemyUnion>() != null && !Objs[i].GetSetExist)
+            {
+                ObjEnemyUnion unionEnemy = Objs[i].GetComponent<ObjEnemyUnion>();
+                unionEnemy.GetSetExist = true;
+                ON_HitManager.instance.SetActive(unionEnemy.GetSetObjID, true);
+                unionEnemy.GetSetPos = Objs[id_1].GetSetPos + new Vector3(0f, 5f, 0f);
+                unionEnemy.m_nEnemyCnt
+                    = Objs[id_1].GetComponent<ObjEnemyBase>().m_nEnemyCnt +
+                      Objs[id_2].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
+                unionEnemy.m_nEnemyIDs.Add(Objs[id_1].GetSetObjID);
+                unionEnemy.m_nEnemyIDs.Add(Objs[id_2].GetSetObjID);
+                unionEnemy.GetSetEnemyState = EnemyState.Drop;
+                unionEnemy.m_Ground.ResetGroundData();
                 break;
-            case HitState.BALANCE:
-                break;
-            case HitState.BODYS:
-                break;
-            case HitState.DEFENCE:
-                if (Objs[myID].GetComponent<ObjEnemyBase>() != null)
-                    (myID, otherID) = (otherID, myID);
-                break;
-            case HitState.ENEMY:
-                break;
-            case HitState.GRUOND:
-                if (Objs[myID].GetComponent<ObjField>() != null)
-                {
-                    (myID, otherID) = (otherID, myID);
-                    if(ON_HitManager.instance.GetData(dataNum).dir == HitDir.UP)
-                    {
-                        ON_HitManager.instance.GetData(dataNum).dir = HitDir.DOWN;
-                        break;
-                    }
-                    if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.DOWN)
-                    {
-                        ON_HitManager.instance.GetData(dataNum).dir = HitDir.UP;
-                        break;
-                    }
-                    if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.RIGHT)
-                    {
-                        ON_HitManager.instance.GetData(dataNum).dir = HitDir.LEFT;
-                        break;
-                    }
-                    if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.LEFT)
-                    {
-                        ON_HitManager.instance.GetData(dataNum).dir = HitDir.RIGHT;
-                        break;
-                    }
-                }
-                break;
+            }
         }
+    }
+
+    //// --- 当たり判定による修正関数 ---
+    //private void CollisionFix(int dataNum, HitState hitState)
+    //{
+    //    switch(hitState)
+    //    {
+    //        case HitState.ATTACK:
+    //            break;
+    //        case HitState.BALANCE:
+    //            break;
+    //        case HitState.BODYS:
+    //            break;
+    //        case HitState.DEFENCE:
+    //            if (Objs[myID].GetComponent<ObjEnemyBase>() != null)
+    //                (myID, otherID) = (otherID, myID);
+    //            break;
+    //        case HitState.ENEMY:
+    //            break;
+    //        case HitState.GRUOND:
+    //            if (Objs[myID].GetComponent<ObjField>() != null)
+    //            {
+    //                (myID, otherID) = (otherID, myID);
+    //                if(ON_HitManager.instance.GetData(dataNum).dir == HitDir.UP)
+    //                {
+    //                    ON_HitManager.instance.GetData(dataNum).dir = HitDir.DOWN;
+    //                    break;
+    //                }
+    //                if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.DOWN)
+    //                {
+    //                    ON_HitManager.instance.GetData(dataNum).dir = HitDir.UP;
+    //                    break;
+    //                }
+    //                if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.RIGHT)
+    //                {
+    //                    ON_HitManager.instance.GetData(dataNum).dir = HitDir.LEFT;
+    //                    break;
+    //                }
+    //                if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.LEFT)
+    //                {
+    //                    ON_HitManager.instance.GetData(dataNum).dir = HitDir.RIGHT;
+    //                    break;
+    //                }
+    //            }
+    //            break;
+    //    }
+    //}
+
+    public ObjBase GetObj(int i)
+    {
+        return Objs[i];
+    }
+
+    public List<ObjBase> GetObjList()
+    {
+        return Objs;
     }
 }

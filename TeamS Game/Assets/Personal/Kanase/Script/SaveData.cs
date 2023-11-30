@@ -15,4 +15,5 @@ public class SaveData
     public Vector3 pos; //座標
     public int Score;    //スコア
     public bool RetryFlg;
+    public List<int> HighScore; //ハイスコア
 }

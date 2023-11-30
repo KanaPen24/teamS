@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
         m_sGameMode = m_GameMode;
 
         // 当たり判定デバッグ表示更新
-        ON_HitDebug.instance.Update(hitType);
+        ON_HitDebug.instance.Update(hitType,true);
     }
 
     /**

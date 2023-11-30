@@ -25,6 +25,9 @@ public class PlayerJump : PlayerStrategy
 
     public override void UpdatePlayer()
     {
+        // アニメ―ション
+        ObjPlayer.instance.Anim.ChangeAnim(PlayerAnimState.Jump);
+
         if (ObjPlayer.m_bJumpFlg)
         {
             AudioManager.instance.PlaySE(SEType.SE_PlayerJump);

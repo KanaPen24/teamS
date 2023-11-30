@@ -47,7 +47,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Cloud_density: 1
+    - _Cloud_Step: 0.65
+    - _Cloud_density: 2
     - _Cloud_size: 30
     - _Color_alpha: 0.5
     - _QueueControl: 0
@@ -57,4 +58,5 @@ Material:
     - _Cloud_speed: {r: 0, g: -0.1, b: 0, a: 0}
     - _Color: {r: 0.35585618, g: 0.5283019, b: 0.5192258, a: 0}
     - _Color_1: {r: 0.23325025, g: 0.4442491, b: 0.49056602, a: 0}
+    - _Noize_Pos: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
