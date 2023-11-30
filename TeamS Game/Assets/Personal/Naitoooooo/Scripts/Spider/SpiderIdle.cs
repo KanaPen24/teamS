@@ -14,10 +14,10 @@ public class SpiderIdle : EnemyStrategy
         {
             m_Spider.GetSetEnemyState = EnemyState.Walk;
         }
-        if(!m_Spider.GetSetGround.m_bStand)
-        {
-            m_Spider.GetSetEnemyState = EnemyState.Drop;
-        }
+        //if(!m_Spider.GetSetGround.m_bStand)
+        //{
+        //    m_Spider.GetSetEnemyState = EnemyState.Drop;
+        //}
     }
 
     public override void UpdateStrategy()

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 403ae2dd693bb1d4b924f6b8d206b053, type: 3}
+  m_Name: Ihara.fadeMotionList
+  m_EditorClassIdentifier: 
+  MotionInstanceIds: 460afeff380afeff08f3fdff12f3fdff
+  CubismFadeMotionObjects:
+  - {fileID: 11400000, guid: e9a429ac72ea1ca489bb85b5aa089451, type: 2}
+  - {fileID: 11400000, guid: b738c99e850c54443a34341c10150538, type: 2}
+  - {fileID: 11400000, guid: e36bb3ee4384b8c4384b143bd8250515, type: 2}
+  - {fileID: 11400000, guid: 26c75f9a405e0df46bbfad9bdb17a3b3, type: 2}
