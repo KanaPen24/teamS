@@ -1354,6 +1354,14 @@ PrefabInstance:
       propertyPath: m_nDbgNum
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6788969508269984795, guid: e593b96daea199e4b9ee1cccceecb63e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6788969508269984795, guid: e593b96daea199e4b9ee1cccceecb63e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5330185201258816003, guid: e593b96daea199e4b9ee1cccceecb63e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e593b96daea199e4b9ee1cccceecb63e, type: 3}
