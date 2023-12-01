@@ -16,12 +16,6 @@ public class ObjField : ObjBase
     {
     }
 
-    // --- デバッグ更新処理 ---
-    public override void UpdateDebug()
-    {
-        Debug.Log("Field");
-    }
-
     //  ---- 当たり判定を生成した際の処理 ----
     public override void GenerateHit()
     {

@@ -84,6 +84,9 @@ public class PlayerAtk : PlayerStrategy
         }
         //else m_fTime -= Time.deltaTime;
 
+        // “–‚½‚è”»’è‚Ì’†SÀ•W
+        ON_HitManager.instance.GetHit(atknum).GetCenter();
+
         // ‘¬“x‚ÍŒ¸‘¬(‰¼)
         ObjPlayer.instance.GetSetSpeed *= new Vector2(0.8f, 1f);
     }

@@ -94,6 +94,21 @@ public class YK_JsonSave : MonoBehaviour
         Save(data);
     }
 
+    //外部でハイスコアのセーブが呼べるように
+    public void HighScoreSave(List<int> high)
+    {
+        data.HighScore = high;
+        Save(data);
+    }
+
+    //外部でハイスコアのロードが呼べるように
+    public void HighScoreLoad()
+    {
+        //ファイルを読み込んでdataに格納
+        data = Load(filepath);
+        YK_HighScore.instance.GetSetHighScore = data.HighScore;        
+    }
+
     //外部でもロードが呼べるように
     public void Load()
     {
