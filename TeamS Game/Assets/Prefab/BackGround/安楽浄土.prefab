@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
-  rate: 0.7
+  rate: 0.5
 --- !u!1001 &2877948868439626336
 PrefabInstance:
   m_ObjectHideFlags: 0
