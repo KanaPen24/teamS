@@ -33,7 +33,7 @@ public class ON_BackGround : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float dir = cam.transform.position.x - currentX;
 
