@@ -1,5 +1,5 @@
 /**
- * @file   PlayerSpecial.cs
+ * @file   PlayerIdle.cs
  * @brief  Playerの「必殺」クラス
  * @author IharaShota
  * @date   2023/11/30
@@ -11,20 +11,19 @@ using UnityEngine;
 
 public class PlayerSpecial : PlayerStrategy
 {
-    [SerializeField] private Vector3 m_vSpecialArea;
+    [SerializeField] private Vector3 m_vAtkArea;
     [SerializeField] private float m_fLength;
-    private int specialNum;
+    private int atknum = -1;
 
     public override void UpdateState()
     {
-        //if (m_fTime <= 0 && !ObjPlayer.m_bAtkFlg)
-        if (ObjPlayer.instance.Anim.GetAnimNormalizeTime(PlayerAnimState.Atk, 1f) && !ObjPlayer.m_bAtkFlg)
+        if (ObjPlayer.instance.Anim.GetAnimNormalizeTime(PlayerAnimState.Special, 1f))
         {
             // 必殺 → 待ち
             if (ObjPlayer.instance.GetSetGround.m_bStand)
             {
                 ObjPlayer.instance.m_PlayerState = PlayerState.Idle;
-                ON_HitManager.instance.DeleteHit(specialNum);
+                EndState();
                 return;
             }
         }
@@ -32,31 +31,59 @@ public class PlayerSpecial : PlayerStrategy
 
     public override void UpdatePlayer()
     {
-        // アニメ―ション
-        ObjPlayer.instance.Anim.ChangeAnim(PlayerAnimState.Atk);
+        // 遷移最初の処理
+        if (m_bStartFlg) StartState();
 
-        if (ObjPlayer.m_bSpecialFlg)
+        // 攻撃中は座標更新
+        if (atknum != -1)
         {
-            // 攻撃の当たり判定生成(向きによって生成位置が変わる)
             if (ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
-            {
-                specialNum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f),
-                m_vSpecialArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
-
-                ObjPlayer.instance.GetSetSpeed += new Vector2(5f, 0f);
-            }
+                ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
             else if (ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
-            {
-                specialNum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f),
-                m_vSpecialArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
-
-                ObjPlayer.instance.GetSetSpeed += new Vector2(-5f, 0f);
-            }
-
-            AudioManager.instance.PlaySE(SEType.SE_PlayerAtk);
-            ObjPlayer.m_bSpecialFlg = false;
+                ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f));
         }
+
         // 速度は減速(仮)
-        ObjPlayer.instance.GetSetSpeed *= new Vector2(0f, 0f);
+        ObjPlayer.instance.GetSetSpeed *= new Vector2(0.8f, 1f);
+    }
+
+    public override void StartState()
+    {
+        // アニメ―ション変更
+        ObjPlayer.instance.Anim.ChangeAnim(PlayerAnimState.Special);
+
+        // 攻撃の当たり判定生成(向きによって生成位置が変わる)
+        if (ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
+        {
+            atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f),
+            m_vAtkArea, true, HitType.SPECIAL, ObjPlayer.instance.GetSetObjID);
+
+            ObjPlayer.instance.GetSetSpeed += new Vector2(5f, 0f);
+        }
+        else if (ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
+        {
+            atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f),
+            m_vAtkArea, true, HitType.SPECIAL, ObjPlayer.instance.GetSetObjID);
+
+            ObjPlayer.instance.GetSetSpeed += new Vector2(-5f, 0f);
+        }
+
+        // 攻撃SEを再生
+        AudioManager.instance.PlaySE(SEType.SE_PlayerAtk);
+
+        // 遷移最初のフラグをoff
+        m_bStartFlg = false;
+    }
+
+    public override void EndState()
+    {
+        // 攻撃の当たり判定削除
+        ON_HitManager.instance.DeleteHit(atknum);
+
+        // 攻撃の当たり判定IDを-1にする
+        atknum = -1;
+
+        // 遷移最初のフラグをONにしておく
+        m_bStartFlg = true;
     }
 }

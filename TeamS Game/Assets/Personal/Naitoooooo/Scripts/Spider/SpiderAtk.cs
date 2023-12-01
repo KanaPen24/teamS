@@ -27,9 +27,13 @@ public class SpiderAtk : EnemyStrategy
         m_cnt += Time.deltaTime;
         if(m_cnt>m_AtkTiming&&!m_bAtk)
         {
-           GameObject missile = Instantiate(m_Missile, m_BalletPos.transform.position, Quaternion.identity);
-            missile.GetComponent<Missile>().SetSpider(m_Spider);
-            m_bAtk = true;
+            if(m_Spider.myMissile == null)
+            {
+                m_Spider.myMissile = Instantiate(m_Missile, m_BalletPos.transform.position, Quaternion.identity);
+                m_Spider.myMissile.GetComponent<Missile>().SetSpider(m_Spider);
+                m_Spider.myMissile.GetComponent<Missile>().FireMissile();
+                m_bAtk = true;
+            }
         }
         m_Spider.GetSetSpeed = new Vector2(0.0f, 0.0f);
     }

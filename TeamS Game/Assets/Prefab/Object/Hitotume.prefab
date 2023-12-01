@@ -161,6 +161,7 @@ MonoBehaviour:
     m_vMaxSpeed: {x: 0, y: 0}
     m_vMove: {x: 0, y: 0}
     m_bExist: 0
+    m_bDestroy: 0
     m_eDir: 0
     m_eType: 0
   m_Ground:
@@ -172,7 +173,7 @@ MonoBehaviour:
     m_fTime: 0
   knockBack:
     m_vSpeed: {x: 0, y: 0}
-    m_vInitSpeed: {x: 0.075, y: 0.45}
+    m_vInitSpeed: {x: 0.3, y: 0.45}
     m_fDamping: 0.45
     m_fGravity: 0.02
   m_EnemyState: 0

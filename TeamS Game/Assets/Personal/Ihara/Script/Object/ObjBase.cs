@@ -108,6 +108,7 @@ public class CheckParam
     public Vector2 GetSetMaxSpeed { get { return m_vMaxSpeed; } set { m_vMaxSpeed = value; } }
     public Vector2 GetSetMove { get { return m_vMove; } set { m_vMove = value; } }
     public bool GetSetExist { get { return m_bExist; } set { m_bExist = value; } }
+    public bool GetSetDestroy { get { return m_bDestroy; } set { m_bDestroy = value; } }
     public ObjDir GetSetDir { get { return m_eDir; } set { m_eDir = value; } }
     public ObjType GetSetType { get { return m_eType; } set { m_eType = value; } }
     public Ground GetSetGround { get { return m_Ground; } set { m_Ground = value; } }
@@ -137,6 +138,7 @@ public class ObjBase : MonoBehaviour
     protected Vector2 m_vMove;        // 移動量
     protected bool m_bExist;          // 存在しているか
     protected bool m_bDestroy;        // 破壊されているか
+    protected bool m_bHit;            // 攻撃されたか
     protected ObjDir m_eDir;          // 向き
     protected ObjType m_eType;        // タイプ
     // ---------------------
@@ -163,6 +165,7 @@ public class ObjBase : MonoBehaviour
         CheckParam.GetSetMaxSpeed = m_vMaxSpeed;
         CheckParam.GetSetMove = m_vMove;
         CheckParam.GetSetExist = m_bExist;
+        CheckParam.GetSetDestroy = m_bDestroy;
         CheckParam.GetSetDir = m_eDir;
         CheckParam.GetSetType = m_eType;
         CheckParam.GetSetGround = m_Ground;
@@ -244,14 +247,14 @@ public class ObjBase : MonoBehaviour
     // --- プロパティ関数 ---------------------------------------------------------------------
     public int GetSetObjID { get { return m_nObjID; } set { m_nObjID = value; } }
     public int GetSetHitID { get { return m_nHitID; } set { m_nHitID = value; } }
-    //public int GetSetHp { get { return m_nHp; } set { m_nHp = value; } }
-    //public int GetSetMaxHp { get { return m_nMaxHp; } set { m_nMaxHp = value; } }
     public float GetSetAccel { get { return m_fAccel; } set { m_fAccel = value; } }
     public float GetSetWeight { get { return m_fWeight; } set { m_fWeight = value; } }
     public Vector2 GetSetSpeed { get { return m_vSpeed; } set { m_vSpeed = value; } }
     public Vector2 GetSetMaxSpeed { get { return m_vMaxSpeed; } set { m_vMaxSpeed = value; } }
     public Vector2 GetSetMove { get { return m_vMove; } set { m_vMove = value; } }
     public bool GetSetExist { get { return m_bExist; } set { m_bExist = value; } }
+    public bool GetSetDestroy { get { return m_bDestroy; } set { m_bDestroy = value; } }
+    public bool GetSetHit { get { return m_bHit; } set { m_bHit = value; } }
     public ObjDir GetSetDir { get { return m_eDir; } set { m_eDir = value; } }
     public ObjType GetSetType { get { return m_eType; } set { m_eType = value; } }
     public Vector3 GetSetPos

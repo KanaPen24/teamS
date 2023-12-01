@@ -13,81 +13,77 @@ public class PlayerAtk : PlayerStrategy
 {
     [SerializeField] private Vector3 m_vAtkArea;
     [SerializeField] private float m_fLength;
-    //[SerializeField] private float m_fInterval;
-    //[SerializeField] private float m_fTime;
-    private int atknum;
-    private bool m_bAtk;
-
-    //private void Start()
-    //{
-    //    m_fTime = m_fInterval;
-    //}
+    private int atknum = -1;
 
     public override void UpdateState()
     {
-        //if (m_fTime <= 0 && !ObjPlayer.m_bAtkFlg)
-        if (ObjPlayer.instance.Anim.GetAnimNormalizeTime(PlayerAnimState.Atk,1f) && !ObjPlayer.m_bAtkFlg)
+        if (ObjPlayer.instance.Anim.GetAnimNormalizeTime(PlayerAnimState.Atk,0.5f))
         {
-            //// UŒ‚ŽžŠÔ‚ð0‚É‚·‚é
-            //m_fTime = 0;
-
             // UŒ‚ ¨ ‘Ò‚¿
             if (ObjPlayer.instance.GetSetGround.m_bStand)
             {
                 ObjPlayer.instance.m_PlayerState = PlayerState.Idle;
-                ON_HitManager.instance.DeleteHit(atknum);
-                m_bAtk = false;
+                EndState();
                 return;
-            }
-
-            // UŒ‚‚Ì“–‚½‚è”»’è‚ÌÀ•WXV
-            if (m_bAtk)
-            {
-                if (ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
-                ON_HitManager.instance.SetCenter(atknum,ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
-                else if (ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
-                    ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f));
             }
         }
     }
 
     public override void UpdatePlayer()
     {
-        // ƒAƒjƒ\ƒVƒ‡ƒ“
-        ObjPlayer.instance.Anim.ChangeAnim(PlayerAnimState.Atk);
+        // ‘JˆÚÅ‰‚Ìˆ—
+        if (m_bStartFlg) StartState();
 
-        if (ObjPlayer.m_bAtkFlg)
+        // UŒ‚’†‚ÍÀ•WXV
+        if (atknum != -1)
         {
-            if (GameManager.IsDebug())
-                Debug.Log("HitGenerate");
-
-            // UŒ‚‚Ì“–‚½‚è”»’è¶¬(Œü‚«‚É‚æ‚Á‚Ä¶¬ˆÊ’u‚ª•Ï‚í‚é)
-            if(ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
-            {
-                atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f),
-                m_vAtkArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
-
-                ObjPlayer.instance.GetSetSpeed += new Vector2(5f, 0f);
-            }
-            else if(ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
-            {
-                atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f),
-                m_vAtkArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
-
-                ObjPlayer.instance.GetSetSpeed += new Vector2(-5f, 0f);
-            }
-
-            //m_fTime = m_fInterval;
-            AudioManager.instance.PlaySE(SEType.SE_PlayerAtk);
-            ObjPlayer.m_bAtkFlg = false;
-            m_bAtk = true;
+            if (ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
+                ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
+            else if (ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
+                ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f));
         }
-        //else m_fTime -= Time.deltaTime;
-
-        // “–‚½‚è”»’è‚Ì’†SÀ•W
-        ON_HitManager.instance.GetHit(atknum).GetCenter();
 
         // ‘¬“x‚ÍŒ¸‘¬(‰¼)
         ObjPlayer.instance.GetSetSpeed *= new Vector2(0.8f, 1f);
+    }
+
+    public override void StartState()
+    {
+        // ƒAƒjƒ\ƒVƒ‡ƒ“•ÏX
+        ObjPlayer.instance.Anim.ChangeAnim(PlayerAnimState.Atk);
+
+        // UŒ‚‚Ì“–‚½‚è”»’è¶¬(Œü‚«‚É‚æ‚Á‚Ä¶¬ˆÊ’u‚ª•Ï‚í‚é)
+        if (ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
+        {
+            atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f),
+            m_vAtkArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
+
+            ObjPlayer.instance.GetSetSpeed += new Vector2(5f, 0f);
+        }
+        else if (ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
+        {
+            atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f),
+            m_vAtkArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
+
+            ObjPlayer.instance.GetSetSpeed += new Vector2(-5f, 0f);
+        }
+
+        // UŒ‚SE‚ðÄ¶
+        AudioManager.instance.PlaySE(SEType.SE_PlayerAtk);
+
+        // ‘JˆÚÅ‰‚Ìƒtƒ‰ƒO‚ðoff
+        m_bStartFlg = false;
+    }
+
+    public override void EndState()
+    {
+        // UŒ‚‚Ì“–‚½‚è”»’èíœ
+        ON_HitManager.instance.DeleteHit(atknum);
+
+        // UŒ‚‚Ì“–‚½‚è”»’èID‚ð-1‚É‚·‚é
+        atknum = -1;
+
+        // ‘JˆÚÅ‰‚Ìƒtƒ‰ƒO‚ðON‚É‚µ‚Ä‚¨‚­
+        m_bStartFlg = true;
     }
 }
