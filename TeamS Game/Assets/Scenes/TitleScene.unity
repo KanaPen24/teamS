@@ -773,7 +773,7 @@ RectTransform:
   m_GameObject: {fileID: 250185453}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7.75321, y: 3.8639, z: 3.8639}
+  m_LocalScale: {x: 7, y: 5, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1357026207}
@@ -804,7 +804,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d1367d341a9484e40bc38dd98bc7a541, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 822659146ce31d04fb4415aadcb4fb0f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -982,6 +982,18 @@ PrefabInstance:
     - target: {fileID: 461897807268556279, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
       propertyPath: m_Name
       value: BackGround
+      objectReference: {fileID: 0}
+    - target: {fileID: 846323412734930337, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2882008739196728906, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4770577896543079141, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8407334486152332361, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
       propertyPath: m_Enabled
