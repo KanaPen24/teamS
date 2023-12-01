@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2421346865799147534}
   - component: {fileID: 2421346865799147535}
   - component: {fileID: 2421346865799147533}
+  - component: {fileID: 2183059215574737135}
   - component: {fileID: 8622685969760560357}
   m_Layer: 0
   m_Name: Player
@@ -75,6 +76,7 @@ MonoBehaviour:
     m_vMaxSpeed: {x: 0, y: 0}
     m_vMove: {x: 0, y: 0}
     m_bExist: 0
+    m_bDestroy: 0
     m_eDir: 1
     m_eType: 0
   m_Ground:
@@ -91,6 +93,7 @@ MonoBehaviour:
   - {fileID: 2421346865799147534}
   - {fileID: 2421346865799147535}
   - {fileID: 2421346865799147533}
+  - {fileID: 2183059215574737135}
   Anim: {fileID: 8622685969760560357}
 --- !u!114 &2421346865799147528
 MonoBehaviour:
@@ -104,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19853e44132190b4096ad4f4f6b7185d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bStartFlg: 0
 --- !u!114 &2421346865799147529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2a6b1b9c5e135d4daaddc6b017a2ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bStartFlg: 0
 --- !u!114 &2421346865799147534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a01a5d306d48ce408687655878c97b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bStartFlg: 0
   jumpEffect: {fileID: 0}
 --- !u!114 &2421346865799147535
 MonoBehaviour:
@@ -141,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d398f977e4729438ee2d8b8f6a85ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bStartFlg: 0
   landingEffect: {fileID: 0}
 --- !u!114 &2421346865799147533
 MonoBehaviour:
@@ -154,10 +161,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8c8e2f81cdb204fb493661c9c01326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_bStartFlg: 0
   m_vAtkArea: {x: 1, y: 1.5, z: 0}
   m_fLength: 2.5
-  m_fInterval: 0.1
-  m_fTime: 0
+--- !u!114 &2183059215574737135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2421346865799147525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aea808e7c4054604cbd00b95dcd7ceff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bStartFlg: 0
+  m_vAtkArea: {x: 1, y: 1.5, z: 0}
+  m_fLength: 2.5
 --- !u!114 &8622685969760560357
 MonoBehaviour:
   m_ObjectHideFlags: 0

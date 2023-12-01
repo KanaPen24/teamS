@@ -26,7 +26,7 @@ public class TitleButton : MonoBehaviour
         Fade.instance.FadeIn(1f, () =>
         {
             GameManager.GetSetGameState = GameState.GameStart;
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("IS_Scene");
         });
     }
     //public void StartOption()

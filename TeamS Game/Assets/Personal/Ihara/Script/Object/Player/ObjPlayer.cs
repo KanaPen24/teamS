@@ -16,20 +16,13 @@ public enum PlayerState
     Jump,
     Drop,
     Atk,
-    //Special,
+    Special,
 
     MaxPlayerState
 }
 
 public class ObjPlayer : ObjBase
 {
-    public static bool m_bWalkFlg = false;
-    public static bool m_bJumpFlg = false;
-    public static bool m_bDropFlg = false;
-    public static bool m_bAtkFlg = false;
-    public static bool m_bSpecialFlg = false;
-    public static bool m_bDefFlg = false;
-
     public static ObjPlayer instance;
     public PlayerState m_PlayerState;
     public List<PlayerStrategy> m_PlayerStrategys;
@@ -64,6 +57,10 @@ public class ObjPlayer : ObjBase
     public override void InitObj()
     {
         base.InitObj();
+        for(int i = 0; i < m_PlayerStrategys.Count; ++i)
+        {
+            m_PlayerStrategys[i].InitState();
+        }
     }
 
     // オブジェクトの破壊

@@ -39,6 +39,8 @@ public class NK_HitotumeKnockBack : NK_HitotumeStrategy
             }
             enemyProto.m_Ground.m_bStand = false;
         }
+
+        enemyProto.GetSetSpeed = new Vector2(enemyProto.GetSetSpeed.x * 0.99f, enemyProto.GetSetSpeed.y);
     }
 }
 
