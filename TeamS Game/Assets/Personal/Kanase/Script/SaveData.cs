@@ -15,5 +15,9 @@ public class SaveData
     public Vector3 pos; //座標
     public int Score;    //スコア
     public bool RetryFlg;
-    public List<int> HighScore; //ハイスコア
+}
+[System.Serializable]
+public class SaveData2
+{
+    public List<int> HighScore = new List<int>(5); //ハイスコア
 }
