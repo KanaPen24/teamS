@@ -10,11 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 403ae2dd693bb1d4b924f6b8d206b053, type: 3}
-  m_Name: Naitoooooo.fadeMotionList
+  m_Name: Player.fadeMotionList
   m_EditorClassIdentifier: 
-  MotionInstanceIds: 54c8ffff14bcffff0abcffff00bcffff
+  MotionInstanceIds: e2d4ffff
   CubismFadeMotionObjects:
-  - {fileID: 11400000, guid: f4465918e3cf3674ca288f13f02cf2c6, type: 2}
-  - {fileID: 11400000, guid: 62f31e4aa6dcf9043af387521c5fc801, type: 2}
-  - {fileID: 11400000, guid: 3cc7cc295e137254e809f825a2eea095, type: 2}
-  - {fileID: 11400000, guid: 2c93bf63d7c2ab54e9d16d41f2992f4c, type: 2}
+  - {fileID: 11400000, guid: 418664532c46fa94c877432379c5a96a, type: 2}

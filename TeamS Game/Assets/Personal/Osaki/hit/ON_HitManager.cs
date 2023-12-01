@@ -138,11 +138,18 @@ public class ON_HitManager
         switch (m_hits[i].GetHitType())
         {
             case HitType.ATTACK:
-                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.BALANCE;       // ‘ŠE
-                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.ATTACK;          // UŒ‚‚ª“–‚½‚é
-                if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.NONE;         // •KE‹Z‚Í‘ŠE‚µ‚È‚¢
-                if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.NONE;          // ‰½‚à‚µ‚È‚¢
-                if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.NONE;           // ‰½‚à‚µ‚È‚¢
+                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.BALANCE;@// ‘ŠE
+                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.ATTACK;     // UŒ‚‚ª“–‚½‚é
+                if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.NONE;    // •KE‹Z‚Í‘ŠE‚µ‚È‚¢
+                if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.NONE;     // ‰½‚à‚µ‚È‚¢
+                if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.NONE;      // ‰½‚à‚µ‚È‚¢
+                break;
+            case HitType.SPECIAL:
+                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.NONE;@ // ‰½‚à‚µ‚È‚¢
+                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.SPECIAL;  // •KE‚ª“–‚½‚é
+                if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.NONE;  // •KE‹Z‚Í‘ŠE‚µ‚È‚¢
+                if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.NONE;   // ‰½‚à‚µ‚È‚¢
+                if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.NONE;    // ‰½‚à‚µ‚È‚¢
                 break;
             case HitType.BODY:
                 if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.DEFENCE;     // UŒ‚‚ğó‚¯‚é
