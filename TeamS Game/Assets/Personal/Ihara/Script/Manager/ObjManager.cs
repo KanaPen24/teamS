@@ -57,7 +57,7 @@ public class ObjManager : MonoBehaviour
         for(int i = 0; i < Objs.Count; ++i)
         {
             // --- オブジェクトが存在している場合 ---
-            if (Objs[i].GetSetExist)
+            if (Objs[i].GetSetExist && !Objs[i].GetSetDestroy)
             {
                 // オブジェクトの表示
                 if (Objs[i].texObj != null)
@@ -90,6 +90,18 @@ public class ObjManager : MonoBehaviour
 
         // --- 当たり判定処理 ---
         CollisionUpdate();
+
+        // --- オブジェクトの無敵処理 ---
+        for (int i = 0; i < Objs.Count; ++i)
+        {
+            // --- オブジェクトが存在している場合 ---
+            if (Objs[i].GetSetHit)
+            {
+                Objs[i].GetSetInvincible.SetInvincible(1f);
+            }
+
+            Objs[i].GetSetHit = false;
+        }
     }
 
     // --- 速度調整処理 ---
@@ -200,18 +212,59 @@ public class ObjManager : MonoBehaviour
                 // 自身が無敵でなければ…
                 if (!Objs[myID].GetSetInvincible.m_bInvincible)
                 {
-                    // 自身が敵だったら
-                    if(Objs[myID].GetComponent<ObjEnemyBase>() != null)
+                    // 自身がプレイヤーだったら
+                    if (Objs[myID].GetComponent<ObjPlayer>() != null)
                     {
-                        // ノックバック処理 → 無敵時間設定
-                        Objs[myID].KnockBackObj(Objs[otherID].GetSetDir);
-                        Objs[myID].GetSetInvincible.SetInvincible(0.3f);
+                        // 攻撃を受ける
+                        Objs[myID].DamageAttack();
+                        Objs[myID].GetSetHit = true;
                     }
+                    // 自身が敵だったら
+                    if (Objs[myID].GetComponent<ObjEnemyBase>() != null)
+                    {
+                        // ノックバック処理
+                        Objs[myID].KnockBackObj(Objs[otherID].GetSetDir);
+                        Objs[myID].GetSetHit = true;
+                    }
+
                 }
             }
             // 体同士の接触判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.BODYS)
             {
+                //// 右に当たっていたら
+                //if (ON_HitManager.instance.GetData(i).dir == HitDir.RIGHT)
+                //{
+                //    // 座標調整
+                //    Objs[myID].GetSetPos = new Vector3(Objs[otherID].GetSetPos.x, Objs[myID].GetSetPos.y, 0f) -
+                //                           new Vector3(Objs[otherID].GetSetScale.x / 2f + 0.5f +
+                //                                       Objs[myID].GetSetScale.x / 2f, 0f, 0f);
+
+                //    // 速度を0にする
+                //    Objs[myID].GetSetSpeed = new Vector3(0f, Objs[myID].GetSetSpeed.y, 0f);
+                //}
+                //// 左に当たっていたら
+                //if (ON_HitManager.instance.GetData(i).dir == HitDir.LEFT)
+                //{
+                //    // 座標調整
+                //    Objs[myID].GetSetPos = new Vector3(Objs[otherID].GetSetPos.x, Objs[myID].GetSetPos.y, 0f) +
+                //                           new Vector3(Objs[otherID].GetSetScale.x / 2f - 0.5f +
+                //                                       Objs[myID].GetSetScale.x / 2f, 0f, 0f);
+
+                //    // 速度を0にする
+                //    Objs[myID].GetSetSpeed = new Vector3(0f, Objs[myID].GetSetSpeed.y, 0f);
+                //}
+                //// 上に当たっていたら
+                //if (ON_HitManager.instance.GetData(i).dir == HitDir.UP)
+                //{
+                //    // 座標調整
+                //    Objs[myID].GetSetPos = new Vector3(Objs[myID].GetSetPos.x, Objs[otherID].GetSetPos.y, 0f) -
+                //                           new Vector3(0f, Objs[otherID].GetSetScale.y / 2f +
+                //                                       Objs[myID].GetSetScale.y / 2f, 0f);
+
+                //    // 速度を0にする
+                //    Objs[myID].GetSetSpeed = new Vector3(Objs[myID].GetSetSpeed.x, 0f, 0f);
+                //}
             }
             // 攻撃同士の接触判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.BALANCE)
@@ -238,14 +291,44 @@ public class ObjManager : MonoBehaviour
             // 必殺技を当てた判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.SPECIAL)
             {
+                if (!Objs[otherID].GetSetInvincible.m_bInvincible)
+                {
+                    if (Objs[myID].GetComponent<ObjPlayer>() != null &&
+                    Objs[otherID].GetComponent<ObjEnemyBase>() != null)
+                    {
+                        int num = Objs[otherID].GetComponent<ObjEnemyBase>().m_nEnemyCnt;
+                        YK_Score.instance.FieldAddScore(num);
+
+                        // ヒットエフェクト再生
+                        hitEffect.Play();
+                        hitEffect.transform.position = Objs[otherID].GetSetPos;
+                    }
+                }
             }
             // 必殺技を受けた判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.DEFSPECIAL)
             {
+                // 自身が無敵でなければ…
+                if (!Objs[myID].GetSetInvincible.m_bInvincible)
+                {
+                    // 自身が敵だったら
+                    if (Objs[myID].GetComponent<ObjEnemyBase>() != null)
+                    {
+                        // ノックバック処理
+                        Objs[myID].KnockBackObj(Objs[otherID].GetSetDir);
+                        ON_HitManager.instance.SetActive(Objs[myID].GetSetObjID, false);
+                        Objs[myID].GetSetHit = true;
+                        Objs[myID].GetSetDestroy = true;
+                    }
+                }
             }
             // 弾を当てた判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.BULLET)
             {
+                if (Objs[myID].GetComponent<Spider>() != null)
+                {
+                    Objs[myID].GetComponent<Spider>().DeleteMissile();
+                }
             }
             // 弾を受けた判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.DEFBULLET)
@@ -350,56 +433,11 @@ public class ObjManager : MonoBehaviour
                 unionEnemy.m_nEnemyIDs.Add(Objs[id_2].GetSetObjID);
                 unionEnemy.GetSetEnemyState = EnemyState.Drop;
                 unionEnemy.m_Ground.ResetGroundData();
+                unionEnemy.GetSetHit = true;
                 break;
             }
         }
     }
-
-    //// --- 当たり判定による修正関数 ---
-    //private void CollisionFix(int dataNum, HitState hitState)
-    //{
-    //    switch(hitState)
-    //    {
-    //        case HitState.ATTACK:
-    //            break;
-    //        case HitState.BALANCE:
-    //            break;
-    //        case HitState.BODYS:
-    //            break;
-    //        case HitState.DEFENCE:
-    //            if (Objs[myID].GetComponent<ObjEnemyBase>() != null)
-    //                (myID, otherID) = (otherID, myID);
-    //            break;
-    //        case HitState.ENEMY:
-    //            break;
-    //        case HitState.GRUOND:
-    //            if (Objs[myID].GetComponent<ObjField>() != null)
-    //            {
-    //                (myID, otherID) = (otherID, myID);
-    //                if(ON_HitManager.instance.GetData(dataNum).dir == HitDir.UP)
-    //                {
-    //                    ON_HitManager.instance.GetData(dataNum).dir = HitDir.DOWN;
-    //                    break;
-    //                }
-    //                if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.DOWN)
-    //                {
-    //                    ON_HitManager.instance.GetData(dataNum).dir = HitDir.UP;
-    //                    break;
-    //                }
-    //                if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.RIGHT)
-    //                {
-    //                    ON_HitManager.instance.GetData(dataNum).dir = HitDir.LEFT;
-    //                    break;
-    //                }
-    //                if (ON_HitManager.instance.GetData(dataNum).dir == HitDir.LEFT)
-    //                {
-    //                    ON_HitManager.instance.GetData(dataNum).dir = HitDir.RIGHT;
-    //                    break;
-    //                }
-    //            }
-    //            break;
-    //    }
-    //}
 
     public ObjBase GetObj(int i)
     {

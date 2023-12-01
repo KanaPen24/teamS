@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
-    private int Missilenum;
+    [HideInInspector]
+    public int Missilenum;
     private Spider m_Spider;
     [SerializeField] private float m_MissileY;
     [SerializeField] private float m_YSpeed;
@@ -12,11 +13,6 @@ public class Missile : MonoBehaviour
     [SerializeField] private float m_DownTiming;
     private float m_cnt;
     private bool m_Yposb=false;
-
-    private void Start()
-    {
-        Missilenum = ON_HitManager.instance.GenerateHit(transform.position, transform.localScale, true, HitType.BULLET, m_Spider.GetSetObjID);
-    }
 
     private void Update()
     {
@@ -55,5 +51,11 @@ public class Missile : MonoBehaviour
     public void SetSpider(Spider PSpider)
     {
         m_Spider = PSpider;
+    }
+
+    public void FireMissile()
+    {
+        Missilenum = 
+            ON_HitManager.instance.GenerateHit(transform.position, transform.localScale, true, HitType.BULLET, m_Spider.GetSetObjID);
     }
 }
