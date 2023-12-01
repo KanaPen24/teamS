@@ -17,6 +17,8 @@ public class SpiderAtk : EnemyStrategy
         {
             m_Spider.GetSetEnemyState = EnemyState.Idle;
             m_bAtk = false;
+            m_cnt = 0;
+            return;
         }
     }
 

@@ -14,6 +14,8 @@ public class SpiderWalk : EnemyStrategy
         if(m_cnt>m_AtkTiming)
         {
             m_Spider.GetSetEnemyState = EnemyState.Atk;
+            m_cnt = 0;
+            return;
         }
     }
 
