@@ -8,8 +8,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class YK_HighScore : MonoBehaviour
+public class YK_HighScore : YK_UI
 {
     private List<int> m_nHighScore;
     [SerializeField] private int m_nRank = 5;
@@ -37,9 +38,9 @@ public class YK_HighScore : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_nHighScore = new List<int>(m_nRank) { 5, 4, 3, 2, 1 };
-        
-        SaveHighScore();
+        //タイプの設定
+        m_eUIType = UIType.HighScore;
+        Obj = this.gameObject;
     }
 
     // Update is called once per frame
@@ -48,9 +49,12 @@ public class YK_HighScore : MonoBehaviour
         //テスト
         if (Input.GetKeyDown(KeyCode.F7))
         {
-            ChangeHighScore();
-            SaveHighScore();
-            DrawHighScore();
+            UpdateHighScore();
+        }
+        if(GameManager.GetSetGameState==GameState.Result&& Input.GetKeyDown(IS_XBoxInput.A))
+        {
+            GameManager.GetSetGameState = GameState.Title;
+            SceneManager.LoadScene("TitleScene");
         }
     }
 
@@ -67,7 +71,8 @@ public class YK_HighScore : MonoBehaviour
             if(m_nHighScore[i]<=YK_Score.instance.GetSetScore)
             {
                 for (int j = i; j < m_nRank - 1; j++)
-                    m_nHighScore[m_nHighScore.Count - j - 1] = m_nHighScore[m_nHighScore.Count - j - 2];              //次の順位に元々のハイスコアを移動させる
+                    //次の順位に元々のハイスコアを移動させる
+                    m_nHighScore[m_nHighScore.Count - j - 1] = m_nHighScore[m_nHighScore.Count - j - 2];             
                 m_nHighScore[i] = YK_Score.instance.GetSetScore;    //ハイスコアを更新する
                 break;
             }
@@ -80,7 +85,7 @@ public class YK_HighScore : MonoBehaviour
         for (int i = 0; i < m_nRank; i++)
         {
             // テキストの更新
-            scoreText[i].text = "Score:" + m_nHighScore[i].ToString("D7");
+            scoreText[i].text = m_nHighScore[i].ToString("D7");
         }
     }
 
@@ -89,5 +94,19 @@ public class YK_HighScore : MonoBehaviour
     {
         get { return m_nHighScore; }
         set { m_nHighScore = value; }
+    }
+
+    //ランキングの渡す
+    public int GetRank()
+    {
+        return m_nRank;
+    }
+    
+    //ハイスコア更新の一巡関数
+    public void UpdateHighScore()
+    {
+        ChangeHighScore();
+        SaveHighScore();
+        DrawHighScore();
     }
 }

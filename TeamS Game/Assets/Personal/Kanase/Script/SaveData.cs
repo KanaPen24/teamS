@@ -19,5 +19,5 @@ public class SaveData
 [System.Serializable]
 public class SaveData2
 {
-    public List<int> HighScore = new List<int>(5); //ハイスコア
+    public List<int> HighScore; //ハイスコア
 }
