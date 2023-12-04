@@ -38,15 +38,23 @@ public class ON_BackGround : MonoBehaviour
     void Update()
     {
         float dir = cam.transform.position.x - currentX;
-
-        // 式が違うor画面内の場合のみ式を動かす
+        // 移動
         transform.position = new Vector3(transform.position.x - Mathf.Lerp(0.0f, dir, rate), transform.position.y, transform.position.z);
-        if(renderer != null)
+
+        // 再配置
+        if (renderer != null)
         {
-            if(renderer.bounds.max.x < cam.transform.position.x - 9.0f)
+            // カメラの進行方向で変化
+            if(Mathf.Sign(dir) > 0 &&renderer.bounds.max.x < cam.transform.position.x - 9.0f)
             {
                 var pos = transform.position;
                 pos.x = cam.transform.position.x + 9.0f + (renderer.bounds.size.x / 2.0f);
+                transform.position = pos;
+            }
+            if(Mathf.Sin(dir) < 0 && renderer.bounds.min.x > cam.transform.position.x + 9.0f)
+            {
+                var pos = transform.position;
+                pos.x = cam.transform.position.x - 9.0f - (renderer.bounds.size.x / 2.0f);
                 transform.position = pos;
             }
 
