@@ -40,7 +40,6 @@ public class ObjEnemyBase : ObjBase
 {
     [SerializeField] protected KnockBack knockBack;
     [SerializeField] protected EnemyState m_EnemyState;
-    public int m_nEnemyCnt = 1;
     public override void UpdateObj()
     {
     }
