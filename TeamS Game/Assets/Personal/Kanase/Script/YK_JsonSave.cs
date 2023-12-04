@@ -34,6 +34,12 @@ public class YK_JsonSave : MonoBehaviour
         {
             DelFile();                     // セーブデータの削除
         }
+        //ハイスコア用のファイルがなければ
+        if(!File.Exists(filepath2))
+        {
+            data2.HighScore = new List<int>(YK_HighScore.instance.GetRank()) { 5, 4, 3, 2, 1 };
+            Save2(data2);   //セーブデータを生成する
+        }
         if (instance == null)
         {
             instance = this;
