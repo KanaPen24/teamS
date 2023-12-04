@@ -19,34 +19,42 @@ public class ON_BackGround : MonoBehaviour
     [SerializeField] private GameObject cam;
     [SerializeField] private float rate = 1;
     private float currentX;
-    private bool inScene = true;
-    private bool oldinScene;
     private Vector3 start;
+    private SpriteRenderer renderer = null;
     // Start is called before the first frame update
     void Start()
     {
         currentX = cam.transform.position.x;
-        oldinScene = inScene;
         start = transform.position;
         if (cam == null)
             cam = Camera.main.gameObject;
+        renderer = GetComponent<SpriteRenderer>();
+
+        rate = 1 - rate;
     }
 
+
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         float dir = cam.transform.position.x - currentX;
 
-        if(inScene)
+        // ®‚ªˆá‚¤or‰æ–Ê“à‚Ìê‡‚Ì‚İ®‚ğ“®‚©‚·
+        transform.position = new Vector3(transform.position.x - Mathf.Lerp(0.0f, dir, rate), transform.position.y, transform.position.z);
+        if(renderer != null)
         {
-            // ‰æ–Ê“à‚ÅˆÚ“®
-            transform.position = new Vector3(start.x + Mathf.Lerp(0, cam.transform.position.x, rate) , start.y, start.z);
+            if(renderer.bounds.max.x < cam.transform.position.x - 9.0f)
+            {
+                var pos = transform.position;
+                pos.x = cam.transform.position.x + 9.0f + (renderer.bounds.size.x / 2.0f);
+                transform.position = pos;
+            }
+
         }
 
-        
+
         // XV
-        if(currentX != cam.transform.position.x)
+        if (currentX != cam.transform.position.x)
             currentX = cam.transform.position.x;
-        oldinScene = inScene;
     }
 }
