@@ -8,16 +8,18 @@ public class SpiderIdle : EnemyStrategy
     [SerializeField] private float m_Reng;
     public override void UpdateState()
     {
+        //‘Ò‚¿¨—Ž‰º
+        if (!m_Spider.GetSetGround.m_bStand)
+        {
+            m_Spider.GetSetEnemyState = EnemyState.Drop;
+        }
+
         //‘Ò‚¿¨ˆÚ“®
         if(m_Spider.GetSetPos.x>ObjPlayer.instance.GetSetPos.x-m_Reng&&
             m_Spider.GetSetPos.x<ObjPlayer.instance.GetSetPos.x+m_Reng)
         {
             m_Spider.GetSetEnemyState = EnemyState.Walk;
         }
-        //if(!m_Spider.GetSetGround.m_bStand)
-        //{
-        //    m_Spider.GetSetEnemyState = EnemyState.Drop;
-        //}
     }
 
     public override void UpdateStrategy()
