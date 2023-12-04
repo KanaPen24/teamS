@@ -35,7 +35,7 @@ public class ObjEnemyUnion : ObjEnemyBase
         // 生成時に当たり判定IDを取得し、初期値を設定している(中心座標,大きさ,当たり判定の種類,objのID)
         m_nHitID = ON_HitManager.instance.GenerateHit(this.gameObject.transform.position,
         this.gameObject.transform.localScale / 2,
-        false, HitType.BODY, GetSetObjID);
+        true, HitType.BODY, GetSetObjID);
     }
 
     // --- 敵の分離処理 ---
@@ -49,20 +49,40 @@ public class ObjEnemyUnion : ObjEnemyBase
             enemy.GetSetPos = GetSetPos;
             enemy.GetSetEnemyState = EnemyState.RePop;
             ON_HitManager.instance.SetActive(ObjManager.instance.GetObj(m_nEnemyIDs[i]).GetSetObjID, true);
+
+            // 合体していた敵が「合体敵」だった場合、破壊トリガーをON
+            if (enemy.GetComponent<ObjEnemyUnion>() != null)
+                enemy.GetSetDestroy = true;
         }
 
         // 合成していた敵のIDを全削除
         m_nEnemyIDs.Clear();
 
-        // 自身のオブジェクトを非表示にする
-        for (int j = 0; j < ObjManager.instance.GetObjList().Count; ++j)
+        // 自身の破壊トリガーをON
+        GetSetDestroy = true;
+
+        //// 自身のオブジェクトを非表示にする
+        //for (int j = 0; j < ObjManager.instance.GetObjList().Count; ++j)
+        //{
+        //    // Objのリストから自身と同じオブジェクトIDを検索
+        //    if (ObjManager.instance.GetObjList()[j].GetSetObjID == GetSetObjID)
+        //    {
+        //        GetSetExist = false;
+        //        //ON_HitManager.instance.SetActive(ObjManager.instance.GetObj(j).GetSetObjID, false);
+        //        ON_HitManager.instance.SetActive(ObjManager.instance.GetObjList()[j].GetSetObjID, false);
+        //        break;
+        //    }
+        //}
+    }
+
+    // --- 合体していた敵たちの破壊トリガーをON ---
+    public void DestroyTriggerChildEnemy()
+    {
+        // 合成していた敵を表示させる
+        for (int i = 0; i < m_nEnemyIDs.Count; ++i)
         {
-            if (ObjManager.instance.GetObj(j).gameObject == gameObject)
-            {
-                GetSetExist = false;
-                ON_HitManager.instance.SetActive(ObjManager.instance.GetObj(j).GetSetObjID, false);
-                break;
-            }
+            ObjEnemyBase enemy = ObjManager.instance.GetObj(m_nEnemyIDs[i]).GetComponent<ObjEnemyBase>();
+            enemy.GetSetDestroy = true;
         }
     }
 }
