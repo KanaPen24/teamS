@@ -231,8 +231,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_fly: {fileID: 1520558687717841323}
-  m_XmoveSpeed: 0.05
-  m_YmoveSpeed: 0.05
+  m_XmoveSpeed: 0.15
+  m_YmoveSpeed: 0.15
   m_DownTiming: 3
   m_angle: 30
 --- !u!114 &1520558687717841319
