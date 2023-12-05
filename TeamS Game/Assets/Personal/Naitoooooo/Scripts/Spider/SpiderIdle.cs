@@ -12,6 +12,7 @@ public class SpiderIdle : EnemyStrategy
         if (!m_Spider.GetSetGround.m_bStand)
         {
             m_Spider.GetSetEnemyState = EnemyState.Drop;
+            return;
         }
 
         //‘Ò‚¿¨ˆÚ“®
@@ -19,6 +20,7 @@ public class SpiderIdle : EnemyStrategy
             m_Spider.GetSetPos.x<ObjPlayer.instance.GetSetPos.x+m_Reng)
         {
             m_Spider.GetSetEnemyState = EnemyState.Walk;
+            return;
         }
     }
 

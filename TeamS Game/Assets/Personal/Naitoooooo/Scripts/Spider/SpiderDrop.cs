@@ -10,10 +10,12 @@ public class SpiderDrop : EnemyStrategy
         if(m_Spider.GetSetGround.m_bStand)
         {
             m_Spider.GetSetEnemyState = EnemyState.Idle;
+            return;
         }
     }
 
     public override void UpdateStrategy()
     {
+        m_Spider.GetSetSpeed = new Vector2(0f, 0f);
     }
 }
