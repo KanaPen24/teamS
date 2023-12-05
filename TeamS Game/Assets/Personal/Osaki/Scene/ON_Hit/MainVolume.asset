@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dabe33b2c6f6c7b47bbc25decd09e3a0, type: 3}
   m_Name: ON_GaussianVolume
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   rate:
     m_OverrideState: 1
     m_Value: 0

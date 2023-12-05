@@ -127,6 +127,7 @@ public class ON_HitManager
         HitState state = HitState.NONE;
 
         // “G“¯m‚ª“–‚½‚Á‚½
+        // C³•K{
         if (ObjManager.instance.GetObj(m_hits[i].GetObjID()).GetComponent<ObjEnemyBase>() != null &&
            ObjManager.instance.GetObj(m_hits[j].GetObjID()).GetComponent<ObjEnemyBase>() != null)
         {
