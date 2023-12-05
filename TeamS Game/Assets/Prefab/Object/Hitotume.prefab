@@ -202,8 +202,8 @@ MonoBehaviour:
   m_Hitotume: {fileID: 8922192720101417169}
   t: 0
   s: 0
-  acceleration: 0.5
-  magnification: 0.3
+  acceleration: 0.4
+  magnification: 0.2
 --- !u!114 &8922192720101417175
 MonoBehaviour:
   m_ObjectHideFlags: 0
