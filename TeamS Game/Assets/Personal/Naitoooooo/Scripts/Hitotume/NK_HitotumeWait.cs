@@ -26,6 +26,6 @@ public class NK_HitotumeWait : NK_HitotumeStrategy
     }
     public override void UpdateStrategy()
     {
-
+        m_HitotumeProto.GetSetSpeed = Vector2.zero;
     }
 }
