@@ -35,11 +35,31 @@ public class KnockBack
     public float m_fGravity;     //重力
 }
 
+// 分散用のクラス
+[System.Serializable]
+public class Division
+{
+    [HideInInspector]
+    public bool m_bDivisionTrigger;
+    [HideInInspector]
+    public float m_fDivisionTime;
+}
+
 
 public class ObjEnemyBase : ObjBase
 {
     [SerializeField] protected KnockBack knockBack;
     [SerializeField] protected EnemyState m_EnemyState;
+    [HideInInspector]
+    public Division m_division;
+
+    public override void InitObj()
+    {
+        base.InitObj();
+        m_division.m_bDivisionTrigger = false;
+        m_division.m_fDivisionTime = 1.0f;
+    }
+
     public override void UpdateObj()
     {
     }
@@ -98,6 +118,18 @@ public class ObjEnemyBase : ObjBase
             //重力を使って落とす
             m_vSpeed.y -= knockBack.m_fGravity;
         }        
+    }
+
+    protected void CheckDivision()
+    {
+        if (m_division.m_bDivisionTrigger)
+        {
+            m_division.m_fDivisionTime -= Time.deltaTime;
+            if (m_division.m_fDivisionTime <= 0f)
+            {
+                GetSetDestroy = true;
+            }
+        }
     }
 
     public EnemyState GetSetEnemyState

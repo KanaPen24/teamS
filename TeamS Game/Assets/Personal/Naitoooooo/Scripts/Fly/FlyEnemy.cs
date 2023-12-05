@@ -21,5 +21,6 @@ public class FlyEnemy : ObjEnemyBase
         }
         m_FlyStrategy[(int)m_EnemyState].UpdateState();
         m_FlyStrategy[(int)m_EnemyState].UpdateStrategy();
+        CheckDivision();
     }
 }

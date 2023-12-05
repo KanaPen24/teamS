@@ -20,6 +20,7 @@ public class Spider : ObjEnemyBase
 
         m_SpiderStrategy[(int)m_EnemyState].UpdateState();
         m_SpiderStrategy[(int)m_EnemyState].UpdateStrategy();
+        CheckDivision();
     }
 
     public void DeleteMissile()

@@ -26,6 +26,7 @@ public class HitotumeProto : ObjEnemyBase
 
         m_HitotumeStrategy[(int)m_EnemyState].UpdateState();
         m_HitotumeStrategy[(int)m_EnemyState].UpdateStrategy();
+        CheckDivision();
         //m_vSpeed.x = 3.0f;
     }
 }
