@@ -18,6 +18,8 @@ public class YK_HighScore : YK_UI
     public static YK_HighScore instance;         // YK_HighScoreのインスタンス
     [SerializeField] List<Text> scoreText; // スコアを表示するためのTextコンポーネントへの参照
     private int storage;
+    [SerializeField] private float dotweenInterval;
+    [SerializeField] private float Movetime;
 
     /**
     * @fn
@@ -93,7 +95,11 @@ public class YK_HighScore : YK_UI
         Vector3 RectTransform_get;
         RectTransform_get = scoreText[storage].rectTransform.position;
         scoreText[storage].rectTransform.anchoredPosition = new Vector3(0.0f, -200, 0); 
-        scoreText[storage].rectTransform.DOMove(RectTransform_get, 3f);
+        scoreText[storage].rectTransform.DOMove(RectTransform_get, Movetime).OnComplete(() =>
+        {
+            scoreText[storage].DOFade(0.0f, dotweenInterval)   // アルファ値を0にしていく
+                       .SetLoops(-1, LoopType.Yoyo);    // 行き来を無限に繰り返す
+        });
     }
 
     //ゲッターセッターハイスコアを書く
