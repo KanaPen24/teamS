@@ -837,6 +837,8 @@ MonoBehaviour:
   - {fileID: 8971877943766950904}
   - {fileID: 3396726959294350398}
   - {fileID: 2582815504813704314}
+  dotweenInterval: 0.3
+  Movetime: 1.5
 --- !u!1 &6284188588369037127
 GameObject:
   m_ObjectHideFlags: 0
