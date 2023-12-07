@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     {
         //テスト
         if (Input.GetKeyDown(KeyCode.F4))
-            UIs[(int)UIType.HighScore].Active(false);
+            GameManager.GetSetGameState = GameState.GameGoal;
         if (GameManager.GetSetGameState == GameState.GameGoal)
         {
             //トランジションを掛けてイベントを発生させる

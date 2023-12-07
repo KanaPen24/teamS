@@ -18,7 +18,7 @@ MonoBehaviour:
     m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 2.01
+    m_Value: 2
   scatter:
     m_OverrideState: 1
     m_Value: 1
@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0.6227483, g: 0.6695546, b: 0.9245283, a: 1}
+    m_Value: {r: 0.30266997, g: 0.33195248, b: 0.49056602, a: 1}
   highQualityFiltering:
     m_OverrideState: 1
     m_Value: 0
@@ -52,25 +52,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cba8ff320cb7fe44a92bafc48a40f58a, type: 3}
   m_Name: FlareVolume
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   flareColor:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 0, b: 0, a: 1}
+    m_Value: {r: 0.7264151, g: 0.5852439, b: 0.5852439, a: 1}
   flarePosition:
     m_OverrideState: 1
-    m_Value: {x: 0.08, y: 0}
+    m_Value: {x: 0.39, y: -0.69}
   flareSize:
     m_OverrideState: 1
-    m_Value: 0.28
+    m_Value: 0.53
   paraColor:
     m_OverrideState: 1
-    m_Value: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+    m_Value: {r: 0.5647059, g: 0.7647059, b: 0.7516706, a: 1}
   paraPosition:
     m_OverrideState: 1
-    m_Value: {x: 0.18, y: -0.04}
+    m_Value: {x: -0.34, y: 0.11}
   paraSize:
     m_OverrideState: 1
-    m_Value: 0.56
+    m_Value: 0.58
 --- !u!114 &-6204809596990474611
 MonoBehaviour:
   m_ObjectHideFlags: 3

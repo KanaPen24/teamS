@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class YK_HighScore : YK_UI
 {
@@ -16,6 +17,9 @@ public class YK_HighScore : YK_UI
     [SerializeField] private int m_nRank = 5;
     public static YK_HighScore instance;         // YK_HighScoreのインスタンス
     [SerializeField] List<Text> scoreText; // スコアを表示するためのTextコンポーネントへの参照
+    private int storage;
+    [SerializeField] private float dotweenInterval;
+    [SerializeField] private float Movetime;
 
     /**
     * @fn
@@ -40,7 +44,7 @@ public class YK_HighScore : YK_UI
     {
         //タイプの設定
         m_eUIType = UIType.HighScore;
-        Obj = this.gameObject;
+        Obj = this.gameObject;        
     }
 
     // Update is called once per frame
@@ -70,6 +74,7 @@ public class YK_HighScore : YK_UI
         {
             if(m_nHighScore[i]<=YK_Score.instance.GetSetScore)
             {
+                storage = i;    //更新された順位を保存
                 for (int j = i; j < m_nRank - 1; j++)
                     //次の順位に元々のハイスコアを移動させる
                     m_nHighScore[m_nHighScore.Count - j - 1] = m_nHighScore[m_nHighScore.Count - j - 2];             
@@ -87,6 +92,14 @@ public class YK_HighScore : YK_UI
             // テキストの更新
             scoreText[i].text = m_nHighScore[i].ToString("D7");
         }
+        Vector3 RectTransform_get;
+        RectTransform_get = scoreText[storage].rectTransform.position;
+        scoreText[storage].rectTransform.anchoredPosition = new Vector3(0.0f, -200, 0); 
+        scoreText[storage].rectTransform.DOMove(RectTransform_get, Movetime).OnComplete(() =>
+        {
+            scoreText[storage].DOFade(0.0f, dotweenInterval)   // アルファ値を0にしていく
+                       .SetLoops(-1, LoopType.Yoyo);    // 行き来を無限に繰り返す
+        });
     }
 
     //ゲッターセッターハイスコアを書く
