@@ -7,7 +7,7 @@ public class NK_HitotumeWait : NK_HitotumeStrategy
     //カウント用
     private float c;
     [SerializeField] private HitotumeProto m_HitotumeProto;
-    [SerializeField] private float DashTiming;      //走り始めるtiming
+    [SerializeField] private float m_Reng;      //走り始めるtiming
 
     public override void UpdateState()
     {
@@ -16,12 +16,14 @@ public class NK_HitotumeWait : NK_HitotumeStrategy
         if(!m_HitotumeProto.GetSetGround.m_bStand)
         {
             m_HitotumeProto.GetSetEnemyState = EnemyState.Drop;
+            return;
         }
         //待ち→移動
-        if (c > DashTiming)
+        if (m_HitotumeProto.GetSetPos.x > ObjPlayer.instance.GetSetPos.x - m_Reng &&
+            m_HitotumeProto.GetSetPos.x < ObjPlayer.instance.GetSetPos.x + m_Reng)
         {
             m_HitotumeProto.GetSetEnemyState = EnemyState.Walk;
-            c = 0;
+            return;
         }
     }
     public override void UpdateStrategy()

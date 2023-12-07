@@ -177,7 +177,9 @@ MonoBehaviour:
     m_fDamping: 0.45
     m_fGravity: 0.02
   m_EnemyState: 0
-  m_nEnemyCnt: 1
+  m_division:
+    m_bDivisionTrigger: 0
+    m_fDivisionTime: 0
   m_HitotumeStrategy:
   - {fileID: 8922192720101417175}
   - {fileID: 8922192720101417174}
@@ -217,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HitotumeProto: {fileID: 8922192720101417169}
-  DashTiming: 30
+  m_Reng: 30
 --- !u!114 &9067292263333297109
 MonoBehaviour:
   m_ObjectHideFlags: 0
