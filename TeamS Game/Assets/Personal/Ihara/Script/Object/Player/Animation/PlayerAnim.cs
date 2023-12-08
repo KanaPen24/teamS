@@ -51,4 +51,14 @@ public class PlayerAnim : MonoBehaviour
             return true;
         else return false;
     }
+
+    private void Update()
+    {
+        //if(HitStop.instance.hitStopState == HitStopState.ON)
+        if(ObjPlayer.instance.GetSetHitStopParam.m_bHitStop)
+        {
+            m_animator.SetFloat("Speed", 0.1f);
+        }
+        else m_animator.SetFloat("Speed", 1f);
+    }
 }

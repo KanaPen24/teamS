@@ -62,6 +62,26 @@ public class Invincible
     }
 }
 
+// ----- ヒットストップ状態を管理するクラス ------------------------------------------
+[System.Serializable]
+public class HitStopParam
+{
+    [SerializeField] public bool m_bHitStop; // ヒットストップが掛かっているか
+    [SerializeField] public float m_fTime;   // 時間
+
+    public void SetHitStop(float i)
+    {
+        m_bHitStop = true;
+        m_fTime = i;
+    }
+
+    public void EndHitStop()
+    {
+        m_bHitStop = false;
+        m_fTime = 0f;
+    }
+}
+
 // --- インスペクターで初期値を設定するクラス ------------------------------
 [System.Serializable]
 public class InitParam
@@ -88,6 +108,7 @@ public class CheckParam
 {
     [SerializeField] private Ground m_Ground;     // 地面の情報
     [SerializeField] private Invincible m_Invincible; // 無敵情報
+    [SerializeField] private HitStopParam m_HitStopParam; // ヒットストップ
     [SerializeField] private int m_nObjID;        // objのID
     [SerializeField] private int m_nHitID;        // 当たり判定のID
     [SerializeField] private float m_fAccel;      // 加速度
@@ -113,6 +134,7 @@ public class CheckParam
     public ObjType GetSetType { get { return m_eType; } set { m_eType = value; } }
     public Ground GetSetGround { get { return m_Ground; } set { m_Ground = value; } }
     public Invincible GetSetInvincible { get { return m_Invincible; } set { m_Invincible = value; } }
+    public HitStopParam GetSetHitStopParam { get { return m_HitStopParam; } set { m_HitStopParam = value; } }
 }
 // ------------------------------------------------------------------------
 
@@ -129,6 +151,8 @@ public class ObjBase : MonoBehaviour
     public Ground m_Ground;           // 地面の情報
     [HideInInspector]
     public Invincible m_Invincible;   // 無敵情報
+    [HideInInspector]
+    public HitStopParam m_HitStopParam;// ヒットストップ
     protected int m_nObjID;           // objのID
     protected int m_nHitID;           // 当たり判定のID
     protected float m_fAccel;         // 加速度
@@ -170,6 +194,7 @@ public class ObjBase : MonoBehaviour
         CheckParam.GetSetType = m_eType;
         CheckParam.GetSetGround = m_Ground;
         CheckParam.GetSetInvincible = m_Invincible;
+        CheckParam.GetSetHitStopParam = m_HitStopParam;
     }
 
     // --- 更新関数 ---
@@ -244,6 +269,19 @@ public class ObjBase : MonoBehaviour
         else m_vSpeed.y = 0f;
     }
 
+    // --- ヒットストップ判定処理 ---
+    public virtual void UpdateHitStop()
+    {
+        if(m_HitStopParam.m_bHitStop)
+        {
+            m_HitStopParam.m_fTime -= Time.deltaTime;
+            if(m_HitStopParam.m_fTime <= 0f)
+            {
+                m_HitStopParam.EndHitStop();
+            }
+        }
+    }
+
     // --- プロパティ関数 ---------------------------------------------------------------------
     public int GetSetObjID { get { return m_nObjID; } set { m_nObjID = value; } }
     public int GetSetHitID { get { return m_nHitID; } set { m_nHitID = value; } }
@@ -270,17 +308,8 @@ public class ObjBase : MonoBehaviour
 
     public Ground GetSetGround { get { return m_Ground; } set { m_Ground = value; } }
     public Invincible GetSetInvincible { get { return m_Invincible; } set { m_Invincible = value; } }
+    public HitStopParam GetSetHitStopParam { get { return m_HitStopParam; } set { m_HitStopParam = value; } }
     // ----------------------------------------------------------------------------------------
 }
-
-
-//当たり判定を生成 → その座標を動かす → 最後は消去
-
-//int ID = ON_HitManager.instance.GenerateHit();
-
-//ON_HitManager.instance.SetCenter(ID, 指定した座標に移動する);
-//ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
-
-//ON_HitManager.instance.DeleteHit(ID);
 
 

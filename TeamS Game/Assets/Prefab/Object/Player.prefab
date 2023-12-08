@@ -95,6 +95,7 @@ MonoBehaviour:
   - {fileID: 2421346865799147533}
   - {fileID: 2183059215574737135}
   Anim: {fileID: 8622685969760560357}
+  PlayerObj: {fileID: 8053466303714750634}
 --- !u!114 &2421346865799147528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,6 +768,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3461787307631526711, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: _maskTexture
+      value: 
+      objectReference: {fileID: 11400000, guid: 16bf142754640ab4487bb625c30931fd, type: 2}
     - target: {fileID: 3514292476287669380, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: Opacity
       value: 1
@@ -2740,6 +2745,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308e904e3f33207489a2c15b9b0b297b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8053466303714750634 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 930118680370623071, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+  m_PrefabInstance: {fileID: 7146045941522154229}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8113060261211495345 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1422218010211752260, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
