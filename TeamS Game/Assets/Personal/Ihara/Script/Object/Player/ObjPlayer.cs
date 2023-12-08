@@ -51,6 +51,15 @@ public class ObjPlayer : ObjBase
     {
         // --- ‘JˆÚó‘Ô‚É‚æ‚éXVˆ— ---
         m_PlayerStrategys[(int)m_PlayerState].UpdatePlayer();
+
+        if(GetSetDir == ObjDir.RIGHT)
+        {
+            transform.localScale = new Vector3(3f, 3f, 3f);
+        }
+        else if (GetSetDir == ObjDir.LEFT)
+        {
+            transform.localScale = new Vector3(-3f, 3f, 3f);
+        }
     }
 
     // ‰Šú‰»ŠÖ”
