@@ -17,7 +17,9 @@ public class YK_HighScore : YK_UI
     [SerializeField] private int m_nRank = 5;
     public static YK_HighScore instance;         // YK_HighScoreのインスタンス
     [SerializeField] List<Text> scoreText; // スコアを表示するためのTextコンポーネントへの参照
+    [SerializeField] Text MyscoreText; // 自分のスコアを表示するためのText
     private int storage;
+    private bool m_bDrawflg = false;         //順位変動がなかった場合のフラグ
     [SerializeField] private float dotweenInterval;
     [SerializeField] private float Movetime;
 
@@ -44,17 +46,12 @@ public class YK_HighScore : YK_UI
     {
         //タイプの設定
         m_eUIType = UIType.HighScore;
-        Obj = this.gameObject;        
-    }
+        Obj = this.gameObject;
+        UpdateHighScore();    }
 
     // Update is called once per frame
     void Update()
     {
-        //テスト
-        if (Input.GetKeyDown(KeyCode.F7))
-        {
-            UpdateHighScore();
-        }
         if(GameManager.GetSetGameState==GameState.Result&& Input.GetKeyDown(IS_XBoxInput.A))
         {
             GameManager.GetSetGameState = GameState.Title;
@@ -72,15 +69,21 @@ public class YK_HighScore : YK_UI
         m_nHighScore = YK_JsonSave.instance.HighScoreLoad();
         for (int i = 0; i < m_nRank; i++)
         {
-            if(m_nHighScore[i]<=YK_Score.instance.GetSetScore)
+            //リザルトシーン様に変更
+            if (m_nHighScore[i] <= YK_JsonSave.instance.MyScoreLoad())
             {
                 storage = i;    //更新された順位を保存
                 for (int j = i; j < m_nRank - 1; j++)
                     //次の順位に元々のハイスコアを移動させる
-                    m_nHighScore[m_nHighScore.Count - j - 1] = m_nHighScore[m_nHighScore.Count - j - 2];             
-                m_nHighScore[i] = YK_Score.instance.GetSetScore;    //ハイスコアを更新する
+                    m_nHighScore[m_nHighScore.Count - j - 1] = m_nHighScore[m_nHighScore.Count - j - 2];
+                m_nHighScore[i] = YK_JsonSave.instance.MyScoreLoad();    //ハイスコアを更新する
                 break;
             }
+            else    //順位変動がない場合
+            {
+                m_bDrawflg = true;
+            }
+                
         }
     }
 
@@ -92,6 +95,10 @@ public class YK_HighScore : YK_UI
             // テキストの更新
             scoreText[i].text = m_nHighScore[i].ToString("D7");
         }
+        //自分のスコアを表示
+        MyscoreText.text= YK_JsonSave.instance.MyScoreLoad().ToString("D7");
+        //順位変動がなかったら演出はいれない
+        if (m_bDrawflg) return;
         Vector3 RectTransform_get;
         RectTransform_get = scoreText[storage].rectTransform.position;
         scoreText[storage].rectTransform.anchoredPosition = new Vector3(0.0f, -200, 0); 
@@ -119,7 +126,7 @@ public class YK_HighScore : YK_UI
     public void UpdateHighScore()
     {
         ChangeHighScore();
-        SaveHighScore();
+        //SaveHighScore();
         DrawHighScore();
     }
 }
