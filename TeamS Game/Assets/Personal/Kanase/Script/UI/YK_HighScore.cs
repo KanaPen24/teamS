@@ -54,8 +54,12 @@ public class YK_HighScore : YK_UI
     {
         if(GameManager.GetSetGameState==GameState.Result&& Input.GetKeyDown(IS_XBoxInput.A))
         {
-            GameManager.GetSetGameState = GameState.Title;
-            SceneManager.LoadScene("TitleScene");
+            //トランジションを掛けてシーン遷移する
+            Fade.instance.FadeIn(1f, () =>
+            {
+                GameManager.GetSetGameState = GameState.Title;
+                SceneManager.LoadScene("TitleScene");
+            });
         }
     }
 
