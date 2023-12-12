@@ -20,4 +20,5 @@ public class SaveData
 public class SaveData2
 {
     public List<int> HighScore; //ハイスコア
+    public int MyScore;    //スコア
 }

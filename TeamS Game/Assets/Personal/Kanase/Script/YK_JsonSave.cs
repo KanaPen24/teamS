@@ -38,6 +38,7 @@ public class YK_JsonSave : MonoBehaviour
         if(!File.Exists(filepath2))
         {
             data2.HighScore = new List<int>(YK_HighScore.instance.GetRank()) { 5, 4, 3, 2, 1 };
+            data2.MyScore = 0;
             Save2(data2);   //セーブデータを生成する
         }
         if (instance == null)
@@ -76,6 +77,7 @@ public class YK_JsonSave : MonoBehaviour
     void Save2(SaveData2 data2)
     {
         data2.HighScore = YK_HighScore.instance.GetSetHighScore;
+        data2.MyScore = YK_Score.instance.GetSetScore;
         string json = JsonUtility.ToJson(data2);                 // jsonとして変換
         StreamWriter wr = new StreamWriter(filepath2, false);    // ファイル書き込み指定
         wr.WriteLine(json);                                     // json変換した情報を書き込み
@@ -131,6 +133,13 @@ public class YK_JsonSave : MonoBehaviour
         //ファイルを読み込んでdataに格納
         data2 = Load2(filepath2);
         return data2.HighScore;     
+    }
+    //外部でハイスコアのロードが呼べるように
+    public int MyScoreLoad()
+    {
+        //ファイルを読み込んでdataに格納
+        data2 = Load2(filepath2);
+        return data2.MyScore;
     }
 
     //外部でもロードが呼べるように
