@@ -56,7 +56,7 @@ MonoBehaviour:
   InitParam:
     m_fAccel: 0.3
     m_fWeight: 1
-    m_vMaxSpeed: {x: 0.3, y: 0.7}
+    m_vMaxSpeed: {x: 0.1, y: 0.7}
     m_bExist: 1
     m_eDir: 1
     m_eType: 0
@@ -67,6 +67,9 @@ MonoBehaviour:
       m_vSize: {x: 0, y: 0}
     m_Invincible:
       m_bInvincible: 0
+      m_fTime: 0
+    m_HitStopParam:
+      m_bHitStop: 0
       m_fTime: 0
     m_nObjID: 0
     m_nHitID: 0
@@ -86,6 +89,9 @@ MonoBehaviour:
   m_Invincible:
     m_bInvincible: 0
     m_fTime: 0
+  m_HitStopParam:
+    m_bHitStop: 0
+    m_fTime: 0
   m_PlayerState: 0
   m_PlayerStrategys:
   - {fileID: 2421346865799147528}
@@ -95,7 +101,6 @@ MonoBehaviour:
   - {fileID: 2421346865799147533}
   - {fileID: 2183059215574737135}
   Anim: {fileID: 8622685969760560357}
-  PlayerObj: {fileID: 8053466303714750634}
 --- !u!114 &2421346865799147528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +170,7 @@ MonoBehaviour:
   m_bStartFlg: 0
   m_vAtkArea: {x: 1, y: 1.5, z: 0}
   m_fLength: 2.5
+  atkEffect: {fileID: 0}
 --- !u!114 &2183059215574737135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2745,11 +2751,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308e904e3f33207489a2c15b9b0b297b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &8053466303714750634 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 930118680370623071, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
-  m_PrefabInstance: {fileID: 7146045941522154229}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8113060261211495345 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1422218010211752260, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}

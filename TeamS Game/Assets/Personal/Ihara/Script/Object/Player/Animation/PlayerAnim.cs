@@ -54,10 +54,17 @@ public class PlayerAnim : MonoBehaviour
 
     private void Update()
     {
-        //if(HitStop.instance.hitStopState == HitStopState.ON)
-        if(ObjPlayer.instance.GetSetHitStopParam.m_bHitStop)
+        if (GameManager.GetSetGameState == GameState.GamePause)
+        {
+            m_animator.SetFloat("Speed", 0.0f);
+            return;
+        }
+        else m_animator.SetFloat("Speed", 1f);
+
+        if (ObjPlayer.instance.GetSetHitStopParam.m_bHitStop)
         {
             m_animator.SetFloat("Speed", 0.1f);
+            return;
         }
         else m_animator.SetFloat("Speed", 1f);
     }
