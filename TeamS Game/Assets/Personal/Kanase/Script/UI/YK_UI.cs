@@ -18,8 +18,8 @@ public enum UIType
     Score   = 0,    // スコア
     Combo   = 1,    //コンボ
     BossBar = 2,    //ボスHPバー
-    HighScore = 3,  //ハイスコア
-    Pause = 4,    //ポーズ
+    Pause = 3,    //ポーズ
+    HighScore = 4,  //ハイスコア
     Start   = 5,    //スタート
     End     = 6,    //エンド
     

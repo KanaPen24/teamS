@@ -21,6 +21,13 @@ public class PlayerJump : PlayerStrategy
             EndState();
             return;
         }
+        // íµñÙ Å® ë“Çø
+        if (ObjPlayer.instance.GetSetGround.m_bStand)
+        {
+            ObjPlayer.instance.m_PlayerState = PlayerState.Idle;
+            EndState();
+            return;
+        }
     }
 
     public override void UpdatePlayer()

@@ -78,7 +78,20 @@ public class GameManager : MonoBehaviour
         {
             m_sGameState = GameState.GamePlay;
             m_bOnce = true;
+            m_fTime = 0f;
         }
+
+        // テスト
+        if (Input.GetKeyDown(IS_XBoxInput.LB))
+        {
+            //トランジションを掛けてシーン遷移する
+            Fade.instance.FadeIn(1f, () =>
+            {
+                GameManager.GetSetGameState = GameState.Result;
+                SceneManager.LoadScene("ResultScene");
+            });
+        }
+        
     }
 
     private void FixedUpdate()
