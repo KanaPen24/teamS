@@ -8,11 +8,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerAtk : PlayerStrategy
 {
     [SerializeField] private Vector3 m_vAtkArea;
     [SerializeField] private float m_fLength;
+    public VisualEffect atkEffect;
     private int atknum = -1;
 
     public override void UpdateState()
@@ -43,6 +45,13 @@ public class PlayerAtk : PlayerStrategy
                 ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f));
         }
 
+        //if (HitStop.instance.hitStopState == HitStopState.ON)
+        if (ObjPlayer.instance.GetSetHitStopParam.m_bHitStop)
+        {
+            atkEffect.playRate = 0.1f;
+        }
+        else atkEffect.playRate = 1f;
+
         // 速度は減速(仮)
         ObjPlayer.instance.GetSetSpeed *= new Vector2(0.8f, 1f);
     }
@@ -59,6 +68,11 @@ public class PlayerAtk : PlayerStrategy
             m_vAtkArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
 
             ObjPlayer.instance.GetSetSpeed += new Vector2(5f, 0f);
+
+            // エフェクト再生
+            atkEffect.Play();
+            atkEffect.transform.position = this.gameObject.transform.position;
+            atkEffect.transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         else if (ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
         {
@@ -66,6 +80,11 @@ public class PlayerAtk : PlayerStrategy
             m_vAtkArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
 
             ObjPlayer.instance.GetSetSpeed += new Vector2(-5f, 0f);
+
+            // エフェクト再生
+            atkEffect.Play();
+            atkEffect.transform.position = this.gameObject.transform.position;
+            atkEffect.transform.localScale = new Vector3(1f, 1f, 1f);
         }
 
         // 攻撃SEを再生

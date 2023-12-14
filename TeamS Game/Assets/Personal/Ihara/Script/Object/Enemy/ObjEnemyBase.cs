@@ -43,6 +43,10 @@ public class Division
     public bool m_bDivisionTrigger;
     [HideInInspector]
     public float m_fDivisionTime;
+    [HideInInspector]
+    public float m_fBlinkTime;
+    [HideInInspector]
+    public float m_fMaxBlinkTime;
 }
 
 
@@ -58,6 +62,8 @@ public class ObjEnemyBase : ObjBase
         base.InitObj();
         m_division.m_bDivisionTrigger = false;
         m_division.m_fDivisionTime = 1.0f;
+        m_division.m_fMaxBlinkTime = 0.1f;
+        m_division.m_fBlinkTime = m_division.m_fMaxBlinkTime;
     }
 
     public override void UpdateObj()
@@ -129,7 +135,18 @@ public class ObjEnemyBase : ObjBase
             {
                 GetSetDestroy = true;
             }
+            else UpdateDivision();
         }
+    }
+
+    private void UpdateDivision()
+    {
+        if (m_division.m_fBlinkTime <= 0f)
+        {
+            texObj.enabled = !texObj.enabled;
+            m_division.m_fBlinkTime = m_division.m_fMaxBlinkTime;
+        }
+        else m_division.m_fBlinkTime -= Time.deltaTime;
     }
 
     public EnemyState GetSetEnemyState

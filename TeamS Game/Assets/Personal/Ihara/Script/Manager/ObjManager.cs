@@ -11,10 +11,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class ObjManager : MonoBehaviour
 {
     [SerializeField] private List<ObjBase> Objs; // オブジェクトを格納する配列
+    [SerializeField] private CinemachineImpulseSource cinema;
     public static ObjManager instance;
     public ParticleSystem hitEffect;
     public ObjEnemyUnion enemyUnionPrefab;
@@ -56,7 +58,8 @@ public class ObjManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (GameManager.m_sGameState != GameState.GamePlay)
+        if (GameManager.m_sGameState != GameState.GamePlay || 
+            HitStop.instance.hitStopState == HitStopState.ON)
             return;
 
         // --- オブジェクトの更新処理 ---
@@ -67,7 +70,14 @@ public class ObjManager : MonoBehaviour
             {
                 // オブジェクトの表示
                 if (Objs[i].texObj != null)
-                Objs[i].texObj.enabled = true;
+                {
+                    if(Objs[i].GetComponent<ObjEnemyBase>() != null)
+                    {
+                        if(!Objs[i].GetComponent<ObjEnemyBase>().m_division.m_bDivisionTrigger)
+                            Objs[i].texObj.enabled = true;
+                    }
+                    else Objs[i].texObj.enabled = true;
+                }
 
                 // 更新処理  → 地面判定 → 向き調整 → 移動量に速度を格納 → 速度調整 →
                 // 無敵時間更新 → 座標更新
@@ -79,8 +89,14 @@ public class ObjManager : MonoBehaviour
                 Objs[i].GetSetMove = Objs[i].GetSetSpeed;
                 Objs[i].GetSetPos += new Vector3(Objs[i].GetSetMove.x, Objs[i].GetSetMove.y, 0f);
 
-                // オブジェクトが移動した座標に当たり判定を移動させる
-                ON_HitManager.instance.SetCenter(Objs[i].GetSetHitID, Objs[i].GetSetPos);
+                // ヒットストップ更新
+                Objs[i].UpdateHitStop();
+
+                if (!Objs[i].m_HitStopParam.m_bHitStop)
+                {
+                    // オブジェクトが移動した座標に当たり判定を移動させる
+                    ON_HitManager.instance.SetCenter(Objs[i].GetSetHitID, Objs[i].GetSetPos);
+                }
             }
             // --- 存在していない場合 ---
             else
@@ -92,6 +108,9 @@ public class ObjManager : MonoBehaviour
 
             // オブジェクトのパラメーター更新
             Objs[i].UpdateCheckParam();
+
+            // ヒットを初期化
+            Objs[i].GetSetHit = false;
         }
 
         // --- 当たり判定処理 ---
@@ -117,9 +136,11 @@ public class ObjManager : MonoBehaviour
             if (Objs[i].GetSetHit)
             {
                 Objs[i].GetSetInvincible.SetInvincible(1f);
-            }
+                // ヒットストップ発生
+                //HitStop.instance.StartHitStop(0.1f);
 
-            Objs[i].GetSetHit = false;
+                //cinema.GenerateImpulse();
+            }
         }
     }
 
@@ -222,6 +243,9 @@ public class ObjManager : MonoBehaviour
                         // ヒットエフェクト再生
                         hitEffect.Play();
                         hitEffect.transform.position = Objs[otherID].GetSetPos;
+
+                        // ヒットストップをかける
+                        Objs[myID].GetSetHitStopParam.SetHitStop(0.5f);
                     }
                 }
             }
@@ -244,6 +268,9 @@ public class ObjManager : MonoBehaviour
                         // ノックバック処理
                         Objs[myID].KnockBackObj(Objs[otherID].GetSetDir);
                         Objs[myID].GetSetHit = true;
+
+                        // ヒットストップをかける
+                        Objs[myID].GetSetHitStopParam.SetHitStop(0.5f);
                     }
 
                 }
@@ -378,13 +405,15 @@ public class ObjManager : MonoBehaviour
             // 地面に当たった判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.GRUOND)
             {
+                float pos;
                 // 右に当たっていたら
                 if (ON_HitManager.instance.GetData(i).dir == HitDir.RIGHT)
                 {
-                    // 座標調整
-                    Objs[myID].GetSetPos = new Vector3(Objs[otherID].GetSetPos.x, Objs[myID].GetSetPos.y, 0f) -
-                                           new Vector3(Objs[otherID].GetSetScale.x / 2f +
-                                                       Objs[myID].GetSetScale.x / 2f, 0f, 0f);
+                    // 座標調整(相手の左端 - 自身の縮小 / 2)
+                    pos = Objs[otherID].GetSetPos.x - Mathf.Abs(Objs[otherID].GetSetScale.x / 2f) -
+                          Mathf.Abs(Objs[myID].GetSetScale.x / 2f);
+
+                    Objs[myID].GetSetPos = new Vector3(pos, Objs[myID].GetSetPos.y, 0f);
 
                     // 速度を0にする
                     Objs[myID].GetSetSpeed = new Vector3(0f, Objs[myID].GetSetSpeed.y, 0f);
@@ -392,10 +421,11 @@ public class ObjManager : MonoBehaviour
                 // 左に当たっていたら
                 if (ON_HitManager.instance.GetData(i).dir == HitDir.LEFT)
                 {
-                    // 座標調整
-                    Objs[myID].GetSetPos = new Vector3(Objs[otherID].GetSetPos.x, Objs[myID].GetSetPos.y, 0f) +
-                                           new Vector3(Objs[otherID].GetSetScale.x / 2f +
-                                                       Objs[myID].GetSetScale.x / 2f, 0f, 0f);
+                    // 座標調整(相手の右端 + 自身の縮小 / 2)
+                    pos = Objs[otherID].GetSetPos.x + Mathf.Abs(Objs[otherID].GetSetScale.x / 2f) +
+                          Mathf.Abs(Objs[myID].GetSetScale.x / 2f);
+
+                    Objs[myID].GetSetPos = new Vector3(pos, Objs[myID].GetSetPos.y, 0f);
 
                     // 速度を0にする
                     Objs[myID].GetSetSpeed = new Vector3(0f, Objs[myID].GetSetSpeed.y, 0f);
@@ -403,10 +433,11 @@ public class ObjManager : MonoBehaviour
                 // 上に当たっていたら
                 if (ON_HitManager.instance.GetData(i).dir == HitDir.UP)
                 {
-                    // 座標調整
-                    Objs[myID].GetSetPos = new Vector3(Objs[myID].GetSetPos.x, Objs[otherID].GetSetPos.y, 0f) -
-                                           new Vector3(0f, Objs[otherID].GetSetScale.y / 2f +
-                                                       Objs[myID].GetSetScale.y / 2f, 0f);
+                    // 座標調整(相手の下端 - 自身の縮小 / 2)
+                    pos = Objs[otherID].GetSetPos.y - Mathf.Abs(Objs[otherID].GetSetScale.y / 2f) -
+                          Mathf.Abs(Objs[myID].GetSetScale.y / 2f);
+
+                    Objs[myID].GetSetPos = new Vector3(Objs[myID].GetSetPos.x, pos, 0f);
 
                     // 速度を0にする
                     Objs[myID].GetSetSpeed = new Vector3(Objs[myID].GetSetSpeed.x, 0f, 0f);
@@ -414,10 +445,11 @@ public class ObjManager : MonoBehaviour
                 // 下に当たっていたら
                 if (ON_HitManager.instance.GetData(i).dir == HitDir.DOWN)
                 {
-                    // 座標調整
-                    Objs[myID].GetSetPos = new Vector3(Objs[myID].GetSetPos.x, Objs[otherID].GetSetPos.y, 0f) +
-                                           new Vector3(0f, Objs[otherID].GetSetScale.y / 2f +
-                                                       Objs[myID].GetSetScale.y / 2f, 0f);
+                    // 座標調整(相手の上端 + 自身の縮小 / 2)
+                    pos = Objs[otherID].GetSetPos.y + Mathf.Abs(Objs[otherID].GetSetScale.y / 2f) +
+                          Mathf.Abs(Objs[myID].GetSetScale.y / 2f);
+
+                    Objs[myID].GetSetPos = new Vector3(Objs[myID].GetSetPos.x, pos, 0f);
 
                     // 速度を0にする
                     Objs[myID].GetSetSpeed = new Vector3(Objs[myID].GetSetSpeed.x, 0f, 0f);

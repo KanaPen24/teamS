@@ -56,7 +56,7 @@ MonoBehaviour:
   InitParam:
     m_fAccel: 0.3
     m_fWeight: 1
-    m_vMaxSpeed: {x: 0.3, y: 0.7}
+    m_vMaxSpeed: {x: 0.1, y: 0.7}
     m_bExist: 1
     m_eDir: 1
     m_eType: 0
@@ -67,6 +67,9 @@ MonoBehaviour:
       m_vSize: {x: 0, y: 0}
     m_Invincible:
       m_bInvincible: 0
+      m_fTime: 0
+    m_HitStopParam:
+      m_bHitStop: 0
       m_fTime: 0
     m_nObjID: 0
     m_nHitID: 0
@@ -85,6 +88,9 @@ MonoBehaviour:
     m_vSize: {x: 0, y: 0}
   m_Invincible:
     m_bInvincible: 0
+    m_fTime: 0
+  m_HitStopParam:
+    m_bHitStop: 0
     m_fTime: 0
   m_PlayerState: 0
   m_PlayerStrategys:
@@ -164,6 +170,7 @@ MonoBehaviour:
   m_bStartFlg: 0
   m_vAtkArea: {x: 1, y: 1.5, z: 0}
   m_fLength: 2.5
+  atkEffect: {fileID: 0}
 --- !u!114 &2183059215574737135
 MonoBehaviour:
   m_ObjectHideFlags: 0

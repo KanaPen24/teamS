@@ -51,4 +51,21 @@ public class PlayerAnim : MonoBehaviour
             return true;
         else return false;
     }
+
+    private void Update()
+    {
+        if (GameManager.GetSetGameState == GameState.GamePause)
+        {
+            m_animator.SetFloat("Speed", 0.0f);
+            return;
+        }
+        else m_animator.SetFloat("Speed", 1f);
+
+        if (ObjPlayer.instance.GetSetHitStopParam.m_bHitStop)
+        {
+            m_animator.SetFloat("Speed", 0.1f);
+            return;
+        }
+        else m_animator.SetFloat("Speed", 1f);
+    }
 }

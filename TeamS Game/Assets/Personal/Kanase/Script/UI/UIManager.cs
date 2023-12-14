@@ -17,7 +17,6 @@ public class UIManager : MonoBehaviour
         {
             instance = this;
         }
-        UIs[(int)UIType.HighScore].Active(false);
         UIs[(int)UIType.Pause].Active(false);
     }
 
