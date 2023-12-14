@@ -29,6 +29,7 @@ public enum PlayerAnimState
 public class PlayerAnim : MonoBehaviour
 {
     [SerializeField] private Animator m_animator; // Playerのアニメーション
+    public bool m_bSlow;
     private const string s_intName = "motionNum";
 
     public void ChangeAnim(PlayerAnimState anim)
@@ -54,6 +55,7 @@ public class PlayerAnim : MonoBehaviour
 
     private void Update()
     {
+        // Pauseになっていたらアニメーションを止める
         if (GameManager.GetSetGameState == GameState.GamePause)
         {
             m_animator.SetFloat("Speed", 0.0f);
@@ -61,11 +63,18 @@ public class PlayerAnim : MonoBehaviour
         }
         else m_animator.SetFloat("Speed", 1f);
 
-        if (ObjPlayer.instance.GetSetHitStopParam.m_bHitStop)
+        // スローになっていたら、アニメーションの速度を遅くする
+        if (m_bSlow)
         {
             m_animator.SetFloat("Speed", 0.1f);
             return;
         }
         else m_animator.SetFloat("Speed", 1f);
+    }
+
+    public Animator GetSetAnimator
+    {
+        get { return m_animator; }
+        set { m_animator = value; }
     }
 }
