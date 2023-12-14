@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8922192720015151523}
   - component: {fileID: 8922192720015151520}
+  - component: {fileID: 1236122887}
   m_Layer: 0
   m_Name: ProtoEnemy
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 8922192720015151521}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8922192720101417168}
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: -1484857115
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f7792ffe80b5e9649985d20b43cc8b9f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7099f164186b4404c86cbcc197e28710, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -84,6 +85,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1236122887
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8922192720015151521}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ce4e3cd4d8fb28b40a0ab288f9069f5e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8922192720101417172
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +140,7 @@ Transform:
   m_GameObject: {fileID: 8922192720101417172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.34, y: -2.08, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8922192720015151523}
@@ -206,7 +227,7 @@ MonoBehaviour:
   t: 0
   s: 0
   acceleration: 0.4
-  magnification: 0.2
+  magnification: 0.01
 --- !u!114 &8922192720101417175
 MonoBehaviour:
   m_ObjectHideFlags: 0
