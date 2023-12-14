@@ -129,17 +129,37 @@ public class ObjManager : MonoBehaviour
             }
         }
 
-        // --- オブジェクトの無敵処理 ---
+        // --- オブジェクトの攻撃判定処理 ---
         for (int i = 0; i < Objs.Count; ++i)
         {
             // --- オブジェクトがヒットしている場合 ---
             if (Objs[i].GetSetHit)
             {
+                // 無敵時間を設定
                 Objs[i].GetSetInvincible.SetInvincible(1f);
-                // ヒットストップ発生
-                //HitStop.instance.StartHitStop(0.1f);
 
-                //cinema.GenerateImpulse();
+                // ヒットストップ発生
+                Objs[i].m_HitStopParam.SetHitStop(0.4f);
+
+                // 敵だった場合、ノックバックのカウントダウンを始める
+                if(Objs[i].GetComponent<ObjEnemyBase>() != null)
+                {
+                    Objs[i].GetComponent<ObjEnemyBase>().GetSetKnockBack.m_fStartTime = 0.5f;
+                }
+            }
+
+            // ノックバック発生管理(余りに汚いので修正必須)
+            if (Objs[i].GetComponent<ObjEnemyBase>() != null)
+            {
+                if (Objs[i].GetComponent<ObjEnemyBase>().GetSetKnockBack.m_fStartTime > 0)
+                {
+                    Objs[i].GetComponent<ObjEnemyBase>().GetSetKnockBack.m_fStartTime -= Time.deltaTime;
+                    if (Objs[i].GetComponent<ObjEnemyBase>().GetSetKnockBack.m_fStartTime <= 0)
+                    {
+                        Objs[i].KnockBackObj(Objs[0].GetSetDir);
+                        Objs[i].GetComponent<ObjEnemyBase>().GetSetKnockBack.m_fStartTime = 0;
+                    }
+                }
             }
         }
     }
@@ -266,11 +286,8 @@ public class ObjManager : MonoBehaviour
                     if (Objs[myID].GetComponent<ObjEnemyBase>() != null)
                     {
                         // ノックバック処理
-                        Objs[myID].KnockBackObj(Objs[otherID].GetSetDir);
+                        //Objs[myID].KnockBackObj(Objs[otherID].GetSetDir);
                         Objs[myID].GetSetHit = true;
-
-                        // ヒットストップをかける
-                        Objs[myID].GetSetHitStopParam.SetHitStop(0.5f);
                     }
 
                 }
@@ -324,9 +341,11 @@ public class ObjManager : MonoBehaviour
                 // 互いに敵が存在していたら…
                 if(Enemy_1.GetSetExist && Enemy_2.GetSetExist)
                 {
-                    // どちらもノックバックの状態だったら
-                    if (Enemy_1.GetSetEnemyState == EnemyState.KnockBack &&
-                        Enemy_2.GetSetEnemyState == EnemyState.KnockBack)
+                    // どちらもノックバックの状態 on
+                    // どちらも無敵状態ではなかった場合
+                    //if ((Enemy_1.GetSetEnemyState == EnemyState.KnockBack && Enemy_2.GetSetEnemyState == EnemyState.KnockBack) &&
+                    //    (!Enemy_1.GetSetInvincible.m_bInvincible && !Enemy_2.GetSetInvincible.m_bInvincible))
+                    if (Enemy_1.GetSetEnemyState == EnemyState.KnockBack && Enemy_2.GetSetEnemyState == EnemyState.KnockBack)
                     {
                         // --- 敵の合成 ---
                         UnionEnemy(Enemy_1.GetSetObjID, Enemy_2.GetSetObjID);
