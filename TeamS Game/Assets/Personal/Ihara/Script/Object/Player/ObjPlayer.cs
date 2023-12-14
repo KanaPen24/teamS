@@ -72,9 +72,17 @@ public class ObjPlayer : ObjBase
         }
     }
 
-    // オブジェクトの破壊
-    public override void DestroyObj()
+    // ヒットストップ更新
+    public override void UpdateHitStop()
     {
-        base.DestroyObj();
+        // ヒットストップ時にアニメーションをスローにする
+        if (m_HitStopParam.m_bHitStop)
+        {
+            Anim.m_bSlow = true;
+        }
+        else Anim.m_bSlow = false;
+
+        // 基底の処理
+        base.UpdateHitStop();
     }
 }

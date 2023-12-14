@@ -66,19 +66,34 @@ public class Invincible
 [System.Serializable]
 public class HitStopParam
 {
-    [SerializeField] public bool m_bHitStop; // ヒットストップが掛かっているか
-    [SerializeField] public float m_fTime;   // 時間
+    [SerializeField] public  bool  m_bHitStop; // ヒットストップが掛かっているか
+    [SerializeField] private float m_fTime;   // 時間
 
+    // ヒットストップのセット
     public void SetHitStop(float i)
     {
         m_bHitStop = true;
         m_fTime = i;
     }
 
+    // ヒットストップの終了
     public void EndHitStop()
     {
         m_bHitStop = false;
         m_fTime = 0f;
+    }
+
+    // ヒットストップのチェック
+    public void CheckHitStop()
+    {
+        if(m_bHitStop)
+        {
+            m_fTime -= Time.deltaTime;
+            if(m_fTime <= 0f)
+            {
+                EndHitStop();
+            }
+        }
     }
 }
 
@@ -254,9 +269,9 @@ public class ObjBase : MonoBehaviour
         }
 
         // 今現在立っている地面を離れたら…
-        if (GetSetPos.x + GetSetScale.x / 2f < m_Ground.m_vCenter.x - (m_Ground.m_vSize.x / 2f) ||
-            GetSetPos.x - GetSetScale.x / 2f > m_Ground.m_vCenter.x + (m_Ground.m_vSize.x / 2f))
-        　   m_Ground.m_bStand = false;
+        if (GetSetPos.x + Mathf.Abs(GetSetScale.x / 2f) < m_Ground.m_vCenter.x - Mathf.Abs(m_Ground.m_vSize.x / 2f) ||
+            GetSetPos.x - Mathf.Abs(GetSetScale.x / 2f) > m_Ground.m_vCenter.x + Mathf.Abs(m_Ground.m_vSize.x / 2f))
+            m_Ground.m_bStand = false;
 
         // 地面についていなかったら、落ちる
         if (!GetSetGround.m_bStand)
@@ -269,17 +284,11 @@ public class ObjBase : MonoBehaviour
         else m_vSpeed.y = 0f;
     }
 
-    // --- ヒットストップ判定処理 ---
+    // --- ヒットストップ更新処理 ---
     public virtual void UpdateHitStop()
     {
-        if(m_HitStopParam.m_bHitStop)
-        {
-            m_HitStopParam.m_fTime -= Time.deltaTime;
-            if(m_HitStopParam.m_fTime <= 0f)
-            {
-                m_HitStopParam.EndHitStop();
-            }
-        }
+        // ヒットストップチェック
+        m_HitStopParam.CheckHitStop();
     }
 
     // --- プロパティ関数 ---------------------------------------------------------------------
