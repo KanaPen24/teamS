@@ -12,16 +12,26 @@ using UnityEngine;
 public class HitotumeProto : ObjEnemyBase
 {
     [SerializeField] private List<NK_HitotumeStrategy> m_HitotumeStrategy;
+    private float m_localScalex;
+
+    private void Start()
+    {
+        m_localScalex = this.transform.localScale.x;
+    }
 
     public override void UpdateObj()
     {
         if(ObjPlayer.instance.GetSetPos.x > GetSetPos.x)
         {
             GetSetDir = ObjDir.RIGHT;
+            this.transform.localScale =
+                  new Vector3(-m_localScalex, this.transform.localScale.y, this.transform.localScale.z);
         }
         else
         {
             GetSetDir = ObjDir.LEFT;
+            this.transform.localScale =
+                  new Vector3(m_localScalex, this.transform.localScale.y, this.transform.localScale.z);
         }
 
         m_HitotumeStrategy[(int)m_EnemyState].UpdateState();

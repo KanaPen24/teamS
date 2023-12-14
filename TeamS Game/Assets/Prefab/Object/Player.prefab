@@ -222,6 +222,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 198446539172455667, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 229137765156364499, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: _childDrawableRenderers.Array.data[0]
       value: 
@@ -417,6 +421,10 @@ PrefabInstance:
     - target: {fileID: 1555566758422176288, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1621511820879330815, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: _localSortingOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1672060752206940782, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: _childDrawableRenderers.Array.data[0]
@@ -626,6 +634,10 @@ PrefabInstance:
       propertyPath: _childDrawableRenderers.Array.data[2]
       value: 
       objectReference: {fileID: 3004436379961831659}
+    - target: {fileID: 3098458488467665754, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3169840502108379588, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -866,6 +878,14 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3697347133273095693, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: _localSortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3698522664260746107, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3824203026878439225, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -889,6 +909,10 @@ PrefabInstance:
     - target: {fileID: 4012676766665844185, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4040164129042103939, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4043991476660361234, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
@@ -914,9 +938,17 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4325758855953974003, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: _localSortingOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4333704131524458455, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4347613909088321329, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: _localSortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4449469200918190813, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Enabled
@@ -1070,6 +1102,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5518759310156741650, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: _localSortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5528353109098218097, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -1093,6 +1129,10 @@ PrefabInstance:
     - target: {fileID: 5747507184720688204, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5778163456184090691, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5835340994383075709, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: _childDrawableRenderers.Array.data[0]
@@ -1306,9 +1346,17 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7393491696163009961, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: _localSortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7431698596066397569, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7472811850783381615, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7540432004886834887, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
@@ -1365,6 +1413,10 @@ PrefabInstance:
     - target: {fileID: 7820910430488335633, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7952611322891985273, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8128104485766597185, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
@@ -1457,6 +1509,10 @@ PrefabInstance:
     - target: {fileID: 8637330747170697462, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744804888856032846, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
+      propertyPath: _localSortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8781074110457006100, guid: 521b9ba64fe21d64aa33e39747ec7d38, type: 3}
       propertyPath: _childDrawableRenderers.Array.data[0]
