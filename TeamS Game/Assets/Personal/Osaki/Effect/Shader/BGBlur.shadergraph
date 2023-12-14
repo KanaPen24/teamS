@@ -53,6 +53,9 @@
         },
         {
             "m_Id": "3d9ab44f71294cf2b30288b4a0d2a757"
+        },
+        {
+            "m_Id": "dd34a704fbf54320b877722c595b0c1d"
         }
     ],
     "m_GroupDatas": [],
@@ -103,6 +106,20 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
+                    "m_Id": "4818997a809a4a27990c5261c8737808"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "dd34a704fbf54320b877722c595b0c1d"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
                     "m_Id": "4bb6f25210944804a8ed62a9c5518e80"
                 },
                 "m_SlotId": 0
@@ -124,6 +141,20 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "4818997a809a4a27990c5261c8737808"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "dd34a704fbf54320b877722c595b0c1d"
+                },
+                "m_SlotId": 4
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "69960a1855fe458293f3c7a6cbc91443"
                 },
                 "m_SlotId": 0
             }
@@ -265,6 +296,21 @@
     "m_ShaderOutputName": "Out",
     "m_StageCapability": 3,
     "m_BareResource": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "12cb6f11d65b47fbb7f749781d0f271a",
+    "m_Id": 1,
+    "m_DisplayName": "R",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "R",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -480,6 +526,21 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "4586e42ce34f4bb68b76b9c43c491649",
+    "m_Id": 4,
+    "m_DisplayName": "A",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "A",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "46813ad1eb8e4ede808e8662dc39b71e",
     "m_Id": 2,
     "m_DisplayName": "Rate",
@@ -540,7 +601,7 @@
     "m_SourceType": 1,
     "m_FunctionName": "blur",
     "m_FunctionSource": "",
-    "m_FunctionBody": "col = 0;\nstatic const int samplingCount = 7;\r\nstatic const half weights[samplingCount] = { 0.036, 0.113, 0.216, 0.269, 0.216, 0.113, 0.036 };\nfloat rate = lerp(.0, 5.0f, _Rate);\nfloat2 offsetV = float2(0, 1 / _ScreenParams.y) * rate;\nfloat2 offsetH = float2(1 / _ScreenParams.x, 0) * rate;\nfloat2 coordV = uv - offsetV * ((samplingCount - 1) * 0.5);\nfloat2 coordH = uv - offsetH * ((samplingCount - 1) * 0.5);\nfor (int i = 0; i < samplingCount; ++i)\r{\r\n\t// サンプリングして重みを掛ける。後で水平方向も合成するため0.5をかける\r\n\tcol += SAMPLE_TEXTURE2D(MainTex, sampler_MainTex, coordV) * weights[i] * 0.5;\r\n\r\n\t// offset分だけサンプリングポイントをずらす\r\n\tcoordV += offsetV;\r\n}\n// 水平方向\r\nfor (int j = 0; j < samplingCount; ++j)\r\n{\r\n\tcol += SAMPLE_TEXTURE2D(MainTex, sampler_MainTex, coordH) * weights[j] * 0.5;\r\n\t// offset分だけサンプリングポイントをずらす\r\n\tcoordH += offsetH;\r\n}"
+    "m_FunctionBody": "col = 0;\nstatic const int samplingCount = 7;\r\nstatic const half weights[samplingCount] = { 0.036, 0.113, 0.216, 0.269, 0.216, 0.113, 0.036 };\nfloat rate = lerp(.0, 10.0f, _Rate);\nfloat2 offsetV = float2(0, 1 / _ScreenParams.y) * rate;\nfloat2 offsetH = float2(1 / _ScreenParams.x, 0) * rate;\nfloat2 coordV = uv - offsetV * ((samplingCount - 1) * 0.5);\nfloat2 coordH = uv - offsetH * ((samplingCount - 1) * 0.5);\nfor (int i = 0; i < samplingCount; ++i)\r{\r\n\t// サンプリングして重みを掛ける。後で水平方向も合成するため0.5をかける\r\n\tcol += SAMPLE_TEXTURE2D(MainTex, sampler_MainTex, coordV) * weights[i] * 0.5;\r\n\r\n\t// offset分だけサンプリングポイントをずらす\r\n\tcoordV += offsetV;\r\n}\n// 水平方向\r\nfor (int j = 0; j < samplingCount; ++j)\r\n{\r\n\tcol += SAMPLE_TEXTURE2D(MainTex, sampler_MainTex, coordH) * weights[j] * 0.5;\r\n\t// offset分だけサンプリングポイントをずらす\r\n\tcoordH += offsetH;\r\n}"
 }
 
 {
@@ -632,6 +693,21 @@
     "m_Property": {
         "m_Id": "a0924b5a6018478d8f1cb6ad7eb92676"
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "6707fae17c324c72a8f23db6b08acde8",
+    "m_Id": 2,
+    "m_DisplayName": "G",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "G",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -800,7 +876,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"b8ba3923a6094cd48b85425f47fd7450\",\"type\":3}}",
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"74a5c942037271142bf65342ea4862d6\",\"type\":3}}",
         "m_Guid": ""
     },
     "isMainTexture": false,
@@ -828,7 +904,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 1.0,
+    "m_Value": 0.30000001192092898,
     "m_FloatType": 1,
     "m_RangeValues": {
         "x": 0.0,
@@ -927,6 +1003,67 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "cc4c6ebf9de6482a83fd53a97d95935b",
+    "m_Id": 3,
+    "m_DisplayName": "B",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "B",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SplitNode",
+    "m_ObjectId": "dd34a704fbf54320b877722c595b0c1d",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Split",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 180.8324737548828,
+            "y": 30.432491302490236,
+            "width": 119.19998168945313,
+            "height": 148.79998779296876
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "f69179c28d6e4fcf92215a7c8ec24bfb"
+        },
+        {
+            "m_Id": "12cb6f11d65b47fbb7f749781d0f271a"
+        },
+        {
+            "m_Id": "6707fae17c324c72a8f23db6b08acde8"
+        },
+        {
+            "m_Id": "cc4c6ebf9de6482a83fd53a97d95935b"
+        },
+        {
+            "m_Id": "4586e42ce34f4bb68b76b9c43c491649"
+        }
+    ],
+    "synonyms": [
+        "separate"
+    ],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BlockNode",
     "m_ObjectId": "dfff46f69f414d2cb398a2ff3d415498",
     "m_Group": {
@@ -981,6 +1118,30 @@
         "w": 0.0
     },
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
+    "m_ObjectId": "f69179c28d6e4fcf92215a7c8ec24bfb",
+    "m_Id": 0,
+    "m_DisplayName": "In",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "In",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    }
 }
 
 {
