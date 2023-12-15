@@ -13,6 +13,7 @@ public class HitotumeProto : ObjEnemyBase
 {
     [SerializeField] private List<NK_HitotumeStrategy> m_HitotumeStrategy;
     private float m_localScalex;
+    [SerializeField] private Animator m_Anim;
 
     private void Start()
     {
@@ -32,6 +33,14 @@ public class HitotumeProto : ObjEnemyBase
             GetSetDir = ObjDir.LEFT;
             this.transform.localScale =
                   new Vector3(m_localScalex, this.transform.localScale.y, this.transform.localScale.z);
+        }
+        if(GetSetEnemyState!=EnemyState.KnockBack)
+        {
+            m_Anim.SetBool("KnockFlag", false);
+        }
+        else
+        {
+            m_Anim.SetBool("KnockFlag", true);
         }
 
         m_HitotumeStrategy[(int)m_EnemyState].UpdateState();
