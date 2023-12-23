@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -32,8 +33,7 @@ public class UIManager : MonoBehaviour
             Fade.instance.FadeIn(1f, () =>
              {
                  GameManager.GetSetGameState = GameState.Result;
-                 UIs[(int)UIType.HighScore].Active(true);
-                 YK_HighScore.instance.UpdateHighScore();
+                 SceneManager.LoadScene("ResultScene");
              });
         }
         //É|Å[ÉYèàóù

@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 1885710459724103192}
   - component: {fileID: 1885710459724103199}
   - component: {fileID: 5738820909593748349}
-  - component: {fileID: 7266423839541875932}
   - component: {fileID: 8323683262582606933}
+  - component: {fileID: 5536705195092404139}
   m_Layer: 5
   m_Name: TitleMenu
   m_TagString: Untagged
@@ -32,7 +32,7 @@ RectTransform:
   m_GameObject: {fileID: 1885710459724103174}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.79227, y: 0.79227, z: 0}
+  m_LocalScale: {x: 1.1678396, y: 0.9533385, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5611409207139447573}
@@ -43,7 +43,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -212, y: -184.4}
+  m_AnchoredPosition: {x: -187, y: -184.4}
   m_SizeDelta: {x: 300, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1885710459724103194
@@ -227,7 +227,20 @@ MonoBehaviour:
   StartBObj: {fileID: 1901588821073865423}
   OptionBObj: {fileID: 77097286026437658}
   ExitBObj: {fileID: 7622540011861542962}
---- !u!114 &7266423839541875932
+--- !u!114 &8323683262582606933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885710459724103174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e630d4367d54cd4e99c4be626e7c7e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirstSelect: {fileID: 5075375448196571281}
+--- !u!114 &5536705195092404139
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -242,19 +255,6 @@ MonoBehaviour:
   InvokeTime: 0.5
   decideSE: {fileID: 0}
   selectSE: {fileID: 0}
---- !u!114 &8323683262582606933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1885710459724103174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e630d4367d54cd4e99c4be626e7c7e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FirstSelect: {fileID: 5075375448196571281}
 --- !u!1001 &4835886639428086434
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -262,6 +262,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1885710459724103193}
     m_Modifications:
+    - target: {fileID: 392902038533818931, guid: c24ba0230ad140a42a31293b1cc6adbe, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9c70aee62ab34ed418c67e1d6c0ccf00, type: 3}
+    - target: {fileID: 392902038533818931, guid: c24ba0230ad140a42a31293b1cc6adbe, type: 3}
+      propertyPath: m_SpriteState.m_DisabledSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9c70aee62ab34ed418c67e1d6c0ccf00, type: 3}
+    - target: {fileID: 392902038533818931, guid: c24ba0230ad140a42a31293b1cc6adbe, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d48ee0b98af848d45bd9a73b139361ad, type: 3}
+    - target: {fileID: 392902038533818931, guid: c24ba0230ad140a42a31293b1cc6adbe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 5536705195092404139}
+    - target: {fileID: 392902038533818931, guid: c24ba0230ad140a42a31293b1cc6adbe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnClickStart
+      objectReference: {fileID: 0}
+    - target: {fileID: 392902038533818931, guid: c24ba0230ad140a42a31293b1cc6adbe, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TitleButton, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1063763993909008823, guid: c24ba0230ad140a42a31293b1cc6adbe, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -346,6 +370,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2079068826004046689, guid: c24ba0230ad140a42a31293b1cc6adbe, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 717060d50b53a4b4ca33be00f57c543f, type: 3}
     - target: {fileID: 6448954227952517229, guid: c24ba0230ad140a42a31293b1cc6adbe, type: 3}
       propertyPath: m_Name
       value: Start
@@ -385,6 +413,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1885710459724103193}
     m_Modifications:
+    - target: {fileID: 240644741857636035, guid: c448991fb5a67544ab5e8b072719eb38, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ffd0d917ab145c94797097b31023827c, type: 3}
+    - target: {fileID: 240644741857636035, guid: c448991fb5a67544ab5e8b072719eb38, type: 3}
+      propertyPath: m_SpriteState.m_DisabledSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ffd0d917ab145c94797097b31023827c, type: 3}
+    - target: {fileID: 240644741857636035, guid: c448991fb5a67544ab5e8b072719eb38, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7655a70bbeb40144ea4b7d6f69702710, type: 3}
+    - target: {fileID: 240644741857636035, guid: c448991fb5a67544ab5e8b072719eb38, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 5536705195092404139}
+    - target: {fileID: 240644741857636035, guid: c448991fb5a67544ab5e8b072719eb38, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnClickOption
+      objectReference: {fileID: 0}
+    - target: {fileID: 240644741857636035, guid: c448991fb5a67544ab5e8b072719eb38, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TitleButton, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 641218670405926215, guid: c448991fb5a67544ab5e8b072719eb38, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -469,6 +521,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1945406984264607633, guid: c448991fb5a67544ab5e8b072719eb38, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6981d898c64aebf47b6eeebaeb5ebe35, type: 3}
     - target: {fileID: 6870917428737844381, guid: c448991fb5a67544ab5e8b072719eb38, type: 3}
       propertyPath: m_Name
       value: Option
@@ -511,6 +567,30 @@ PrefabInstance:
     - target: {fileID: 1795857026716486460, guid: 447092ae975eae64d8403fc5e99aafcc, type: 3}
       propertyPath: m_Name
       value: Exit
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963175225188122978, guid: 447092ae975eae64d8403fc5e99aafcc, type: 3}
+      propertyPath: m_SpriteState.m_PressedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6f101e1a48063934da4023674e5c7aef, type: 3}
+    - target: {fileID: 4963175225188122978, guid: 447092ae975eae64d8403fc5e99aafcc, type: 3}
+      propertyPath: m_SpriteState.m_DisabledSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6f101e1a48063934da4023674e5c7aef, type: 3}
+    - target: {fileID: 4963175225188122978, guid: 447092ae975eae64d8403fc5e99aafcc, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 61b1224fded82d645970c7180ae72dbf, type: 3}
+    - target: {fileID: 4963175225188122978, guid: 447092ae975eae64d8403fc5e99aafcc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 5536705195092404139}
+    - target: {fileID: 4963175225188122978, guid: 447092ae975eae64d8403fc5e99aafcc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnClickExit
+      objectReference: {fileID: 0}
+    - target: {fileID: 4963175225188122978, guid: 447092ae975eae64d8403fc5e99aafcc, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: TitleButton, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5715169597007745766, guid: 447092ae975eae64d8403fc5e99aafcc, type: 3}
       propertyPath: m_Pivot.x
@@ -596,6 +676,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6721963104760039472, guid: 447092ae975eae64d8403fc5e99aafcc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a396b2858e150e94c94759fffc5eb2c1, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 447092ae975eae64d8403fc5e99aafcc, type: 3}
 --- !u!114 &3874261301228028524 stripped
