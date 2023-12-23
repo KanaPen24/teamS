@@ -196,6 +196,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0814f82647a51ec409532fdd1dd1e207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &711684492 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3900916558645588089, guid: e593b96daea199e4b9ee1cccceecb63e, type: 3}
+  m_PrefabInstance: {fileID: 4818748960579243952}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fe0c67641467dc47936d9bca0079233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &745110627 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8755098107852515892, guid: e593b96daea199e4b9ee1cccceecb63e, type: 3}
@@ -1037,7 +1048,7 @@ PrefabInstance:
     - target: {fileID: 7305334753864216225, guid: a330d3dc84c0fb44dbb6081f032e8639, type: 3}
       propertyPath: Pause
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 711684492}
     - target: {fileID: 7305334753864216225, guid: a330d3dc84c0fb44dbb6081f032e8639, type: 3}
       propertyPath: PostEffect
       value: 
@@ -1057,7 +1068,7 @@ PrefabInstance:
     - target: {fileID: 7305334753864216225, guid: a330d3dc84c0fb44dbb6081f032e8639, type: 3}
       propertyPath: UIs.Array.data[3]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 711684492}
     - target: {fileID: 7305334753864216225, guid: a330d3dc84c0fb44dbb6081f032e8639, type: 3}
       propertyPath: UIs.Array.data[4]
       value: 
