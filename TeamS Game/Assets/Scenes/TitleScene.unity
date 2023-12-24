@@ -2404,7 +2404,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 7b9aa56bf685d7b46a0159619a19f1a1, type: 2}
+  sharedProfile: {fileID: 11400000, guid: bffd1a4d9b72c334eb51a899be43063d, type: 2}
 --- !u!4 &1190022456
 Transform:
   m_ObjectHideFlags: 0
@@ -2921,6 +2921,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1885710459724103199, guid: c7c041928ec1cb844b2245a278eede9a, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2855174712723003221, guid: c7c041928ec1cb844b2245a278eede9a, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -2993,6 +2997,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5536705195092404139, guid: c7c041928ec1cb844b2245a278eede9a, type: 3}
+      propertyPath: decideSE
+      value: 
+      objectReference: {fileID: 8300000, guid: 55de812da7c723a4c9f5a1f4f0d5a84c, type: 3}
+    - target: {fileID: 5536705195092404139, guid: c7c041928ec1cb844b2245a278eede9a, type: 3}
+      propertyPath: selectSE
+      value: 
+      objectReference: {fileID: 8300000, guid: 55de812da7c723a4c9f5a1f4f0d5a84c, type: 3}
     - target: {fileID: 5611409207139447573, guid: c7c041928ec1cb844b2245a278eede9a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

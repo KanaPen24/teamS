@@ -223,7 +223,7 @@ MonoBehaviour:
   Cursor1: {fileID: 2960830151499919394}
   Cursor2: {fileID: 3631256114787368695}
   Cursor3: {fileID: 6538527790414205663}
-  selectSE: {fileID: 0}
+  selectSE: {fileID: 8300000, guid: 55de812da7c723a4c9f5a1f4f0d5a84c, type: 3}
   StartBObj: {fileID: 1901588821073865423}
   OptionBObj: {fileID: 77097286026437658}
   ExitBObj: {fileID: 7622540011861542962}
