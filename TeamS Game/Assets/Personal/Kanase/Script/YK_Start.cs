@@ -55,6 +55,8 @@ public class YK_Start : YK_UI
         //トランジションを掛けてシーン遷移する
         fade.FadeIn(1f, () =>
         {
+            GameManager.m_sGameState = GameState.GameStart;
+            //GameManager.m_fTime = 3f;
             SceneManager.LoadScene("GameScene");
         });
     }
