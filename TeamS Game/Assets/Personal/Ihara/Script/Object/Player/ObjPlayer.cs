@@ -43,6 +43,9 @@ public class ObjPlayer : ObjBase
 
     public void Update()
     {
+        if (GameManager.GetSetGameState != GameState.GamePlay)
+            return;
+
         // --- ëJà⁄èÛë‘Ç…ÇÊÇÈèÛë‘çXêV ---
         m_PlayerStrategys[(int)m_PlayerState].UpdateState();
     }
@@ -54,11 +57,11 @@ public class ObjPlayer : ObjBase
 
         if(GetSetDir == ObjDir.RIGHT)
         {
-            transform.localScale = new Vector3(3f, 3f, 3f);
+            transform.localScale = new Vector3(2.5f, 2.5f, 3f);
         }
         else if (GetSetDir == ObjDir.LEFT)
         {
-            transform.localScale = new Vector3(-3f, 3f, 3f);
+            transform.localScale = new Vector3(-2.5f, 2.5f, 3f);
         }
     }
 
