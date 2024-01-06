@@ -12,13 +12,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.VFX;
 
 public class ObjManager : MonoBehaviour
 {
     [SerializeField] private List<ObjBase> Objs; // オブジェクトを格納する配列
     [SerializeField] private CinemachineImpulseSource cinema;
     public static ObjManager instance;
-    public ParticleSystem hitEffect;
+    public VisualEffect hitEffect;
     public ObjEnemyUnion enemyUnionPrefab;
 
     private int myID;    // 自身のオブジェクトID
