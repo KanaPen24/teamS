@@ -11,6 +11,8 @@ using UnityEngine;
 
 public class ObjField : ObjBase
 {
+    public bool m_bHitWall;
+
     // --- XVŠÖ” ---
     public override void UpdateObj()
     {

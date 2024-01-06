@@ -201,7 +201,7 @@ MonoBehaviour:
     m_fTime: 0
   knockBack:
     m_vSpeed: {x: 0, y: 0}
-    m_vInitSpeed: {x: 0.1, y: 0.5}
+    m_vInitSpeed: {x: 0.5, y: 0.5}
     m_fDamping: 0.8
     m_fGravity: 0.02
     m_fStartTime: 0
