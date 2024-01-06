@@ -19,11 +19,14 @@ using UnityEngine.SceneManagement;
 // ===============================================
 public enum GameState
 {
+    Title,
     GameStart,
     GamePlay,
     GamePause,
     GameGoal,
     GameOver,
+    ReturnDeath,
+    Result,
 
     MaxGameState
 }
@@ -45,9 +48,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameState m_CheckGameState; // 現在のゲーム状態(確認用)
     [SerializeField] private GameMode m_GameMode;        // 現在のゲームモード(変更用)
     public static bool m_bDebugStart;                    // デバッグの開始時かどうか
-    public static float m_fTime = 3f;
+    //public static float m_fTime = 3f;
     public HitType hitType;
-    private bool m_bOnce = false;
+    //private bool m_bOnce = false;
 
     private void Start()
     {
@@ -61,26 +64,43 @@ public class GameManager : MonoBehaviour
         }
 
         AudioManager.instance.PlayBGM(BGMType.BGM_GAME);
+        //m_bOnce = false;
+
+        Invoke(nameof(GameStart), 3.0f);
     }
 
     private void Update()
     {
+        // ゲーム終了処理
         if (Input.GetKey(KeyCode.Escape))
         {
-            Application.Quit();             //ゲーム終了処理
+            Application.Quit();
         }
 
-        m_fTime -= Time.deltaTime;
-        if (m_fTime <= 0f && !m_bOnce)
+        // テスト
+        if (Input.GetKeyDown(IS_XBoxInput.LB) || Input.GetKeyDown(KeyCode.Return))
         {
-            m_sGameState = GameState.GamePlay;
-            m_bOnce = true;
+            //トランジションを掛けてシーン遷移する
+            Fade.instance.FadeIn(1f, () =>
+            {
+                GameManager.GetSetGameState = GameState.Result;
+                SceneManager.LoadScene("ResultScene");
+            });
         }
+        
     }
 
     private void FixedUpdate()
     {
         m_bDebugStart = false;
+
+        //m_fTime -= Time.deltaTime;
+        //if (m_fTime <= 0f && !m_bOnce)
+        //{
+        //    m_sGameState = GameState.GamePlay;
+        //    m_bOnce = true;
+        //    m_fTime = 3f;
+        //}
 
         // デバッグモード切替時は…
         if (m_sGameMode != m_GameMode)
@@ -99,7 +119,7 @@ public class GameManager : MonoBehaviour
         m_sGameMode = m_GameMode;
 
         // 当たり判定デバッグ表示更新
-        ON_HitDebug.instance.Update(hitType);
+        ON_HitDebug.instance.Update(hitType,true);
     }
 
     /**
@@ -136,5 +156,10 @@ public class GameManager : MonoBehaviour
             return true;
         }
         else return false;
+    }
+
+    private void GameStart()
+    {
+        m_sGameState = GameState.GamePlay;
     }
 }

@@ -7,6 +7,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // ================================================
 // UIType
@@ -14,8 +15,14 @@ using UnityEngine;
 // ================================================
 public enum UIType
 {
-    Score   = 1,    // スコア
-    Combo   = 2,    //コンボ
+    Score   = 0,    // スコア
+    Combo   = 1,    //コンボ
+    BossBar = 2,    //ボスHPバー
+    Pause = 3,    //ポーズ
+    HighScore = 4,  //ハイスコア
+    Start   = 5,    //スタート
+    End     = 6,    //エンド
+    
     MaxUIType
 }
 
@@ -36,6 +43,7 @@ public class YK_UI : MonoBehaviour
 {
     protected UIType m_eUIType;      // UIの種類
     protected FadeState m_eFadeState;// フェードの状態
+    protected GameObject Obj;
     protected bool m_bVisible;       // 表示非表示フラグ
     protected Vector3 m_UIPos;         // UIの座標
     protected Vector2 m_UIScale;       // スケール
@@ -102,5 +110,22 @@ public class YK_UI : MonoBehaviour
         get { return m_UIScale; }
         set { m_UIScale = value; }
     }
-    
+
+    /**
+* @fn
+* UIの画像情報getter・setter
+* @return m_Scale(Vector3)
+* @brief UIスケールを返す・セット
+*/
+    public GameObject GetSetUIObj
+    {
+        get { return Obj; }
+        set { Obj = value; }
+    }
+
+    virtual public void Active(bool a)
+    {
+        this.gameObject.SetActive(a);
+    }
+
 }

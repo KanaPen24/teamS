@@ -28,7 +28,26 @@ public class Fade : MonoBehaviour
 {
 	IFade fade;
     public bool StartFade;      //トランジション用変数
-    private float FadeSpeed = 0.02f;
+    [SerializeField] private float FadeSpeed = 0.02f;
+    [SerializeField] private YK_JsonSave Json;
+    public static Fade instance;         // Fadeのインスタンス
+     /**
+     * @fn
+     * 初期化処理(外部参照を除く)
+     * @brief  メンバ初期化処理
+     * @detail 特に無し
+     */
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     public void Start ()
 	{
         Init();
@@ -42,7 +61,16 @@ public class Fade : MonoBehaviour
             FadeOut(1f);
     }
 
-	float cutoutRange;
+    private void Update()
+    {
+        //テスト
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            ReturnDeathFade();
+        }
+    }
+
+    float cutoutRange;
 
 	void Init ()
 	{
@@ -91,9 +119,31 @@ public class Fade : MonoBehaviour
 		if (action != null) {
 			action ();
 		}
-	}
+    }
+    IEnumerator FadeInOutCoroutine(float time, System.Action action)
+    {
+        float endTime = Time.timeSinceLevelLoad + time * (1 - cutoutRange);
 
-	public Coroutine FadeOut (float time, System.Action action)
+        var endFrame = new WaitForEndOfFrame();
+
+        while (cutoutRange <= 1.5f)
+        {
+            cutoutRange += FadeSpeed;
+            fade.Range = cutoutRange;
+            yield return endFrame;
+        }
+        cutoutRange = 1;
+        fade.Range = cutoutRange;
+
+        if (action != null)
+        {
+            action();
+        }
+        FadeOut(1f);
+    }
+
+
+    public Coroutine FadeOut (float time, System.Action action)
 	{
 		StopAllCoroutines ();
 		return StartCoroutine (FadeoutCoroutine (time, action));
@@ -114,10 +164,31 @@ public class Fade : MonoBehaviour
 	{
 		return FadeIn (time, null);
 	}
+
+    public Coroutine FadeInOut(float time, System.Action action)
+    {
+        StopAllCoroutines();
+        return StartCoroutine(FadeInOutCoroutine(time, action));
+    }
+
+    public Coroutine FadeInOut(float time)
+    {
+        return FadeInOut(time, null);
+    }
+
     private void OnGUI()
     {
         GUI.skin.label.fontSize = 17;
         GUI.color = Color.black;
        // GUILayout.Label(StartFade.ToString());
+    }
+
+    public void ReturnDeathFade()
+    {
+        FadeInOut(1f, () =>
+        {
+            Json.Load();
+            YK_Score.instance.LoadScore();
+        });
     }
 }

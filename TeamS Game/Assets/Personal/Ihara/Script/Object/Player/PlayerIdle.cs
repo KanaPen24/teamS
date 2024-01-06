@@ -13,41 +13,65 @@ public class PlayerIdle : PlayerStrategy
 {
     public override void UpdateState()
     {
+        // ----- ó‘Ô‘JˆÚ -----
         // ‘Ò‚¿ ¨ —Ž‰º
         if (!ObjPlayer.instance.GetSetGround.m_bStand)
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Drop;
-            ObjPlayer.m_bDropFlg = true;
+            EndState();
             return;
         }
         // ‘Ò‚¿ ¨ ˆÚ“®
         if (IS_XBoxInput.LStick_H > 0.2f || IS_XBoxInput.LStick_H < -0.2f)
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Walk;
-            ObjPlayer.m_bWalkFlg = true;
+            EndState();
             return;
         }
         // ‘Ò‚¿ ¨ ’µ–ô
         if (Input.GetKeyDown(IS_XBoxInput.A))
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Jump;
-            ObjPlayer.instance.GetSetSpeed = new Vector2(ObjPlayer.instance.GetSetSpeed.x, 0.7f);
-            ObjPlayer.instance.GetSetGround.m_bStand = false;
-            ObjPlayer.m_bJumpFlg = true;
+            EndState();
             return;
         }
-        // ˆÚ“® ¨ UŒ‚
-        if (Input.GetKeyDown(IS_XBoxInput.B))
+        // ‘Ò‚¿ ¨ UŒ‚
+        if (Input.GetKeyDown(IS_XBoxInput.X))
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Atk;
-            ObjPlayer.m_bAtkFlg = true;
+            EndState();
+            return;
+        }
+        // ‘Ò‚¿ ¨ •KŽE
+        if (Input.GetKeyDown(IS_XBoxInput.Y))
+        {
+            ObjPlayer.instance.m_PlayerState = PlayerState.Special;
+            EndState();
             return;
         }
     }
 
     public override void UpdatePlayer()
     {
+        // ‘JˆÚÅ‰‚Ìˆ—
+        if (m_bStartFlg) StartState();
+
         // ‘¬“x‚Í0‚Éˆê’è
         ObjPlayer.instance.GetSetSpeed = new Vector2(0f, 0f);
+    }
+
+    public override void StartState()
+    {
+        // ƒAƒjƒ\ƒVƒ‡ƒ“•ÏX
+        ObjPlayer.instance.Anim.ChangeAnim(PlayerAnimState.Idle);
+
+        // ‘JˆÚÅ‰‚Ìƒtƒ‰ƒO‚ðoff
+        m_bStartFlg = false;
+    }
+
+    public override void EndState()
+    {
+        // ‘JˆÚÅ‰‚Ìƒtƒ‰ƒO‚ðON‚É‚µ‚Ä‚¨‚­
+        m_bStartFlg = true;
     }
 }

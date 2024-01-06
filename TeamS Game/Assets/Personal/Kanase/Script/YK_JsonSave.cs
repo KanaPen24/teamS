@@ -15,8 +15,9 @@ public class YK_JsonSave : MonoBehaviour
     [HideInInspector] public SaveData data;     // json変換するデータのクラス
     string filepath;                            // jsonファイルのパス
     string fileName = "SaveData.json";          // jsonファイル名
-    public int m_Score;            // 保存するためのスコア
-//    [SerializeField] private IS_Player Player;    //プレイヤー
+    [HideInInspector] public SaveData2 data2;   // json変換するデータのクラス
+    string filepath2;                           // jsonファイルのパス
+    string fileName2 = "SaveData2.json";        // jsonファイル名                                                
     private bool m_bOne = true;
 
     //-------------------------------------------------------------------
@@ -25,18 +26,29 @@ public class YK_JsonSave : MonoBehaviour
     {
         // パス名取得
         filepath = Application.dataPath + "/" + fileName;
+        // パス名取得
+        filepath2 = Application.dataPath + "/" + fileName2;
 
         //ファイルがあれば削除
         if (File.Exists(filepath))
         {
             DelFile();                     // セーブデータの削除
         }
-        // ファイルがないとき、ファイル作成
+        //ハイスコア用のファイルがなければ
+        if(!File.Exists(filepath2))
+        {
+            data2.HighScore = new List<int> { 5, 4, 3, 2, 1, 0 };
+            data2.MyScore = 0;
+            Save2(data2);   //セーブデータを生成する
+        }
+        if (instance == null)
+        {
+            instance = this;
+        }
         else
         {
-            Save(false);
+            Destroy(this.gameObject);
         }
-        Load();
     }
 
     private void FixedUpdate()
@@ -45,17 +57,6 @@ public class YK_JsonSave : MonoBehaviour
         {
             //GameManager.instance.GetSetGameState = GameState.GamePlay;
             m_bOne = false;
-        }
-    }
-    private void Start()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
         }
     }
 
@@ -71,6 +72,28 @@ public class YK_JsonSave : MonoBehaviour
         wr.Close();                                             // ファイル閉じる
         Debug.Log("セーブ!!!!!!");
     }
+    //-------------------------------------------------------------------
+    // jsonとしてデータを保存
+    void Save2(SaveData2 data2)
+    {
+        string json = JsonUtility.ToJson(data2);                 // jsonとして変換
+        StreamWriter wr = new StreamWriter(filepath2, false);    // ファイル書き込み指定
+        wr.WriteLine(json);                                     // json変換した情報を書き込み
+        wr.Close();                                             // ファイル閉じる
+        Debug.Log("セーブ!!!!!!");
+    }
+
+    //-------------------------------------------------------------------
+    // jsonとしてデータを保存
+    void MyScoreSave(SaveData2 data2)
+    {
+        data2.HighScore = HighScoreLoad();
+        string json = JsonUtility.ToJson(data2);                 // jsonとして変換
+        StreamWriter wr = new StreamWriter(filepath2, false);    // ファイル書き込み指定
+        wr.WriteLine(json);                                     // json変換した情報を書き込み
+        wr.Close();                                             // ファイル閉じる
+        Debug.Log("セーブ!!!!!!");
+    }
 
     // jsonファイル読み込み
     SaveData Load(string path)
@@ -81,6 +104,16 @@ public class YK_JsonSave : MonoBehaviour
         Debug.Log(json);
         Debug.Log("ロード!!!!!!");
         return JsonUtility.FromJson<SaveData>(json);            // jsonファイルを型に戻して返す
+    }
+    // jsonファイル2読み込み
+    SaveData2 Load2(string path)
+    {
+        StreamReader rd = new StreamReader(path);               // ファイル読み込み指定
+        string json = rd.ReadToEnd();                           // ファイル内容全て読み込む
+        rd.Close();                                             // ファイル閉じる        
+        Debug.Log(json);
+        Debug.Log("ロード!!!!!!");
+        return JsonUtility.FromJson<SaveData2>(json);            // jsonファイルを型に戻して返す
     }
 
     //プレイヤーとぶつかったら
@@ -97,6 +130,29 @@ public class YK_JsonSave : MonoBehaviour
         Save(data);
     }
 
+    //外部でハイスコアのセーブが呼べるように
+    public void HighScoreSave(List<int> HighScore)
+    {
+        data2.HighScore = HighScore;
+        Save2(data2);
+        Debug.Log("セーブ!!!!!!");
+    }
+
+    //外部でハイスコアのロードが呼べるように
+    public List<int> HighScoreLoad()
+    {
+        //ファイルを読み込んでdataに格納
+        data2 = Load2(filepath2);
+        return data2.HighScore;     
+    }
+    //外部でハイスコアのロードが呼べるように
+    public int MyScoreLoad()
+    {
+        //ファイルを読み込んでdataに格納
+        data2 = Load2(filepath2);
+        return data2.MyScore;
+    }
+
     //外部でもロードが呼べるように
     public void Load()
     {
@@ -107,6 +163,14 @@ public class YK_JsonSave : MonoBehaviour
         ObjPlayer.instance.GetSetPos = data.pos;
         YK_Score.instance.GetSetScore = data.Score;
     }
+
+    //自分のスコアセーブ用
+    public void MyScoreSave(int score)
+    {
+        data2.MyScore = score;
+        MyScoreSave(data2);
+    }
+
 
     //ゲーム終了時
     private void OnApplicationQuit()

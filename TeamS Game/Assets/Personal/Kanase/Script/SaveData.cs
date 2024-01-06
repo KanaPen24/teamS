@@ -16,3 +16,9 @@ public class SaveData
     public int Score;    //スコア
     public bool RetryFlg;
 }
+[System.Serializable]
+public class SaveData2
+{
+    public List<int> HighScore; //ハイスコア
+    public int MyScore;    //スコア
+}

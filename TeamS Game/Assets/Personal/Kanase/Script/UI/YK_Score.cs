@@ -31,7 +31,6 @@ public class YK_Score : YK_UI
         }
         else
         {
-            Debug.Log("AudioManagerはすでに存在しています");
             Destroy(gameObject);
         }
     }
@@ -89,6 +88,15 @@ public class YK_Score : YK_UI
     {
         m_nScore = 0;
     }
+    /**
+     * @brief スコアを読みこみなおす
+     */
+    public void LoadScore()
+    {
+        // テキストの更新
+        scoreText.text = "Score:" + m_nScore.ToString("D7");
+    }
+
     // スコアをアニメーションさせる
     IEnumerator ScoreAnimation(int addScore, float time)
     {
@@ -119,7 +127,7 @@ public class YK_Score : YK_UI
     }
     /**
      * @brief スコアに指定された数を加算
-     * @param num 敵の数
+     * @param num 地上敵の数
      */
     public void FieldAddScore(int num)
     {
@@ -133,7 +141,7 @@ public class YK_Score : YK_UI
     }
     /**
      * @brief スコアに指定された数を加算
-     * @param num 敵の数
+     * @param num 空中敵の数
      */
     public void SkyAddScore(int num)
     {
@@ -147,7 +155,7 @@ public class YK_Score : YK_UI
     }
     /**
      * @brief スコアに指定された数を加算
-     * @param num 敵の数
+     * @param num 遠距離敵の数
      */
     public void FarAddScore(int num)
     {
@@ -161,7 +169,7 @@ public class YK_Score : YK_UI
     }
     /**
      * @brief スコアに指定された数を加算
-     * @param num 敵の数
+     * @param num 吹っ飛ばした敵の数
      */
     public void BlowAddScore(int num)
     {

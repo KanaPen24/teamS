@@ -16,22 +16,17 @@ public enum PlayerState
     Jump,
     Drop,
     Atk,
-    //Def,
+    Special,
 
     MaxPlayerState
 }
 
 public class ObjPlayer : ObjBase
 {
-    public static bool m_bWalkFlg = false;
-    public static bool m_bJumpFlg = false;
-    public static bool m_bDropFlg = false;
-    public static bool m_bAtkFlg = false;
-    public static bool m_bDefFlg = false;
-
     public static ObjPlayer instance;
     public PlayerState m_PlayerState;
     public List<PlayerStrategy> m_PlayerStrategys;
+    public PlayerAnim Anim;
 
     public void Start()
     {
@@ -48,6 +43,9 @@ public class ObjPlayer : ObjBase
 
     public void Update()
     {
+        if (GameManager.GetSetGameState != GameState.GamePlay)
+            return;
+
         // --- 遷移状態による状態更新 ---
         m_PlayerStrategys[(int)m_PlayerState].UpdateState();
     }
@@ -56,17 +54,38 @@ public class ObjPlayer : ObjBase
     {
         // --- 遷移状態による更新処理 ---
         m_PlayerStrategys[(int)m_PlayerState].UpdatePlayer();
+
+        if(GetSetDir == ObjDir.RIGHT)
+        {
+            transform.localScale = new Vector3(2.5f, 2.5f, 3f);
+        }
+        else if (GetSetDir == ObjDir.LEFT)
+        {
+            transform.localScale = new Vector3(-2.5f, 2.5f, 3f);
+        }
     }
 
     // 初期化関数
     public override void InitObj()
     {
         base.InitObj();
+        for(int i = 0; i < m_PlayerStrategys.Count; ++i)
+        {
+            m_PlayerStrategys[i].InitState();
+        }
     }
 
-    // オブジェクトの破壊
-    public override void DestroyObj()
+    // ヒットストップ更新
+    public override void UpdateHitStop()
     {
-        base.DestroyObj();
+        // ヒットストップ時にアニメーションをスローにする
+        if (m_HitStopParam.m_bHitStop)
+        {
+            Anim.m_bSlow = true;
+        }
+        else Anim.m_bSlow = false;
+
+        // 基底の処理
+        base.UpdateHitStop();
     }
 }

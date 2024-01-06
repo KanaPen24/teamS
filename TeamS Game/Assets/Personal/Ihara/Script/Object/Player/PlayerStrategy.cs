@@ -11,6 +11,15 @@ using UnityEngine;
 
 public class PlayerStrategy : MonoBehaviour
 {
+    [HideInInspector]
+    public bool m_bStartFlg;
+
+    // State‚Ì‰Šú‰»ˆ—
+    public void InitState()
+    {
+        m_bStartFlg = true;
+    }
+
     // Player‚Ì‘JˆÚó‘Ô‚Ì“ü—Íˆ—
     public virtual void UpdateState()
     {
@@ -19,6 +28,18 @@ public class PlayerStrategy : MonoBehaviour
 
     // Player‚Ì‘JˆÚó‘Ô‚ÌXVˆ—
     public virtual void UpdatePlayer()
+    {
+
+    }
+
+    // Player‚Ì‘JˆÚ‚Ìˆ—
+    public virtual void StartState()
+    {
+
+    }
+
+    // Player‚Ì‘JˆÚI—¹‚Ìˆ—
+    public virtual void EndState()
     {
 
     }

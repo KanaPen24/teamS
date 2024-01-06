@@ -15,7 +15,9 @@ public enum HitType
     NONE = 0,
 
     ATTACK,     // UŒ‚
+    SPECIAL,    // •KŽE
     BODY,       // ‘Ì
+    BULLET,     // ’eŒn“
     FIELD,      // ‘«ê
 
     MAX_TYPE,

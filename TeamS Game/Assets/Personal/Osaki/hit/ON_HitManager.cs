@@ -34,11 +34,20 @@ public enum HitState
 
     ATTACK,     // UŒ‚‚·‚é
     DEFENCE,    // UŒ‚‚³‚ê‚é
-    GRUOND,     // ƒtƒB[ƒ‹ƒh‚É“–‚½‚Á‚½
+
     BODYS,      // ‘Ì“¯m‚ªÚG
     BALANCE,    // UŒ‚“¯m‚ª“–‚½‚é
     ENEMY,      // “G“¯m‚ª“–‚½‚é
 
+    SPECIAL,    // •KE‹Z‚ª“–‚½‚é
+    DEFSPECIAL, // •KE‹Z‚ğó‚¯‚é
+
+    BULLET,     // ’e‚ª“–‚½‚é
+    DEFBULLET,  // ’e‚ğó‚¯‚é
+    BULLET2DESTROY, // ’e‚ğ”j‰ó‚·‚é
+
+    GRUOND,     // ƒtƒB[ƒ‹ƒh‚É“–‚½‚Á‚½
+    DEFGRUOND,  // ƒtƒB[ƒ‹ƒh‘¤‚ªó‚¯‚é
 
     MAX_STATE
 }
@@ -78,10 +87,14 @@ public class ON_HitManager
         // “–‚½‚è”»’è‚ÌŒvZ
         for(int i = 0; i < m_hits.Count; ++i)
         {
+            // Šî€‚ªu’n–Êv‚¾‚Á‚½‚çƒXƒLƒbƒv‚·‚é
+            if (m_hits[i].GetHitType() == HitType.FIELD) continue;
+
             // “–‚½‚è”»’è‚ªoff‚¾‚Á‚½‚çƒXƒLƒbƒv‚·‚é
             if (m_hits[i].GetActive() == false) continue;
 
-            for (int j = i; j < m_hits.Count; ++j)
+            //for (int j = i; j < m_hits.Count; ++j)
+            for (int j = 0; j < m_hits.Count; ++j)
             {
                 // “–‚½‚è”»’è‚ªoff‚¾‚Á‚½‚çƒXƒLƒbƒv‚·‚é
                 if (m_hits[j].GetActive() == false) continue;
@@ -95,10 +108,6 @@ public class ON_HitManager
 
                 // “¯ˆêƒIƒuƒWƒFƒNƒg‚©
                 if (m_hits[i].GetObjID() == m_hits[j].GetObjID()) continue;
-
-                // UŒ‚‚Æ’n–Ê‚Ì”»’è‚©‚Ç‚¤‚©(Šî–{“I‚É‚Í‰½‚à‚µ‚È‚¢)
-                if ((m_hits[i].GetHitType() == HitType.ATTACK && m_hits[j].GetHitType() == HitType.FIELD) &&
-                    (m_hits[j].GetHitType() == HitType.ATTACK && m_hits[i].GetHitType() == HitType.FIELD)) continue;
 
                 // “–‚½‚Á‚Ä‚¢‚é
                 // “–‚½‚è”»’è‚Ìó‘Ô”»’è‚µA’Ç‰Á
@@ -116,29 +125,46 @@ public class ON_HitManager
     private HitState DecideState(int i, int j)
     {
         HitState state = HitState.NONE;
-        // ’n–Ê‚Æ“–‚½‚Á‚Ä‚¢‚é‚©
-        if(m_hits[i].GetHitType() == HitType.FIELD || m_hits[j].GetHitType() == HitType.FIELD)
-        {
-            state = HitState.GRUOND;
-            return state;
-        }
+
         // “G“¯m‚ª“–‚½‚Á‚½
-        if(ObjManager.instance.GetObjs(m_hits[i].GetObjID()).GetComponent<ObjEnemyBase>() != null &&
-           ObjManager.instance.GetObjs(m_hits[j].GetObjID()).GetComponent<ObjEnemyBase>() != null){
+        // C³•K{
+        if (ObjManager.instance.GetObj(m_hits[i].GetObjID()).GetComponent<ObjEnemyBase>() != null &&
+           ObjManager.instance.GetObj(m_hits[j].GetObjID()).GetComponent<ObjEnemyBase>() != null)
+        {
             state = HitState.ENEMY;
             return state;
         }
 
         // ©•ª‚Ìó‘Ô‚É‚æ‚Á‚Äˆ—”h¶
-        switch(m_hits[i].GetHitType())
+        switch (m_hits[i].GetHitType())
         {
             case HitType.ATTACK:
-                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.BALANCE;
-                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.ATTACK;
+                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.BALANCE;@// ‘ŠE
+                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.ATTACK;     // UŒ‚‚ª“–‚½‚é
+                if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.NONE;    // •KE‹Z‚Í‘ŠE‚µ‚È‚¢
+                if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.NONE;     // ‰½‚à‚µ‚È‚¢
+                if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.NONE;      // ‰½‚à‚µ‚È‚¢
+                break;
+            case HitType.SPECIAL:
+                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.NONE;@ // ‰½‚à‚µ‚È‚¢
+                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.SPECIAL;  // •KE‚ª“–‚½‚é
+                if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.NONE;  // •KE‹Z‚Í‘ŠE‚µ‚È‚¢
+                if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.NONE;   // ‰½‚à‚µ‚È‚¢
+                if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.NONE;    // ‰½‚à‚µ‚È‚¢
                 break;
             case HitType.BODY:
-                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.DEFENCE;
-                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.BODYS;
+                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.DEFENCE;     // UŒ‚‚ğó‚¯‚é
+                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.BODYS;         // ‘Ì“¯m‚ÌÚG
+                if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.DEFSPECIAL; // •KE‹Z‚ğó‚¯‚é 
+                if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.DEFBULLET;   // ’e‚ğó‚¯‚é
+                if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.GRUOND;       // ’n–Ê‚É“–‚½‚é
+                break;
+            case HitType.BULLET:
+                if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.BULLET2DESTROY; // ’e‚ğ”j‰ó
+                if (m_hits[j].GetHitType() == HitType.BODY) state = HitState.BULLET;           // ’e‚ª“–‚½‚é
+                if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.NONE;          // ‰½‚à‚µ‚È‚¢ 
+                if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.NONE;           // ‰½‚à‚µ‚È‚¢
+                if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.BULLET2DESTROY;  // ’e‚ğ”j‰ó
                 break;
         }
 
@@ -153,27 +179,27 @@ public class ON_HitManager
         // ã‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
         if ((m_hits[i].GetCenter().y + m_hits[i].GetSize().y > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
              m_hits[i].GetCenter().y + m_hits[i].GetSize().y < m_hits[j].GetCenter().y + m_hits[j].GetSize().y) &&
-            (m_hits[i].GetCenter().x - m_hits[i].GetSize().x - 0.5f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
+            (m_hits[i].GetCenter().x - m_hits[i].GetSize().x + 0.5f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
              m_hits[i].GetCenter().x + m_hits[i].GetSize().x - 0.5f > m_hits[j].GetCenter().x - m_hits[j].GetSize().x))
             return hitDir = HitDir.UP;
         // ‰º‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
         if ((m_hits[i].GetCenter().y - m_hits[i].GetSize().y > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
              m_hits[i].GetCenter().y - m_hits[i].GetSize().y < m_hits[j].GetCenter().y + m_hits[j].GetSize().y) &&
-            (m_hits[i].GetCenter().x - m_hits[i].GetSize().x - 0.5f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
+            (m_hits[i].GetCenter().x - m_hits[i].GetSize().x + 0.5f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
              m_hits[i].GetCenter().x + m_hits[i].GetSize().x - 0.5f > m_hits[j].GetCenter().x - m_hits[j].GetSize().x))
             return hitDir = HitDir.DOWN;
-        // ‰E‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
-        if ((m_hits[i].GetCenter().x + m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
-             m_hits[i].GetCenter().x + m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x) &&
-            (m_hits[i].GetCenter().y + m_hits[i].GetSize().y - 0.5f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
-             m_hits[i].GetCenter().y - m_hits[i].GetSize().y - 0.5f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y ))
-            return hitDir = HitDir.RIGHT;
         // ¶‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
         if ((m_hits[i].GetCenter().x - m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
              m_hits[i].GetCenter().x - m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x) &&
             (m_hits[i].GetCenter().y + m_hits[i].GetSize().y - 0.5f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
-             m_hits[i].GetCenter().y - m_hits[i].GetSize().y - 0.5f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y))
+             m_hits[i].GetCenter().y - m_hits[i].GetSize().y + 0.5f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y))
             return hitDir = HitDir.LEFT;
+        // ‰E‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
+        if ((m_hits[i].GetCenter().x + m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
+             m_hits[i].GetCenter().x + m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x) &&
+            (m_hits[i].GetCenter().y + m_hits[i].GetSize().y - 0.5f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
+             m_hits[i].GetCenter().y - m_hits[i].GetSize().y + 0.5f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y ))
+            return hitDir = HitDir.RIGHT;
 
         return hitDir;
     }

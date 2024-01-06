@@ -11,15 +11,11 @@ using UnityEngine;
 
 public class ObjField : ObjBase
 {
+    public bool m_bHitWall;
+
     // --- 更新関数 ---
     public override void UpdateObj()
     {
-    }
-
-    // --- デバッグ更新処理 ---
-    public override void UpdateDebug()
-    {
-        Debug.Log("Field");
     }
 
     //  ---- 当たり判定を生成した際の処理 ----

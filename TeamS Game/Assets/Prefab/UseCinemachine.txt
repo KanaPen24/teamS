@@ -1,0 +1,4 @@
+CM　vcam1の使い方
+①CM vcam1をシーンに追加
+②Followにプレイヤーを入れる
+③MainCameraにCinemaChineBrainのコンポーネントを追加

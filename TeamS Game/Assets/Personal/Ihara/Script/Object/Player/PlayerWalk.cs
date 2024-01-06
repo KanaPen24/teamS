@@ -17,8 +17,7 @@ public class PlayerWalk : PlayerStrategy
         if (!ObjPlayer.instance.GetSetGround.m_bStand)
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Drop;
-            AudioManager.instance.StopSE(SEType.SE_PlayerWalk);
-            ObjPlayer.m_bDropFlg = true;
+            EndState();
             return;
         }
         // 移動 → 待ち
@@ -26,37 +25,29 @@ public class PlayerWalk : PlayerStrategy
             (ObjPlayer.instance.GetSetSpeed.x > -0.1f && ObjPlayer.instance.GetSetSpeed.x < 0.1f))
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Idle;
-            AudioManager.instance.StopSE(SEType.SE_PlayerWalk);
+            EndState();
             return;
         }
         // 移動 → 跳躍
         if (Input.GetKeyDown(IS_XBoxInput.A))
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Jump;
-            AudioManager.instance.StopSE(SEType.SE_PlayerWalk);
-            ObjPlayer.instance.GetSetSpeed = new Vector2(ObjPlayer.instance.GetSetSpeed.x, 0.7f);
-            ObjPlayer.instance.GetSetGround.m_bStand = false;
-            ObjPlayer.m_bJumpFlg = true;
+            EndState();
             return;
         }
         // 移動 → 攻撃
-        if (Input.GetKeyDown(IS_XBoxInput.B))
+        if (Input.GetKeyDown(IS_XBoxInput.X))
         {
             ObjPlayer.instance.m_PlayerState = PlayerState.Atk;
-            AudioManager.instance.StopSE(SEType.SE_PlayerWalk);
-            ObjPlayer.m_bAtkFlg = true;
+            EndState();
             return;
         }
     }
 
     public override void UpdatePlayer()
     {
-        if(ObjPlayer.m_bWalkFlg)
-        {
-            AudioManager.instance.PlaySE(SEType.SE_PlayerWalk);
-            AudioManager.instance.GetSE(SEType.SE_PlayerWalk).loop = true;
-            ObjPlayer.m_bWalkFlg = false;
-        }
+        // 遷移最初の処理
+        if (m_bStartFlg) StartState();
 
         // 速度はスティックの方向け具合で決まる
         if (IS_XBoxInput.LStick_H > 0.2f || IS_XBoxInput.LStick_H < -0.2f)
@@ -65,5 +56,27 @@ public class PlayerWalk : PlayerStrategy
             += new Vector2(IS_XBoxInput.LStick_H * ObjPlayer.instance.GetSetAccel, 0f);
         }
         else ObjPlayer.instance.GetSetSpeed *= new Vector2(0.8f, 1f);
+    }
+
+    public override void StartState()
+    {
+        // アニメ―ション変更
+        ObjPlayer.instance.Anim.ChangeAnim(PlayerAnimState.Walk);
+
+        // 歩行SE再生
+        AudioManager.instance.PlaySE(SEType.SE_PlayerWalk);
+        AudioManager.instance.GetSE(SEType.SE_PlayerWalk).loop = true;
+
+        // 遷移最初のフラグをoff
+        m_bStartFlg = false;
+    }
+
+    public override void EndState()
+    {
+        // 歩行SEを止める
+        AudioManager.instance.StopSE(SEType.SE_PlayerWalk);
+
+        // 遷移最初のフラグをONにしておく
+        m_bStartFlg = true;
     }
 }

@@ -82,6 +82,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartFade: 0
+  FadeSpeed: 0.02
+  Json: {fileID: 0}
 --- !u!114 &-721400641995957407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: c08cd46eaf9a0d34eb221ba2978cc476, type: 2}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  maskTexture: {fileID: 2800000, guid: bb7e147db344144468494508ec15ea7f, type: 3}
+  maskTexture: {fileID: 2800000, guid: 4cf1927bd8af2f844aa11aa7014548e1, type: 3}
   cutoutRange: 0

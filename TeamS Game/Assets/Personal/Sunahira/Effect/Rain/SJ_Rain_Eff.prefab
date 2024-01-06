@@ -123,6 +123,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00837cf91a36c434885030dd3b78f38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RainEff: {fileID: 0}
   bOnOff: 0
   bPlay: 0
