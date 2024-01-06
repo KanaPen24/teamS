@@ -28,6 +28,7 @@ public enum SEType
     SE_Bound,
     SE_PlayerSPAtk,
     SE_EExplosion,
+    SE_PEAtkDamage,
 
     MAX_SE
 }
