@@ -20,6 +20,8 @@ public class ObjManager : MonoBehaviour
     [SerializeField] private CinemachineImpulseSource cinema;
     public static ObjManager instance;
     public VisualEffect hitEffect;
+    public ParticleSystem wallEffect;
+    public ParticleSystem unionEffect;
     public ObjEnemyUnion enemyUnionPrefab;
 
     private int myID;    // 自身のオブジェクトID
@@ -421,6 +423,7 @@ public class ObjManager : MonoBehaviour
             {
                 float pos;
 
+                // 敵がノックバック中に画面端に当たっていた場合…
                 if(Objs[myID].GetComponent<ObjEnemyBase>() != null &&
                     Objs[myID].GetComponent<ObjEnemyBase>().GetSetEnemyState == EnemyState.KnockBack &&
                     Objs[otherID].GetComponent<ObjField>().m_bHitWall)
@@ -430,12 +433,22 @@ public class ObjManager : MonoBehaviour
                     {
                         Objs[myID].GetSetSpeed = new Vector2(-0.25f, 0.25f);
                         Objs[myID].GetSetDir = ObjDir.LEFT;
+
+                        // エフェクト再生
+                        wallEffect.Play();
+                        wallEffect.transform.position = Objs[myID].GetSetPos;
+                        wallEffect.transform.rotation = Quaternion.Euler(new Vector3(0f, -110f, 0f));
                     }
                     // 左に当たっていたら
                     if (ON_HitManager.instance.GetData(i).dir == HitDir.LEFT)
                     {
                         Objs[myID].GetSetSpeed = new Vector2(0.25f, 0.25f);
                         Objs[myID].GetSetDir = ObjDir.RIGHT;
+
+                        // エフェクト再生
+                        wallEffect.Play();
+                        wallEffect.transform.position = Objs[myID].GetSetPos;
+                        wallEffect.transform.rotation = Quaternion.Euler(new Vector3(0f, 70f, 0f));
                     }
                 }
                 else if(!Objs[otherID].GetComponent<ObjField>().m_bHitWall)
@@ -562,6 +575,10 @@ public class ObjManager : MonoBehaviour
 
         // オブジェクトのリストに追加
         Objs.Add(enemyUnion);
+
+        // 合体時のエフェクト再生
+        unionEffect.Play();
+        unionEffect.transform.position = enemyUnion.GetSetPos;
     }
 
     // オブジェクトIDを設定する
