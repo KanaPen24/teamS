@@ -242,7 +242,7 @@ MonoBehaviour:
   t: 0
   s: 0
   acceleration: 0.4
-  magnification: 0.05
+  magnification: 0.1
 --- !u!114 &8922192720101417175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HitotumeProto: {fileID: 8922192720101417169}
-  m_Reng: 30
+  m_Reng: 75
 --- !u!114 &9067292263333297109
 MonoBehaviour:
   m_ObjectHideFlags: 0
