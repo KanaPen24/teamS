@@ -23,6 +23,7 @@ public enum SEType
     SE_Avoidance,    // 回避の音
     SE_GameClear,    // ゲームクリアSE
     SE_Select,       // 選択SE
+    SE_AddScore,     // スコア加算SE
 
     MAX_SE
 }
