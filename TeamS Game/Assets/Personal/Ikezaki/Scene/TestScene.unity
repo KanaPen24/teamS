@@ -613,12 +613,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4898860535766430516, guid: ea0c3ff18f8b8004ab1ef7708b3c187d, type: 3}
+      propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.key0.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898860535766430516, guid: ea0c3ff18f8b8004ab1ef7708b3c187d, type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.key0.g
-      value: 5.612565
+      value: 5.7259474
       objectReference: {fileID: 0}
     - target: {fileID: 4898860535766430516, guid: ea0c3ff18f8b8004ab1ef7708b3c187d, type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.key0.r
-      value: 15.999998
+      value: 16.323223
       objectReference: {fileID: 0}
     - target: {fileID: 4898860535766430516, guid: ea0c3ff18f8b8004ab1ef7708b3c187d, type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Value.key1.g
