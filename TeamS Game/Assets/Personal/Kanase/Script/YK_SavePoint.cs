@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class YK_SavePoint : MonoBehaviour
 {
-    private void Update()
+    private void FixedUpdate()
     {
         if(ObjPlayer.instance.GetSetPos.x>=this.gameObject.transform.position.x)
         {
