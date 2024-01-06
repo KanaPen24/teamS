@@ -13,6 +13,7 @@ public class EnemyUnion_KnockBack : EnemyStrategy
 {
     private ObjEnemyUnion enemyUnion; // 自身を格納するためのコンポーネント
     private bool endFlg = false;
+    public ParticleSystem burstEffect;
 
     private void Start()
     {
@@ -26,6 +27,8 @@ public class EnemyUnion_KnockBack : EnemyStrategy
             enemyUnion.GetSetEnemyState = EnemyState.Idle;
             endFlg = false;
             enemyUnion.DivisionEnemy();
+            burstEffect.Play();
+            burstEffect.transform.position = enemyUnion.GetSetPos;
             return;
         }
     }
