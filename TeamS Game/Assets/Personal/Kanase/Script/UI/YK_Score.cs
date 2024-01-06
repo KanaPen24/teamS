@@ -100,6 +100,8 @@ public class YK_Score : YK_UI
     // スコアをアニメーションさせる
     IEnumerator ScoreAnimation(int addScore, float time)
     {
+        // スコア加算SEを再生
+        AudioManager.instance.PlaySE(SEType.SE_AddScore);
         //前回のスコア
         int befor = m_nScore;
         //今回のスコア
