@@ -200,15 +200,21 @@ MonoBehaviour:
     m_fTime: 0
   knockBack:
     m_vSpeed: {x: 0, y: 0}
-    m_vInitSpeed: {x: 0.1, y: 0.45}
-    m_fDamping: 0.45
+    m_vInitSpeed: {x: 0.5, y: 0.5}
+    m_fDamping: 0.8
     m_fGravity: 0
+    m_fStartTime: 0
   m_EnemyState: 0
   m_division:
     m_bDivisionTrigger: 0
     m_fDivisionTime: 0
     m_fBlinkTime: 0
     m_fMaxBlinkTime: 0
+  m_Shake:
+    m_ShakeState: 0
+    m_fPow: 0.5
+    m_fTime: 0
+  m_bStop: 0
   m_FlyStrategy:
   - {fileID: 1520558687717841322}
   - {fileID: 1520558687717841317}
@@ -232,7 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Fly: {fileID: 1520558687717841323}
-  m_Reng: 100
+  m_Reng: 50
 --- !u!114 &1520558687717841317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Fly: {fileID: 1520558687717841323}
-  m_AtkReng: 5
+  m_AtkReng: 3
   m_MoveSpeed: 0.05
   m_ReMoveTime: 5
   m_SpeedHolder: 0.05
@@ -265,7 +271,7 @@ MonoBehaviour:
   m_fly: {fileID: 1520558687717841323}
   m_XmoveSpeed: 0.15
   m_YmoveSpeed: 0.15
-  m_DownTiming: 3
+  m_DownTiming: 1.5
   m_angle: 30
 --- !u!114 &1520558687717841319
 MonoBehaviour:
