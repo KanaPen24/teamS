@@ -19,7 +19,6 @@ public class ObjField : ObjBase
     {
         if (m_bHitWall)
             GetSetPos = new Vector2(Camera.main.transform.position.x + m_fpos, GetSetPos.y);
-
     }
 
     //  ---- “–‚½‚è”»’è‚ğ¶¬‚µ‚½Û‚Ìˆ— ----
