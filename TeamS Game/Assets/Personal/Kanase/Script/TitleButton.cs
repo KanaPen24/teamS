@@ -52,7 +52,7 @@ public class TitleButton : MonoBehaviour
     public void OnClickStart()
     {
         Invoke("StartBt", InvokeTime);  //指定の時間待ってからフェード開始(今は0.5秒)
-       // audioSource.PlayOneShot(decideSE);
+        audioSource.PlayOneShot(decideSE);
     }
     //ボタン押下時にフラグオン
     public void OnClickOption()

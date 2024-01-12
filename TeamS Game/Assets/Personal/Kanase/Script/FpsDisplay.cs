@@ -41,8 +41,8 @@ public class FpsDisplay : MonoBehaviour
     //表示部分
     private void OnGUI()
     {
-        GUI.color = Color.black;
-        GUI.skin.label.fontSize = nFont;
-        GUILayout.Label(fps.ToString());
+        //GUI.color = Color.black;
+        //GUI.skin.label.fontSize = nFont;
+        //GUILayout.Label(fps.ToString());
     }
 }

@@ -37,7 +37,7 @@ public class YK_JsonSave : MonoBehaviour
         //ハイスコア用のファイルがなければ
         if(!File.Exists(filepath2))
         {
-            data2.HighScore = new List<int>(YK_HighScore.instance.GetRank()) { 5, 4, 3, 2, 1 };
+            data2.HighScore = new List<int> { 5, 4, 3, 2, 1, 0 };
             data2.MyScore = 0;
             Save2(data2);   //セーブデータを生成する
         }
@@ -76,8 +76,18 @@ public class YK_JsonSave : MonoBehaviour
     // jsonとしてデータを保存
     void Save2(SaveData2 data2)
     {
-        data2.HighScore = YK_HighScore.instance.GetSetHighScore;
-        data2.MyScore = YK_Score.instance.GetSetScore;
+        string json = JsonUtility.ToJson(data2);                 // jsonとして変換
+        StreamWriter wr = new StreamWriter(filepath2, false);    // ファイル書き込み指定
+        wr.WriteLine(json);                                     // json変換した情報を書き込み
+        wr.Close();                                             // ファイル閉じる
+        Debug.Log("セーブ!!!!!!");
+    }
+
+    //-------------------------------------------------------------------
+    // jsonとしてデータを保存
+    void MyScoreSave(SaveData2 data2)
+    {
+        data2.HighScore = HighScoreLoad();
         string json = JsonUtility.ToJson(data2);                 // jsonとして変換
         StreamWriter wr = new StreamWriter(filepath2, false);    // ファイル書き込み指定
         wr.WriteLine(json);                                     // json変換した情報を書き込み
@@ -121,8 +131,9 @@ public class YK_JsonSave : MonoBehaviour
     }
 
     //外部でハイスコアのセーブが呼べるように
-    public void HighScoreSave()
+    public void HighScoreSave(List<int> HighScore)
     {
+        data2.HighScore = HighScore;
         Save2(data2);
         Debug.Log("セーブ!!!!!!");
     }
@@ -152,6 +163,14 @@ public class YK_JsonSave : MonoBehaviour
         ObjPlayer.instance.GetSetPos = data.pos;
         YK_Score.instance.GetSetScore = data.Score;
     }
+
+    //自分のスコアセーブ用
+    public void MyScoreSave(int score)
+    {
+        data2.MyScore = score;
+        MyScoreSave(data2);
+    }
+
 
     //ゲーム終了時
     private void OnApplicationQuit()

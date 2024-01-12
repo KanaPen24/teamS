@@ -48,9 +48,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameState m_CheckGameState; // 現在のゲーム状態(確認用)
     [SerializeField] private GameMode m_GameMode;        // 現在のゲームモード(変更用)
     public static bool m_bDebugStart;                    // デバッグの開始時かどうか
-    public static float m_fTime = 3f;
+    //public static float m_fTime = 3f;
     public HitType hitType;
-    private bool m_bOnce = false;
+    //private bool m_bOnce = false;
 
     private void Start()
     {
@@ -64,25 +64,21 @@ public class GameManager : MonoBehaviour
         }
 
         AudioManager.instance.PlayBGM(BGMType.BGM_GAME);
+        //m_bOnce = false;
+
+        Invoke(nameof(GameStart), 3.0f);
     }
 
     private void Update()
     {
+        // ゲーム終了処理
         if (Input.GetKey(KeyCode.Escape))
         {
-            Application.Quit();             //ゲーム終了処理
-        }
-
-        m_fTime -= Time.deltaTime;
-        if (m_fTime <= 0f && !m_bOnce)
-        {
-            m_sGameState = GameState.GamePlay;
-            m_bOnce = true;
-            m_fTime = 0f;
+            Application.Quit();
         }
 
         // テスト
-        if (Input.GetKeyDown(IS_XBoxInput.LB))
+        if (Input.GetKeyDown(IS_XBoxInput.LB) || Input.GetKeyDown(KeyCode.Return))
         {
             //トランジションを掛けてシーン遷移する
             Fade.instance.FadeIn(1f, () =>
@@ -97,7 +93,6 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         m_bDebugStart = false;
-
         // デバッグモード切替時は…
         if (m_sGameMode != m_GameMode)
         {
@@ -153,4 +148,10 @@ public class GameManager : MonoBehaviour
         }
         else return false;
     }
+
+    private void GameStart()
+    {
+        m_sGameState = GameState.GamePlay;
+    }
+
 }

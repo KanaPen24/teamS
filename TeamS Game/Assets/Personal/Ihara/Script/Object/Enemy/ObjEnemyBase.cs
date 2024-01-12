@@ -33,6 +33,8 @@ public class KnockBack
     public Vector2 m_vInitSpeed; //初速速度
     public float m_fDamping;     //減衰率
     public float m_fGravity;     //重力
+
+    public float m_fStartTime;
 }
 
 // 分散用のクラス
@@ -49,6 +51,22 @@ public class Division
     public float m_fMaxBlinkTime;
 }
 
+// ブレる用のクラス
+[System.Serializable]
+public class Shake
+{
+    public enum ShakeState
+    {
+        StartShake,
+        Shake,
+        Idle,
+    }
+
+    public ShakeState m_ShakeState;
+    public float m_fPow = 0.5f;
+    public float m_fTime;
+}
+
 
 public class ObjEnemyBase : ObjBase
 {
@@ -56,7 +74,13 @@ public class ObjEnemyBase : ObjBase
     [SerializeField] protected EnemyState m_EnemyState;
     [HideInInspector]
     public Division m_division;
+    [HideInInspector]
+    public Shake m_Shake;
+    public bool m_bStop;
 
+    // ----- オーバーライド関数  ------
+    // ************************************************************************************************
+    // 初期化処理
     public override void InitObj()
     {
         base.InitObj();
@@ -66,16 +90,19 @@ public class ObjEnemyBase : ObjBase
         m_division.m_fBlinkTime = m_division.m_fMaxBlinkTime;
     }
 
+    // 更新処理
     public override void UpdateObj()
     {
     }
 
+    // 攻撃を貰う処理
     public override void DamageAttack()
     {
         //攻撃をくらったらノックバックする
         //KnockBackObj();
     }
 
+    // ノックバック関数
     public override void KnockBackObj(ObjDir dir = ObjDir.NONE)
     {
         //ノックバック中なら
@@ -109,6 +136,7 @@ public class ObjEnemyBase : ObjBase
         knockBack.m_vSpeed = GetSetSpeed;
     }
 
+    // 地面判定処理
     public override void CheckObjGround()
     {
         // 今現在立っている地面を離れたら…
@@ -126,6 +154,64 @@ public class ObjEnemyBase : ObjBase
         }        
     }
 
+    // ヒットストップ更新
+    public override void UpdateHitStop()
+    {
+        // ヒットストップ時に
+        // 敵の動きを止める(座標は動かない) → ブレさせる処理(あくまで見た目を動かす)
+        // 
+        if (m_HitStopParam.m_bHitStop)
+        {
+            m_vSpeed = Vector2.zero;
+
+            GameObject visualObj = transform.GetChild(0).gameObject;
+
+            m_Shake.m_fTime -= Time.deltaTime;
+
+            if (m_Shake.m_fTime <= 0f)
+            {
+                switch (m_Shake.m_ShakeState)
+                {
+                    case Shake.ShakeState.StartShake:
+                        m_Shake.m_fPow = 0.25f;
+
+                        visualObj.transform.localPosition =
+                            new Vector3(m_Shake.m_fPow, 0f, 0f);
+
+                        m_Shake.m_fPow = -m_Shake.m_fPow;
+                        m_Shake.m_ShakeState = Shake.ShakeState.Shake;
+                        break;
+
+                    case Shake.ShakeState.Shake:
+                        m_Shake.m_fPow *= 0.8f;
+                        m_Shake.m_fTime = 0.02f;
+
+                        visualObj.transform.localPosition =
+                            new Vector3(m_Shake.m_fPow, 0f, 0f);
+
+                        m_Shake.m_fPow = -m_Shake.m_fPow;
+                        m_Shake.m_ShakeState = Shake.ShakeState.Idle;
+                        break;
+                    case Shake.ShakeState.Idle:
+                        m_Shake.m_ShakeState = Shake.ShakeState.Shake;
+                        break;
+                }
+            }
+        }
+        else
+        {
+            m_Shake.m_ShakeState = Shake.ShakeState.StartShake;
+            m_Shake.m_fTime = 0f;
+        }
+        // 基底の処理
+        base.UpdateHitStop();
+    }
+    // *************************************************************************************************
+    // ---------------------------------
+
+    // ------ 独自の関数 ------
+    // *************************************************************************************************
+    // 点滅チェック
     protected void CheckDivision()
     {
         if (m_division.m_bDivisionTrigger)
@@ -139,6 +225,7 @@ public class ObjEnemyBase : ObjBase
         }
     }
 
+    // 点滅の更新
     private void UpdateDivision()
     {
         if (m_division.m_fBlinkTime <= 0f)
@@ -149,15 +236,19 @@ public class ObjEnemyBase : ObjBase
         else m_division.m_fBlinkTime -= Time.deltaTime;
     }
 
+    // 敵の状態取得
     public EnemyState GetSetEnemyState
     {
          get { return m_EnemyState; }
          set { m_EnemyState = value; } 
     }
 
+    // ノックバックの取得・セット
     public KnockBack GetSetKnockBack
     {
         get { return knockBack; }
         set { knockBack = value; }
     }
+    // *************************************************************************************************
+    // ----------------------
 }

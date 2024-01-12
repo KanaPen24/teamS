@@ -87,6 +87,8 @@ public class ON_HitManager
         // 当たり判定の計算
         for(int i = 0; i < m_hits.Count; ++i)
         {
+            if (!ObjManager.instance.IsWithinTheScreen(m_hits[i].GetCenter().x))
+                continue;
             // 基準が「地面」だったらスキップする
             if (m_hits[i].GetHitType() == HitType.FIELD) continue;
 
@@ -179,26 +181,26 @@ public class ON_HitManager
         // 上に当たっているかどうか
         if ((m_hits[i].GetCenter().y + m_hits[i].GetSize().y > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
              m_hits[i].GetCenter().y + m_hits[i].GetSize().y < m_hits[j].GetCenter().y + m_hits[j].GetSize().y) &&
-            (m_hits[i].GetCenter().x - m_hits[i].GetSize().x - 0.5f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
+            (m_hits[i].GetCenter().x - m_hits[i].GetSize().x + 0.5f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
              m_hits[i].GetCenter().x + m_hits[i].GetSize().x - 0.5f > m_hits[j].GetCenter().x - m_hits[j].GetSize().x))
             return hitDir = HitDir.UP;
         // 下に当たっているかどうか
         if ((m_hits[i].GetCenter().y - m_hits[i].GetSize().y > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
              m_hits[i].GetCenter().y - m_hits[i].GetSize().y < m_hits[j].GetCenter().y + m_hits[j].GetSize().y) &&
-            (m_hits[i].GetCenter().x - m_hits[i].GetSize().x - 0.5f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
+            (m_hits[i].GetCenter().x - m_hits[i].GetSize().x + 0.5f < m_hits[j].GetCenter().x + m_hits[j].GetSize().x &&
              m_hits[i].GetCenter().x + m_hits[i].GetSize().x - 0.5f > m_hits[j].GetCenter().x - m_hits[j].GetSize().x))
             return hitDir = HitDir.DOWN;
         // 左に当たっているかどうか
         if ((m_hits[i].GetCenter().x - m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
              m_hits[i].GetCenter().x - m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x) &&
             (m_hits[i].GetCenter().y + m_hits[i].GetSize().y - 0.5f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
-             m_hits[i].GetCenter().y - m_hits[i].GetSize().y - 0.5f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y))
+             m_hits[i].GetCenter().y - m_hits[i].GetSize().y + 0.5f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y))
             return hitDir = HitDir.LEFT;
         // 右に当たっているかどうか
         if ((m_hits[i].GetCenter().x + m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
              m_hits[i].GetCenter().x + m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x) &&
             (m_hits[i].GetCenter().y + m_hits[i].GetSize().y - 0.5f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
-             m_hits[i].GetCenter().y - m_hits[i].GetSize().y - 0.5f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y ))
+             m_hits[i].GetCenter().y - m_hits[i].GetSize().y + 0.5f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y ))
             return hitDir = HitDir.RIGHT;
 
         return hitDir;

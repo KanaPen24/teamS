@@ -14,12 +14,15 @@ public class PlayerAtk : PlayerStrategy
 {
     [SerializeField] private Vector3 m_vAtkArea;
     [SerializeField] private float m_fLength;
-    public VisualEffect atkEffect;
+    [SerializeField] private float m_fAtkTime;
+    [SerializeField] private VisualEffect atkEffect;
     private int atknum = -1;
+    private float m_fTime;
 
     public override void UpdateState()
     {
-        if (ObjPlayer.instance.Anim.GetAnimNormalizeTime(PlayerAnimState.Atk,0.5f))
+        // アニメーションが終わったら
+        if (ObjPlayer.instance.Anim.GetAnimNormalizeTime(PlayerAnimState.Atk,1f))
         {
             // 攻撃 → 待ち
             if (ObjPlayer.instance.GetSetGround.m_bStand)
@@ -36,16 +39,29 @@ public class PlayerAtk : PlayerStrategy
         // 遷移最初の処理
         if (m_bStartFlg) StartState();
 
-        // 攻撃中は座標更新
+        // 攻撃中は
         if (atknum != -1)
         {
+            // 座標更新
             if (ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
                 ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
             else if (ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
                 ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f));
+
+            // 攻撃時間が終わったら
+            if (m_fTime <= 0)
+            {
+                // 攻撃の当たり判定削除
+                ON_HitManager.instance.DeleteHit(atknum);
+
+                // 攻撃の当たり判定IDを-1にする
+                atknum = -1;
+
+                m_fTime = 0;
+            }
+            else m_fTime -= Time.deltaTime;
         }
 
-        //if (HitStop.instance.hitStopState == HitStopState.ON)
         if (ObjPlayer.instance.GetSetHitStopParam.m_bHitStop)
         {
             atkEffect.playRate = 0.1f;
@@ -70,8 +86,8 @@ public class PlayerAtk : PlayerStrategy
             ObjPlayer.instance.GetSetSpeed += new Vector2(5f, 0f);
 
             // エフェクト再生
-            atkEffect.Play();
-            atkEffect.transform.position = this.gameObject.transform.position;
+            Invoke(nameof(StartHitEffect), 0.3f);
+            atkEffect.transform.position = this.gameObject.transform.position + new Vector3(0.4f,0.5f,0.0f);
             atkEffect.transform.localScale = new Vector3(-1f, 1f, 1f);
         }
         else if (ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
@@ -82,10 +98,13 @@ public class PlayerAtk : PlayerStrategy
             ObjPlayer.instance.GetSetSpeed += new Vector2(-5f, 0f);
 
             // エフェクト再生
-            atkEffect.Play();
-            atkEffect.transform.position = this.gameObject.transform.position;
+            Invoke(nameof(StartHitEffect), 0.3f);
+            atkEffect.transform.position = this.gameObject.transform.position + new Vector3(-0.4f, 0.5f, 0.0f); ;
             atkEffect.transform.localScale = new Vector3(1f, 1f, 1f);
         }
+
+        // 当たり判定時間セット
+        m_fTime = m_fAtkTime;
 
         // 攻撃SEを再生
         AudioManager.instance.PlaySE(SEType.SE_PlayerAtk);
@@ -96,13 +115,12 @@ public class PlayerAtk : PlayerStrategy
 
     public override void EndState()
     {
-        // 攻撃の当たり判定削除
-        ON_HitManager.instance.DeleteHit(atknum);
-
-        // 攻撃の当たり判定IDを-1にする
-        atknum = -1;
-
         // 遷移最初のフラグをONにしておく
         m_bStartFlg = true;
+    }
+
+    public void StartHitEffect()
+    {
+        atkEffect.Play();
     }
 }
