@@ -68,6 +68,10 @@ public class ObjManager : MonoBehaviour
         // --- オブジェクトの更新処理 ---
         for(int i = 0; i < Objs.Count; ++i)
         {
+            // 画面外にいる「かつ」フィールドでなければスキップする
+            if (!IsWithinTheScreen(Objs[i].GetSetPos.x) && Objs[i].GetSetType != ObjType.Field)
+                continue;
+
             // --- オブジェクトが存在している場合 ---
             if (Objs[i].GetSetExist)
             {
@@ -606,5 +610,13 @@ public class ObjManager : MonoBehaviour
     public List<ObjBase> GetObjList()
     {
         return Objs;
+    }
+
+    public bool IsWithinTheScreen(float pos)
+    {
+        if (pos <= Camera.main.transform.position.x + 9.8f &&
+            pos >= Camera.main.transform.position.x - 9.8f)
+            return true;
+        else return false;
     }
 }
