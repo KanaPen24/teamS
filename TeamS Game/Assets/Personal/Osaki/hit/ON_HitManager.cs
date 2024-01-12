@@ -87,6 +87,8 @@ public class ON_HitManager
         // 当たり判定の計算
         for(int i = 0; i < m_hits.Count; ++i)
         {
+            if (!ObjManager.instance.IsWithinTheScreen(m_hits[i].GetCenter().x))
+                continue;
             // 基準が「地面」だったらスキップする
             if (m_hits[i].GetHitType() == HitType.FIELD) continue;
 
