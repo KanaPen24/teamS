@@ -93,15 +93,6 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         m_bDebugStart = false;
-
-        //m_fTime -= Time.deltaTime;
-        //if (m_fTime <= 0f && !m_bOnce)
-        //{
-        //    m_sGameState = GameState.GamePlay;
-        //    m_bOnce = true;
-        //    m_fTime = 3f;
-        //}
-
         // デバッグモード切替時は…
         if (m_sGameMode != m_GameMode)
         {
@@ -162,4 +153,5 @@ public class GameManager : MonoBehaviour
     {
         m_sGameState = GameState.GamePlay;
     }
+
 }
