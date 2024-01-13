@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
         }
 
         // テスト
-        if (Input.GetKeyDown(IS_XBoxInput.LB) || Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(IS_XBoxInput.LB))// || Input.GetKeyDown(KeyCode.Return))
         {
             //トランジションを掛けてシーン遷移する
             Fade.instance.FadeIn(1f, () =>
