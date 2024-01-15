@@ -18,7 +18,8 @@ public enum HitType
     SPECIAL,    // 必殺
     BODY,       // 体
     BULLET,     // 弾系統
-    FIELD,      // 足場
+    FIELD,      // ステージ
+    STEP,       // 足場
 
     MAX_TYPE,
 }

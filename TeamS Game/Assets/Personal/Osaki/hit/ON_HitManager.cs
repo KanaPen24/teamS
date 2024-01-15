@@ -49,6 +49,8 @@ public enum HitState
     GRUOND,     // フィールドに当たった
     DEFGRUOND,  // フィールド側が受ける
 
+    STEP,       // 足場に当たった
+
     MAX_STATE
 }
 
@@ -91,6 +93,7 @@ public class ON_HitManager
                 continue;
             // 基準が「地面」だったらスキップする
             if (m_hits[i].GetHitType() == HitType.FIELD) continue;
+            if (m_hits[i].GetHitType() == HitType.STEP) continue;
 
             // 当たり判定がoffだったらスキップする
             if (m_hits[i].GetActive() == false) continue;
@@ -110,6 +113,14 @@ public class ON_HitManager
 
                 // 同一オブジェクトか
                 if (m_hits[i].GetObjID() == m_hits[j].GetObjID()) continue;
+
+                // 相手が足場の場合、下方向以外で当たっていたらスルー
+                if(m_hits[j].GetHitType() == HitType.STEP)
+                {
+                    HitDir dir = DecideHitDir(i, j);
+                    if (dir != HitDir.DOWN) continue;
+                    if (ObjManager.instance.GetObj(m_hits[i].GetObjID()).GetSetSpeed.y > 0.0f) continue;
+                }
 
                 // 当たっている
                 // 当たり判定の状態判定し、追加
@@ -146,6 +157,7 @@ public class ON_HitManager
                 if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.NONE;    // 必殺技は相殺しない
                 if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.NONE;     // 何もしない
                 if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.NONE;      // 何もしない
+                if (m_hits[j].GetHitType() == HitType.STEP) state = HitState.NONE;      // 何もしない
                 break;
             case HitType.SPECIAL:
                 if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.NONE;　 // 何もしない
@@ -153,6 +165,7 @@ public class ON_HitManager
                 if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.NONE;  // 必殺技は相殺しない
                 if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.NONE;   // 何もしない
                 if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.NONE;    // 何もしない
+                if (m_hits[j].GetHitType() == HitType.STEP) state = HitState.NONE;      // 何もしない
                 break;
             case HitType.BODY:
                 if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.DEFENCE;     // 攻撃を受ける
@@ -160,6 +173,7 @@ public class ON_HitManager
                 if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.DEFSPECIAL; // 必殺技を受ける 
                 if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.DEFBULLET;   // 弾を受ける
                 if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.GRUOND;       // 地面に当たる
+                if (m_hits[j].GetHitType() == HitType.STEP) state = HitState.STEP;      // 足場に当たる
                 break;
             case HitType.BULLET:
                 if (m_hits[j].GetHitType() == HitType.ATTACK) state = HitState.BULLET2DESTROY; // 弾を破壊
@@ -167,6 +181,7 @@ public class ON_HitManager
                 if (m_hits[j].GetHitType() == HitType.SPECIAL) state = HitState.NONE;          // 何もしない 
                 if (m_hits[j].GetHitType() == HitType.BULLET) state = HitState.NONE;           // 何もしない
                 if (m_hits[j].GetHitType() == HitType.FIELD) state = HitState.BULLET2DESTROY;  // 弾を破壊
+                if (m_hits[j].GetHitType() == HitType.STEP) state = HitState.BULLET2DESTROY;      // 弾を破壊
                 break;
         }
 
