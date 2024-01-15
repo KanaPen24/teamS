@@ -342,10 +342,7 @@ public class ObjManager : MonoBehaviour
                 // 互いに敵が存在していたら…
                 if(Enemy_1.GetSetExist && Enemy_2.GetSetExist)
                 {
-                    // どちらもノックバックの状態 on
-                    // どちらも無敵状態ではなかった場合
-                    //if ((Enemy_1.GetSetEnemyState == EnemyState.KnockBack && Enemy_2.GetSetEnemyState == EnemyState.KnockBack) &&
-                    //    (!Enemy_1.GetSetInvincible.m_bInvincible && !Enemy_2.GetSetInvincible.m_bInvincible))
+                    // どちらかがノックバックの状態
                     if (Enemy_1.GetSetEnemyState == EnemyState.KnockBack || Enemy_2.GetSetEnemyState == EnemyState.KnockBack)
                     {
                         // --- 敵の合成 ---
@@ -435,7 +432,7 @@ public class ObjManager : MonoBehaviour
                     // 右に当たっていたら
                     if (ON_HitManager.instance.GetData(i).dir == HitDir.RIGHT)
                     {
-                        Objs[myID].GetSetSpeed = new Vector2(-0.25f, 0.25f);
+                        Objs[myID].GetSetSpeed += new Vector2(-0.25f, 0.05f);
                         Objs[myID].GetSetDir = ObjDir.LEFT;
 
                         // エフェクト再生
@@ -446,7 +443,7 @@ public class ObjManager : MonoBehaviour
                     // 左に当たっていたら
                     if (ON_HitManager.instance.GetData(i).dir == HitDir.LEFT)
                     {
-                        Objs[myID].GetSetSpeed = new Vector2(0.25f, 0.25f);
+                        Objs[myID].GetSetSpeed += new Vector2(0.25f, 0.05f);
                         Objs[myID].GetSetDir = ObjDir.RIGHT;
 
                         // エフェクト再生
@@ -530,16 +527,6 @@ public class ObjManager : MonoBehaviour
         if (enemy_id_1 == -1 || enemy_id_2 == -1)
             return;
 
-        // 敵同士の存在,当たり判定を消す
-        Objs[enemy_id_1].GetSetExist = false;
-        Objs[enemy_id_2].GetSetExist = false;
-        Objs[enemy_id_1].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.RePop;
-        Objs[enemy_id_2].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.RePop;
-        Objs[enemy_id_1].GetSetSpeed = new Vector2(Random.RandomRange(-0.1f, 0.1f), Random.RandomRange(0.3f, 0.5f));
-        Objs[enemy_id_2].GetSetSpeed = new Vector2(Random.RandomRange(-0.1f, 0.1f), Random.RandomRange(0.3f, 0.5f));
-        ON_HitManager.instance.SetActive(id_1, false);
-        ON_HitManager.instance.SetActive(id_2, false);
-
         // 合体敵の生成 → 初期化
         ObjEnemyUnion enemyUnion = 
             Instantiate(enemyUnionPrefab, Vector3.zero,Quaternion.Euler(Vector3.zero));
@@ -549,6 +536,19 @@ public class ObjManager : MonoBehaviour
 
         // 座標設定
         enemyUnion.GetSetPos = Objs[enemy_id_1].GetSetPos + new Vector3(0f, 5f, 0f);
+
+        // 速度設定
+        enemyUnion.GetSetSpeed = Objs[enemy_id_1].GetSetSpeed + Objs[enemy_id_2].GetSetSpeed;
+
+        // 敵同士の存在,当たり判定を消す
+        Objs[enemy_id_1].GetSetExist = false;
+        Objs[enemy_id_2].GetSetExist = false;
+        Objs[enemy_id_1].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.RePop;
+        Objs[enemy_id_2].GetComponent<ObjEnemyBase>().GetSetEnemyState = EnemyState.RePop;
+        Objs[enemy_id_1].GetSetSpeed = new Vector2(Random.RandomRange(-0.1f, 0.1f), Random.RandomRange(0.3f, 0.5f));
+        Objs[enemy_id_2].GetSetSpeed = new Vector2(Random.RandomRange(-0.1f, 0.1f), Random.RandomRange(0.3f, 0.5f));
+        ON_HitManager.instance.SetActive(id_1, false);
+        ON_HitManager.instance.SetActive(id_2, false);
 
         // 合体元のオブジェクトIDを格納
         enemyUnion.m_nEnemyIDs.Add(Objs[enemy_id_1].GetSetObjID);
@@ -612,6 +612,7 @@ public class ObjManager : MonoBehaviour
         return Objs;
     }
 
+    // 画面内にいるかどうか
     public bool IsWithinTheScreen(float pos)
     {
         if (pos <= Camera.main.transform.position.x + 9.8f &&
@@ -620,6 +621,7 @@ public class ObjManager : MonoBehaviour
         else return false;
     }
 
+    // 削除する時
     private void OnDestroy()
     {
         instance = null;      
