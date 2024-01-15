@@ -28,11 +28,10 @@ public class NK_HitotumeKnockBack : NK_HitotumeStrategy
         {
             //å∏êäèàóù
             enemyProto.GetSetSpeed =
-                new Vector2(enemyProto.GetSetKnockBack.m_vSpeed.x * enemyProto.GetSetKnockBack.m_fDamping,
-                            enemyProto.GetSetKnockBack.m_vSpeed.y * enemyProto.GetSetKnockBack.m_fDamping);
-            enemyProto.GetSetKnockBack.m_vSpeed = enemyProto.GetSetSpeed;
+                new Vector2(enemyProto.GetSetSpeed.x * enemyProto.GetSetKnockBack.m_fDamping,
+                            -enemyProto.GetSetSpeed.y * enemyProto.GetSetKnockBack.m_fDamping);
             //íeÇﬁÇÃÇ™0.1fà»â∫Ç…Ç»Ç¡ÇΩÇÁ
-            if (enemyProto.GetSetSpeed.y <= 0.1f)
+            if (Mathf.Abs(enemyProto.GetSetSpeed.y) <= 0.2f)
             {
                 enemyProto.GetSetSpeed = Vector2.zero;     //é~ÇﬂÇÈ
                 endFlg = true;
