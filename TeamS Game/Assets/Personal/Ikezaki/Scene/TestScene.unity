@@ -589,8 +589,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4898860535766430516, guid: ea0c3ff18f8b8004ab1ef7708b3c187d, type: 3}
+      propertyPath: m_ResetSeedOnPlay
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898860535766430516, guid: ea0c3ff18f8b8004ab1ef7708b3c187d, type: 3}
+      propertyPath: m_InitialEventNameOverriden
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898860535766430516, guid: ea0c3ff18f8b8004ab1ef7708b3c187d, type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898860535766430516, guid: ea0c3ff18f8b8004ab1ef7708b3c187d, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[4].m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898860535766430516, guid: ea0c3ff18f8b8004ab1ef7708b3c187d, type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[7].m_Value
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4898860535766430516, guid: ea0c3ff18f8b8004ab1ef7708b3c187d, type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Name
