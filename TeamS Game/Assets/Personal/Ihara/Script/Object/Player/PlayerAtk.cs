@@ -86,7 +86,7 @@ public class PlayerAtk : PlayerStrategy
             ObjPlayer.instance.GetSetSpeed += new Vector2(5f, 0f);
 
             // エフェクト再生
-            atkEffect.Play();
+            Invoke(nameof(StartHitEffect), 0.3f);
             atkEffect.transform.position = this.gameObject.transform.position + new Vector3(0.4f,0.5f,0.0f);
             atkEffect.transform.localScale = new Vector3(-1f, 1f, 1f);
         }
@@ -98,7 +98,7 @@ public class PlayerAtk : PlayerStrategy
             ObjPlayer.instance.GetSetSpeed += new Vector2(-5f, 0f);
 
             // エフェクト再生
-            atkEffect.Play();
+            Invoke(nameof(StartHitEffect), 0.3f);
             atkEffect.transform.position = this.gameObject.transform.position + new Vector3(-0.4f, 0.5f, 0.0f); ;
             atkEffect.transform.localScale = new Vector3(1f, 1f, 1f);
         }
@@ -117,5 +117,10 @@ public class PlayerAtk : PlayerStrategy
     {
         // 遷移最初のフラグをONにしておく
         m_bStartFlg = true;
+    }
+
+    public void StartHitEffect()
+    {
+        atkEffect.Play();
     }
 }

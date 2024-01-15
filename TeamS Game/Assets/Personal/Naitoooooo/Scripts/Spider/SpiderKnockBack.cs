@@ -22,11 +22,11 @@ public class SpiderKnockBack : EnemyStrategy
     {
         if(m_Spider.m_Ground.m_bStand)
         {
+            //Œ¸Šˆ—
             m_Spider.GetSetSpeed =
-                new Vector2(m_Spider.GetSetKnockBack.m_vSpeed.x * m_Spider.GetSetKnockBack.m_fDamping,
-                m_Spider.GetSetKnockBack.m_vSpeed.y * m_Spider.GetSetKnockBack.m_fDamping);
-            m_Spider.GetSetKnockBack.m_vSpeed = m_Spider.GetSetSpeed;
-            if(m_Spider.GetSetSpeed.y<=0.1f)
+                new Vector2(m_Spider.GetSetSpeed.x * m_Spider.GetSetKnockBack.m_fDamping,
+                            m_Spider.GetSetSpeed.y * m_Spider.GetSetKnockBack.m_fDamping);
+            if (m_Spider.GetSetSpeed.y<=0.1f)
             {
                 m_Spider.GetSetSpeed = Vector2.zero;
                 endFlg = true;

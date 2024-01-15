@@ -27,16 +27,14 @@ public class FlyKnockBack : FlyStrategy
         {
             //å∏êäèàóù
             m_Fly.GetSetSpeed =
-                new Vector2(m_Fly.GetSetKnockBack.m_vSpeed.x * m_Fly.GetSetKnockBack.m_fDamping,
-                            m_Fly.GetSetKnockBack.m_vSpeed.y * m_Fly.GetSetKnockBack.m_fDamping);
-            m_Fly.GetSetKnockBack.m_vSpeed = m_Fly.GetSetSpeed;
+                new Vector2(m_Fly.GetSetSpeed.x * m_Fly.GetSetKnockBack.m_fDamping,
+                            -m_Fly.GetSetSpeed.y * m_Fly.GetSetKnockBack.m_fDamping);
             //íeÇﬁÇÃÇ™0.1fà»â∫Ç…Ç»Ç¡ÇΩÇÁ
-            if (m_Fly.GetSetSpeed.y <= 0.1f)
+            if (Mathf.Abs(m_Fly.GetSetSpeed.y) <= 0.2f)
             {
                 m_Fly.GetSetSpeed = Vector2.zero;     //é~ÇﬂÇÈ
                 endFlg = true;
             }
-            m_Fly.m_Ground.m_bStand = false;
         }
     }
 }

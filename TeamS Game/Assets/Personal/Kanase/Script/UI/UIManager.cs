@@ -40,17 +40,21 @@ public class UIManager : MonoBehaviour
         //É|Å[ÉYèàóù
         if ((Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(IS_XBoxInput.Menu))&&!Pause.GetSetPause)
         {
-            UIs[(int)UIType.Pause].Active(true);
+            DrawPause(true);
             GameManager.GetSetGameState = GameState.GamePause;
             PostEffect.SetGaussianRate(1.0f);
-            Pause.GetSetPause = true;
         }
         else if ((Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(IS_XBoxInput.Menu))&& Pause.GetSetPause)
         {
-            UIs[(int)UIType.Pause].Active(false);
-            Pause.GetSetPause = false;
+            DrawPause(false);
             PostEffect.SetGaussianRate(0.0f);
             GameManager.GetSetGameState = GameState.GamePlay;
         }
+    }
+
+    public void DrawPause(bool flg)
+    {
+        UIs[(int)UIType.Pause].Active(flg);
+        Pause.GetSetPause = flg;
     }
 }

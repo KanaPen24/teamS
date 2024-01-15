@@ -1,7 +1,7 @@
 ﻿/**
  * @file   IS_Pause.cs
  * @brief  ポーズクラス
- * @author IharaShota
+ * @author KanaseYoshida
  * @date   2023/03/28
  * @Update 2023/03/28 作成
  **/
@@ -29,13 +29,25 @@ public class YK_Pause : YK_UI
     [SerializeField]
     private GameObject OptionFirst; //オプション選択時最初にフォーカスさせたいボタン
 
+    private bool OpitionFlg;        //オプション画面かどうかのフラグ
+
     private void Start()
     {
         m_eUIType = UIType.Pause;     
         m_bPause = false;
+        OptionUI.gameObject.SetActive(false);
     }
     // Update is called once per frame
-    
+    private void FixedUpdate()
+    {
+        //オプション画面中にコントローラーのBを押したら
+        if (OpitionFlg && Input.GetKeyDown(IS_XBoxInput.B))
+        {
+            OptionUI.gameObject.SetActive(false);
+            OpitionFlg = false;
+        }
+
+    }
     public bool GetSetPause
     {
         get { return m_bPause; }
@@ -46,12 +58,13 @@ public class YK_Pause : YK_UI
         //ゲームに戻るを選択したとき
         Time.timeScale = 1;
         EventSystem.current.SetSelectedGameObject(RTFirst); //一旦ゲームに戻るボタンからフォーカスを外す
-        pauseUI.gameObject.SetActive(false);
+        UIManager.instance.DrawPause(false);
         m_bPause = false;
     }
     public void OnClickOption()
     {
         //オプション画面を開いたとき
+        OpitionFlg = true;
         OptionUI.gameObject.SetActive(true);
         pauseUI.gameObject.SetActive(false);
         EventSystem.current.SetSelectedGameObject(OptionFirst);
@@ -59,9 +72,15 @@ public class YK_Pause : YK_UI
     public void OnclickReturnTitle()
     {
         //タイトルへ戻るを選択したとき
-        ReturnTitleUI.gameObject.SetActive(true);
-        pauseUI.gameObject.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(RTFirst);
+        //ReturnTitleUI.gameObject.SetActive(true);
+        //pauseUI.gameObject.SetActive(false);
+        //EventSystem.current.SetSelectedGameObject(RTFirst);
+        //トランジションを掛けてシーン遷移する
+        Fade.instance.FadeIn(1f, () =>
+        {
+            GameManager.GetSetGameState = GameState.Title;
+            SceneManager.LoadScene("TitleScene");
+        });
     }
     public void OnClickYes()
     {

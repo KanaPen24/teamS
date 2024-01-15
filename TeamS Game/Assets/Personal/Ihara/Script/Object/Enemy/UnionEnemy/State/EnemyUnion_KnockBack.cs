@@ -13,6 +13,7 @@ public class EnemyUnion_KnockBack : EnemyStrategy
 {
     private ObjEnemyUnion enemyUnion; // é©êgÇäiî[Ç∑ÇÈÇΩÇﬂÇÃÉRÉìÉ|Å[ÉlÉìÉg
     private bool endFlg = false;
+    public ParticleSystem burstEffect;
 
     private void Start()
     {
@@ -26,6 +27,8 @@ public class EnemyUnion_KnockBack : EnemyStrategy
             enemyUnion.GetSetEnemyState = EnemyState.Idle;
             endFlg = false;
             enemyUnion.DivisionEnemy();
+            burstEffect.Play();
+            burstEffect.transform.position = enemyUnion.GetSetPos;
             return;
         }
     }
@@ -36,16 +39,14 @@ public class EnemyUnion_KnockBack : EnemyStrategy
         {
             //å∏êäèàóù
             enemyUnion.GetSetSpeed =
-                new Vector2(enemyUnion.GetSetKnockBack.m_vSpeed.x * enemyUnion.GetSetKnockBack.m_fDamping,
-                            enemyUnion.GetSetKnockBack.m_vSpeed.y * enemyUnion.GetSetKnockBack.m_fDamping);
-            enemyUnion.GetSetKnockBack.m_vSpeed = enemyUnion.GetSetSpeed;
+                new Vector2(enemyUnion.GetSetSpeed.x * enemyUnion.GetSetKnockBack.m_fDamping,
+                            -enemyUnion.GetSetSpeed.y * enemyUnion.GetSetKnockBack.m_fDamping);
             //íeÇﬁÇÃÇ™0.1fà»â∫Ç…Ç»Ç¡ÇΩÇÁ
-            if (enemyUnion.GetSetSpeed.y <= 0.1f)
+            if (Mathf.Abs(enemyUnion.GetSetSpeed.y) <= 0.2f)
             {
                 enemyUnion.GetSetSpeed = Vector2.zero;     //é~ÇﬂÇÈ
                 endFlg = true;
             }
-            enemyUnion.m_Ground.m_bStand = false;
         }
     }
 }

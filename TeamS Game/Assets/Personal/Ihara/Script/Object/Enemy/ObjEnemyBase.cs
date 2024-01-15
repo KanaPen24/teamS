@@ -28,8 +28,6 @@ public enum EnemyState
 [System.Serializable]
 public class KnockBack
 {
-    [HideInInspector]
-    public Vector2 m_vSpeed;     // 現在の速度
     public Vector2 m_vInitSpeed; //初速速度
     public float m_fDamping;     //減衰率
     public float m_fGravity;     //重力
@@ -131,9 +129,6 @@ public class ObjEnemyBase : ObjBase
             else if (dir == ObjDir.LEFT)
                 GetSetSpeed = new Vector2(-knockBack.m_vInitSpeed.x, knockBack.m_vInitSpeed.y);
         }
-
-        // 現在の速度をノックバック計算用の速度に格納(Ihara)
-        knockBack.m_vSpeed = GetSetSpeed;
     }
 
     // 地面判定処理

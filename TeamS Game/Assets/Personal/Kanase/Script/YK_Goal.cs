@@ -13,6 +13,7 @@ public class YK_Goal : MonoBehaviour
             Fade.instance.FadeIn(1f, () =>
         {
             GameManager.GetSetGameState = GameState.Result;
+            YK_JsonSave.instance.MyScoreSave(YK_Score.instance.GetSetScore);
             SceneManager.LoadScene("ResultScene");
         });
         }
