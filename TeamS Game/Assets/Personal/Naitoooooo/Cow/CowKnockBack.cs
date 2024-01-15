@@ -21,11 +21,11 @@ public class CowKnockBack : EnemyStrategy
     {
         if(m_cow.m_Ground.m_bStand)
         {
+            //å∏êäèàóù
             m_cow.GetSetSpeed =
-                new Vector2(m_cow.GetSetKnockBack.m_vSpeed.x * m_cow.GetSetKnockBack.m_fDamping,
-                            m_cow.GetSetKnockBack.m_vSpeed.y * m_cow.GetSetKnockBack.m_fDamping);
-            m_cow.GetSetKnockBack.m_vSpeed = m_cow.GetSetSpeed;
-            if(m_cow.GetSetSpeed.y<=0.1f)
+                new Vector2(m_cow.GetSetSpeed.x * m_cow.GetSetKnockBack.m_fDamping,
+                            m_cow.GetSetSpeed.y * m_cow.GetSetKnockBack.m_fDamping);
+            if (m_cow.GetSetSpeed.y<=0.1f)
             {
                 m_cow.GetSetSpeed = Vector2.zero;
                 endFlg = true;
