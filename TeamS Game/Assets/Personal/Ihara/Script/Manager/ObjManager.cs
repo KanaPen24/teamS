@@ -619,4 +619,12 @@ public class ObjManager : MonoBehaviour
             return true;
         else return false;
     }
+
+    private void OnDestroy()
+    {
+        instance = null;      
+        ON_HitManager.instance = null;
+    }
 }
+
+
