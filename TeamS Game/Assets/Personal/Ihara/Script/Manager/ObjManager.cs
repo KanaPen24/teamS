@@ -503,6 +503,24 @@ public class ObjManager : MonoBehaviour
                     }
                 }
             }
+            // 足場に当たった判定だったら
+            if(ON_HitManager.instance.GetData(i).state == HitState.STEP)
+            {
+                float pos;
+                // 座標調整(相手の上端 + 自身の縮小 / 2)
+                pos = Objs[otherID].GetSetPos.y + Mathf.Abs(Objs[otherID].GetSetScale.y / 2f) +
+                      Mathf.Abs(Objs[myID].GetSetScale.y / 2f);
+
+                Objs[myID].GetSetPos = new Vector3(Objs[myID].GetSetPos.x, pos, 0f);
+
+                // 地面の情報を格納
+                Objs[myID].GetSetGround.m_bStand = true;
+                Objs[myID].GetSetGround.m_vCenter = Objs[otherID].GetSetPos;
+                Objs[myID].GetSetGround.m_vSize = Objs[otherID].GetSetScale;
+
+                if (GameManager.IsDebug())
+                    Debug.Log("地面に当たった");
+            }
             // 地面から見て何かに当てられた判定だったら
             if (ON_HitManager.instance.GetData(i).state == HitState.DEFGRUOND)
             {
