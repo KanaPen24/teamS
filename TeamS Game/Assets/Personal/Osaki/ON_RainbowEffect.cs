@@ -15,6 +15,8 @@ public class ON_RainbowEffect : MonoBehaviour
     [SerializeField] private int[] comboValue;
     [Header("色変更パターン")]
     [SerializeField] private Color[] colors;
+    [Header("エフェクトの量パターン")]
+    [SerializeField] private float[] rates;
 
     [Header("色変更スパン")]
     public float Chnge_Color_Time = 0.1f;
@@ -48,6 +50,7 @@ public class ON_RainbowEffect : MonoBehaviour
     void Update()
     {
         Color = Color.black;
+        float num = 0.0f;
         nowCombo = YK_Combo.GetCombo();
 
         for(int i = 0; i < comboValue.Length; ++i)
@@ -55,9 +58,11 @@ public class ON_RainbowEffect : MonoBehaviour
             if(nowCombo >= comboValue[i])
             {
                 Color = colors[i];
+                num = rates[i];
             }
         }
 
+        effect.SetFloat("Rate", num);
         effect.SetVector4("Color", Color);
     }
 

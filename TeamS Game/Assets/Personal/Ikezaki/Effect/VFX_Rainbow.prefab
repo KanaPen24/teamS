@@ -138,8 +138,13 @@ MonoBehaviour:
   - {r: 0.8018868, g: 0.77856684, b: 0.14676036, a: 0}
   - {r: 0.8509804, g: 0.074509814, b: 0.32337743, a: 0}
   - {r: 0.8509804, g: 0.074509814, b: 0.32337743, a: 0}
+  rates:
+  - 50
+  - 100
+  - 200
+  - 300
   Chnge_Color_Time: 0.05
-  Smooth: 0.01
+  Smooth: 0.02
   HSV_Hue: 1
   HSV_Saturation: 1
   HSV_Brightness: 1
