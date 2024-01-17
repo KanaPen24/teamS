@@ -166,6 +166,9 @@ public class ON_HitDebug
             case HitType.FIELD:
                 col = new Color(0.0f, 1.0f, 0.0f, 0.6f);
                 break;
+            case HitType.STEP:
+                col = new Color(0.0f, 1.0f, 1.0f, 0.6f);
+                break;
         }
         return col;
     }

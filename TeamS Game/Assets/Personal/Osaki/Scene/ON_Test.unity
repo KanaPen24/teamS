@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &537865551
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -214,9 +214,81 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 30407892328528905, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 416997675802570768, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 461897807268556279, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
       propertyPath: m_Name
       value: BackGround
+      objectReference: {fileID: 0}
+    - target: {fileID: 461897807268556279, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 530474197598779047, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 624221803134362404, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1216444343504327345, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1265886971003389470, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300877794369921484, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525412784903972719, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1845753024975312849, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2073976439545219185, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3294116932562025738, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3943838608759799951, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5203630808545027830, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5501059033114609221, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5544682581322464798, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702429510311470319, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8984360184643165661, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9220325690052746337, guid: 2a845d6cbaee42345b77b2708ef572fe, type: 3}
       propertyPath: m_RootOrder
@@ -398,7 +470,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1896528876
 MonoBehaviour:
   m_ObjectHideFlags: 0
