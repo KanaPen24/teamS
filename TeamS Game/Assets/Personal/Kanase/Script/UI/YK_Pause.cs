@@ -57,7 +57,7 @@ public class YK_Pause : YK_UI
     {
         //ゲームに戻るを選択したとき
         Time.timeScale = 1;
-        EventSystem.current.SetSelectedGameObject(RTFirst); //一旦ゲームに戻るボタンからフォーカスを外す
+       // EventSystem.current.SetSelectedGameObject(RTFirst); //一旦ゲームに戻るボタンからフォーカスを外す
         UIManager.instance.DrawPause(false);
         m_bPause = false;
     }
