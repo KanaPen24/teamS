@@ -43,7 +43,7 @@ public class YK_Pause : YK_UI
         //オプション画面中にコントローラーのBを押したら
         if (OpitionFlg && Input.GetKeyDown(IS_XBoxInput.B))
         {
-            OptionUI.gameObject.SetActive(false);
+            OnClickReturn();
             OpitionFlg = false;
         }
 
