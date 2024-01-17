@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9214289346139190263}
   - component: {fileID: 9214289346139190264}
   - component: {fileID: 9214289346139190265}
+  - component: {fileID: 440973940}
   m_Layer: 0
   m_Name: VFX_Rainbow
   m_TagString: Untagged
@@ -49,13 +50,19 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 200
+        m_Name: Rate
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
       m_Array: []
     m_Vector4f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 0.9056604, y: 0.03759341, z: 0.078443825, w: 0}
+        m_Name: Color
+        m_Overridden: 1
     m_Uint:
       m_Array: []
     m_Int:
@@ -110,3 +117,31 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &440973940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9214289346139190266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49a836a0580edf844913f50c20cfd611, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect: {fileID: 9214289346139190264}
+  Color: {r: 0.8679245, g: 0.08515483, b: 0.08515483, a: 0}
+  nowCombo: 0
+  comboValue: 01000000050000000a0000000f000000
+  colors:
+  - {r: 0.078675665, g: 0.74360925, b: 0.8018868, a: 0}
+  - {r: 0.8018868, g: 0.77856684, b: 0.14676036, a: 0}
+  - {r: 0.8509804, g: 0.074509814, b: 0.32337743, a: 0}
+  - {r: 0.8509804, g: 0.074509814, b: 0.32337743, a: 0}
+  Chnge_Color_Time: 0.05
+  Smooth: 0.01
+  HSV_Hue: 1
+  HSV_Saturation: 1
+  HSV_Brightness: 1
+  HSV_Hue_max: 1
+  HSV_Hue_min: 0
