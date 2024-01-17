@@ -24,7 +24,7 @@ public class PlayerAtk01 : PlayerStrategy
         // アニメーションが終わったら
         if (ObjPlayer.instance.Anim.GetAnimNormalizeTime(PlayerAnimState.Atk01,1f))
         {
-            // 攻撃 → 待ち
+            // 攻撃01 → 待ち
             if (ObjPlayer.instance.GetSetGround.m_bStand)
             {
                 ObjPlayer.instance.m_PlayerState = PlayerState.Idle;
