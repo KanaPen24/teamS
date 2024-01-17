@@ -41,20 +41,26 @@ public class UIManager : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(IS_XBoxInput.Menu))&&!Pause.GetSetPause)
         {
             DrawPause(true);
-            GameManager.GetSetGameState = GameState.GamePause;
-            PostEffect.SetGaussianRate(1.0f);
         }
         else if ((Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(IS_XBoxInput.Menu))&& Pause.GetSetPause)
         {
             DrawPause(false);
-            PostEffect.SetGaussianRate(0.0f);
-            GameManager.GetSetGameState = GameState.GamePlay;
         }
     }
 
     public void DrawPause(bool flg)
     {
         UIs[(int)UIType.Pause].Active(flg);
+        if (flg)
+        {
+            PostEffect.SetGaussianRate(1.0f);
+            GameManager.GetSetGameState = GameState.GamePause;
+        }
+        else if (!flg)
+        {
+            PostEffect.SetGaussianRate(0.0f);
+            GameManager.GetSetGameState = GameState.GamePlay;
+        }
         Pause.GetSetPause = flg;
     }
 }
