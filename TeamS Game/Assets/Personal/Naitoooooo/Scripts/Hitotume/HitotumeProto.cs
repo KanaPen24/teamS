@@ -27,12 +27,12 @@ public class HitotumeProto : ObjEnemyBase
     {
         // 画面外にいる時は更新しないようにする
         // ※ノックバック中は例外
-        if(Mathf.Abs(ObjPlayer.instance.GetSetPos.x - GetSetPos.x) >= 12f &&
-            GetSetEnemyState != EnemyState.KnockBack)
-        {
-            m_vSpeed.x = 0f;
-            return;
-        }
+        //if(Mathf.Abs(ObjPlayer.instance.GetSetPos.x - GetSetPos.x) >= 12f &&
+        //    GetSetEnemyState != EnemyState.KnockBack)
+        //{
+        //    m_vSpeed.x = 0f;
+        //    return;
+        //}
         if(ObjPlayer.instance.GetSetPos.x > GetSetPos.x)
         {
             GetSetDir = ObjDir.RIGHT;

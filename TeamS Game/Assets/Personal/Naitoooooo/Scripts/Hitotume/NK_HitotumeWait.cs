@@ -11,7 +11,6 @@ public class NK_HitotumeWait : NK_HitotumeStrategy
 
     public override void UpdateState()
     {
-        c++;
         //‘Ò‚¿¨—‰º
         if(!m_HitotumeProto.GetSetGround.m_bStand)
         {
