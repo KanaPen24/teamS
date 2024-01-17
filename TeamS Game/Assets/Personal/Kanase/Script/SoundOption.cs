@@ -22,13 +22,7 @@ public class SoundOption : MonoBehaviour
         seSlider.value = SEVolume;
 
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    }    
     public float ConvertVolumeToDb(float volume)
     {
         //AudioMixerの-80～20dbの値をvalueの0～1に当てはめる

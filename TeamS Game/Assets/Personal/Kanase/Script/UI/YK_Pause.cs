@@ -43,7 +43,7 @@ public class YK_Pause : YK_UI
         //オプション画面中にコントローラーのBを押したら
         if (OpitionFlg && Input.GetKeyDown(IS_XBoxInput.B))
         {
-            OptionUI.gameObject.SetActive(false);
+            OnClickReturn();
             OpitionFlg = false;
         }
 
@@ -57,7 +57,7 @@ public class YK_Pause : YK_UI
     {
         //ゲームに戻るを選択したとき
         Time.timeScale = 1;
-        EventSystem.current.SetSelectedGameObject(RTFirst); //一旦ゲームに戻るボタンからフォーカスを外す
+       // EventSystem.current.SetSelectedGameObject(RTFirst); //一旦ゲームに戻るボタンからフォーカスを外す
         UIManager.instance.DrawPause(false);
         m_bPause = false;
     }

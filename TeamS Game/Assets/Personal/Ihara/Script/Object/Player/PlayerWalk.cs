@@ -38,7 +38,7 @@ public class PlayerWalk : PlayerStrategy
         // ˆÚ“® ¨ UŒ‚
         if (Input.GetKeyDown(IS_XBoxInput.X))
         {
-            ObjPlayer.instance.m_PlayerState = PlayerState.Atk;
+            ObjPlayer.instance.m_PlayerState = PlayerState.Atk01;
             EndState();
             return;
         }
