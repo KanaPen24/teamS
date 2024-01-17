@@ -15,7 +15,9 @@ public enum PlayerState
     Walk,
     Jump,
     Drop,
-    Atk,
+    Atk01,
+    Atk02,
+    Atk03,
     Special,
 
     MaxPlayerState

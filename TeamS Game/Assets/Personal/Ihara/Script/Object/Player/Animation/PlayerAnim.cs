@@ -20,7 +20,9 @@ public enum PlayerAnimState
     Walk,
     Jump,
     Drop,
-    Atk,
+    Atk01,
+    Atk02,
+    Atk03,
     Special,
 
     MaxPlayerAnimState

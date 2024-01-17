@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 403ae2dd693bb1d4b924f6b8d206b053, type: 3}
+  m_Name: Heroine-20240115T054421Z-001.fadeMotionList
+  m_EditorClassIdentifier: 
+  MotionInstanceIds: b2c9ffffa4c9ffff9ac9ffffd8b3ffffceb3ffff
+  CubismFadeMotionObjects:
+  - {fileID: 11400000, guid: 8d0b6f5f4cc09b84195cd10eff1e522e, type: 2}
+  - {fileID: 11400000, guid: 404f501c5545afd46ab984868fc1d953, type: 2}
+  - {fileID: 11400000, guid: 018858419aa5d5346952e5998f472f9f, type: 2}
+  - {fileID: 11400000, guid: 32f7ad9489f85fc438ab9d2208a921f3, type: 2}
+  - {fileID: 11400000, guid: ac0b76141612c584aba71211a5f10c22, type: 2}

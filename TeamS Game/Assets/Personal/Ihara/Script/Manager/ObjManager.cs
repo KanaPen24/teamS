@@ -19,9 +19,10 @@ public class ObjManager : MonoBehaviour
     [SerializeField] private List<ObjBase> Objs; // オブジェクトを格納する配列
     [SerializeField] private CinemachineImpulseSource cinema;
     public static ObjManager instance;
-    public VisualEffect hitEffect;
-    public ParticleSystem wallEffect;
-    public ParticleSystem unionEffect;
+    public VisualEffect hitEffect;// ヒットエフェクト
+    public VisualEffect ChargeEffect; // 吸収エフェクト
+    public ParticleSystem wallEffect; // 壁衝突エフェクト
+    public ParticleSystem unionEffect; // 合体時のエフェクト
     public ObjEnemyUnion enemyUnionPrefab;
 
     private int myID;    // 自身のオブジェクトID
@@ -381,21 +382,32 @@ public class ObjManager : MonoBehaviour
                 // 自身が無敵でなければ…
                 if (!Objs[myID].GetSetInvincible.m_bInvincible)
                 {
+                    VisualEffect charge = null;
                     // 自身が合体敵だったら
                     if (Objs[myID].GetComponent<ObjEnemyUnion>() != null)
                     {
                         // 破壊トリガーをON
                         Objs[myID].GetSetDestroy = true;
                         Objs[myID].GetComponent<ObjEnemyUnion>().DestroyTriggerChildEnemy();
+
+                        // 吸収エフェクト再生
+                        charge = Instantiate(ChargeEffect, Objs[myID].GetSetPos, Quaternion.identity);
+                        charge.Play();
+                        //Destroy(charge, 5.0f);
                         continue;
                     }
 
                     // 自身が敵だったら
                     if (Objs[myID].GetComponent<ObjEnemyBase>() != null)
                     {
-                        // ノックバック処理
+                        // 破壊処理
                         ON_HitManager.instance.SetActive(Objs[myID].GetSetObjID, false);
                         Objs[myID].GetSetDestroy = true;
+
+                        // 吸収エフェクト再生
+                        charge = Instantiate(ChargeEffect, Objs[myID].GetSetPos, Quaternion.identity);
+                        charge.Play();
+                        //Destroy(charge, 5.0f);
                         continue;
                     }
                 }
