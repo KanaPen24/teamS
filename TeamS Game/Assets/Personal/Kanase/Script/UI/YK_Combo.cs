@@ -156,6 +156,11 @@ public class YK_Combo : YK_UI
         ComboNumber.text = m_nCombo + "";
     }
 
+    public static int GetCombo()
+    {
+        return m_nCombo;
+    }
+
     /**
      * @fn
      * コンボをリセットする関数
