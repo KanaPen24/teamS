@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Intensity: 0.9
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: c363fa9c2752fbd0e78d1cc000000000
+  m_ApplyToSortingLayers: c363fa9c2752fbd0e78d1cc0000000009776c5f6
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -5327,25 +5327,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8481398776385345293, guid: d19e2410eea2ab842b70d32d5da697d4, type: 3}
   m_PrefabInstance: {fileID: 9151393635363332603}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &771157075571750649 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8481398776385345282, guid: d19e2410eea2ab842b70d32d5da697d4, type: 3}
-  m_PrefabInstance: {fileID: 9151393635363332603}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &498625632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 771157075571750649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8801e0ea4b47184fa8c9e0428526f93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  rate: 0
 --- !u!1001 &9204241710897423966
 PrefabInstance:
   m_ObjectHideFlags: 0
