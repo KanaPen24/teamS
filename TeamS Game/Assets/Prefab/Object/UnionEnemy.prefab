@@ -71,9 +71,9 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1484857115
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7099f164186b4404c86cbcc197e28710, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8aa49c9054d5e0d4483b53e4edb23ad3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -263,7 +263,6 @@ MonoBehaviour:
     m_bHitStop: 0
     m_fTime: 0
   knockBack:
-    m_vSpeed: {x: 0, y: 0}
     m_vInitSpeed: {x: 0.4, y: 0.4}
     m_fDamping: 0.7
     m_fGravity: 0.019
@@ -349,6 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65fbf0015434dde4d890be7e3cc49e48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  burstEffect: {fileID: 0}
 --- !u!114 &2675188880141805712
 MonoBehaviour:
   m_ObjectHideFlags: 0

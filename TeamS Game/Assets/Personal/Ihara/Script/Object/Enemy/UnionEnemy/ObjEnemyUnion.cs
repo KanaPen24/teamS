@@ -28,6 +28,8 @@ public class ObjEnemyUnion : ObjEnemyBase
         enemyStrategys[(int)m_EnemyState].UpdateState();
         enemyStrategys[(int)m_EnemyState].UpdateStrategy();
         CheckDivision();
+
+        this.transform.Rotate(0, 0, 3);
     }
 
     //  ---- “–‚½‚è”»’è‚ğ¶¬‚µ‚½Û‚Ìˆ— ----

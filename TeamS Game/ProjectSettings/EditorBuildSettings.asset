@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Personal/Ihara/Scene/IS_Scene.unity
     guid: a9b4d27ddc7891543b6d54ba21dbddec
+  - enabled: 0
+    path: Assets/Personal/Naitoooooo/Scene/GameSceneaa.unity
+    guid: 00d1721a86123b04eb4ce3cbe3f25345
   m_configObjects: {}
