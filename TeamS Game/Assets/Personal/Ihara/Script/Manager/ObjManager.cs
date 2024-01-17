@@ -393,7 +393,7 @@ public class ObjManager : MonoBehaviour
                         // 吸収エフェクト再生
                         charge = Instantiate(ChargeEffect, Objs[myID].GetSetPos, Quaternion.identity);
                         charge.Play();
-                        //Destroy(charge, 5.0f);
+                        Destroy(charge.gameObject, 5.0f);
                         continue;
                     }
 
@@ -407,7 +407,7 @@ public class ObjManager : MonoBehaviour
                         // 吸収エフェクト再生
                         charge = Instantiate(ChargeEffect, Objs[myID].GetSetPos, Quaternion.identity);
                         charge.Play();
-                        //Destroy(charge, 5.0f);
+                        Destroy(charge.gameObject, 5.0f);
                         continue;
                     }
                 }
