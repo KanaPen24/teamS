@@ -607,7 +607,7 @@ public class ObjManager : MonoBehaviour
         // ‘å‚«‚³İ’è(•Ï‚¦‚½‚¢‚È‚ç‚±‚±‚Å˜M‚é)
         // ‡‘ÌŒ³‚Ì“G‚Ì”‚ğ’m‚è‚½‚¢ê‡‚ÍuenemyUnion.m_nEnemyIDs.Countv‚Å•ª‚©‚è‚Ü‚·
         enemyUnion.GetSetScale = new Vector3(1.0f + (1.2f * (enemyUnion.m_nEnemyIDs.Count - 1)),
-            1.0f + (1.2f * (enemyUnion.m_nEnemyIDs.Count - 1)),
+            1.0f + (1.1f * (enemyUnion.m_nEnemyIDs.Count - 1)),
             1.0f);
 
         // “–‚½‚è”»’èİ’è(G‚ç‚È‚¢‚æ‚¤‚É!!)
