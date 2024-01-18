@@ -275,6 +275,9 @@ public class ObjManager : MonoBehaviour
 
                         // ヒットストップをかける
                         Objs[myID].GetSetHitStopParam.SetHitStop(0.5f);
+
+                        // SE再生
+                        AudioManager.instance.PlaySE(SEType.SE_PEAtkDamage);
                     }
                 }
             }
