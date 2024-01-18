@@ -268,7 +268,8 @@ public class ObjManager : MonoBehaviour
                     {
                         // コンボ加算
                         YK_Combo.AddCombo();
-
+                        // 攻撃が当たったらスコア加算
+                        YK_Score.instance.AddScore(10);
                         // ヒットエフェクト再生
                         hitEffect.Play();
                         hitEffect.transform.position = Objs[otherID].GetSetPos;

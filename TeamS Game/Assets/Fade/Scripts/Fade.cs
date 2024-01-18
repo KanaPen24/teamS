@@ -23,6 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 public class Fade : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class Fade : MonoBehaviour
     [SerializeField] private float FadeSpeed = 0.02f;
     [SerializeField] private YK_JsonSave Json;
     public static Fade instance;         // Fadeのインスタンス
+    [SerializeField] private GameObject LoadingT;
+    [SerializeField] YK_UIBlinking UIBlinking;
      /**
      * @fn
      * 初期化処理(外部参照を除く)
@@ -49,7 +52,7 @@ public class Fade : MonoBehaviour
         }
     }
     public void Start ()
-	{
+	{        
         Init();
         //シーン立ち上げ時にトランジションを掛けるか
         if (StartFade == true)//||MoveScene.FadeFlg)
@@ -85,7 +88,12 @@ public class Fade : MonoBehaviour
 
 	IEnumerator FadeoutCoroutine (float time, System.Action action)
 	{
-		float endTime = Time.timeSinceLevelLoad + time * (cutoutRange);
+        yield return new WaitForSeconds(2.0f);
+        //Color color = LoadingT.gameObject.GetComponent<Image>().color;
+        //color.a = 0.0f;
+        //LoadingT.color = color;
+        LoadingT.SetActive(false);
+        float endTime = Time.timeSinceLevelLoad + time * (cutoutRange);
 
 		var endFrame = new WaitForEndOfFrame ();
 
@@ -104,10 +112,14 @@ public class Fade : MonoBehaviour
 
 	IEnumerator FadeinCoroutine (float time, System.Action action)
 	{
-		float endTime = Time.timeSinceLevelLoad + time * (1 - cutoutRange);
+        //Color color = LoadingT.gameObject.GetComponent<Image>().color;
+        //color.a = 1.0f;
+        //LoadingT.color = color;
+        LoadingT.SetActive(true);
+        float endTime = Time.timeSinceLevelLoad + time * (1 - cutoutRange);
 		
 		var endFrame = new WaitForEndOfFrame ();
-
+        
         while (cutoutRange <= 1.5f)  {
             cutoutRange += FadeSpeed;
 			fade.Range = cutoutRange;
@@ -115,7 +127,7 @@ public class Fade : MonoBehaviour
 		}
 		cutoutRange = 1;
 		fade.Range = cutoutRange;
-
+        
 		if (action != null) {
 			action ();
 		}
