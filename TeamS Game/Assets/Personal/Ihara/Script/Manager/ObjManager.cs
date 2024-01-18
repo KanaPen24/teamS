@@ -23,6 +23,7 @@ public class ObjManager : MonoBehaviour
     public VisualEffect ChargeEffect; // 吸収エフェクト
     public ParticleSystem wallEffect; // 壁衝突エフェクト
     public ParticleSystem unionEffect; // 合体時のエフェクト
+    public ParticleSystem ExplosionEffect; // 爆発のエフェクト
     public ObjEnemyUnion enemyUnionPrefab;
 
     private int myID;    // 自身のオブジェクトID
@@ -398,6 +399,9 @@ public class ObjManager : MonoBehaviour
                         charge = Instantiate(ChargeEffect, Objs[myID].GetSetPos, Quaternion.identity);
                         charge.Play();
                         Destroy(charge.gameObject, 5.0f);
+                        //爆発エフェクト再生
+                        ExplosionEffect.transform.position = Objs[myID].GetSetPos;
+                        ExplosionEffect.Play();
                         continue;
                     }
 
@@ -412,6 +416,9 @@ public class ObjManager : MonoBehaviour
                         charge = Instantiate(ChargeEffect, Objs[myID].GetSetPos, Quaternion.identity);
                         charge.Play();
                         Destroy(charge.gameObject, 5.0f);
+                        //爆発エフェクト再生
+                        ExplosionEffect.transform.position = Objs[myID].GetSetPos;
+                        ExplosionEffect.Play();
                         continue;
                     }
                 }
