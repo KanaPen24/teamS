@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 22291984}
   - component: {fileID: 11491604}
   - component: {fileID: -721400641995957407}
+  - component: {fileID: 8168958394999686713}
   m_Layer: 5
   m_Name: FadeCanvas
   m_TagString: Untagged
@@ -105,6 +106,29 @@ MonoBehaviour:
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   maskTexture: {fileID: 2800000, guid: 4cf1927bd8af2f844aa11aa7014548e1, type: 3}
   cutoutRange: 0
+--- !u!114 &8168958394999686713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 1600, y: 900}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!1 &7752006998229982365
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +157,7 @@ RectTransform:
   m_GameObject: {fileID: 7752006998229982365}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.0306878, y: 1.3801, z: 1.3801}
+  m_LocalScale: {x: 4.0229955, y: 2.734116, z: 2.734116}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 22424616}
@@ -141,7 +165,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 267, y: -143}
+  m_AnchoredPosition: {x: 630, y: -326}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5449638024590380789
