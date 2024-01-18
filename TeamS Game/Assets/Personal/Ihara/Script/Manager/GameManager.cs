@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.PlayBGM(BGMType.BGM_GAME);
         //m_bOnce = false;
 
-        Invoke(nameof(GameStart), 3.0f);
+        Invoke(nameof(GameStart), 2.0f);
     }
 
     private void Update()

@@ -36,6 +36,7 @@ public class YK_Pause : YK_UI
         m_eUIType = UIType.Pause;     
         m_bPause = false;
         OptionUI.gameObject.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(PauseFirst);
     }
     // Update is called once per frame
     private void FixedUpdate()
