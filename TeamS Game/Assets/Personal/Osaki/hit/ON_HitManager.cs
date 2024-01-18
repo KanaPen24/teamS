@@ -207,7 +207,7 @@ public class ON_HitManager
             return hitDir = HitDir.DOWN;
         // ¶‚É“–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
         if ((m_hits[i].GetCenter().x - m_hits[i].GetSize().x > m_hits[j].GetCenter().x - m_hits[j].GetSize().x &&
-             m_hits[i].GetCenter().x - m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x) &&
+             m_hits[i].GetCenter().x - m_hits[i].GetSize().x < m_hits[j].GetCenter().x + m_hits[j].GetSize().x)&&
             (m_hits[i].GetCenter().y + m_hits[i].GetSize().y - 0.5f > m_hits[j].GetCenter().y - m_hits[j].GetSize().y &&
              m_hits[i].GetCenter().y - m_hits[i].GetSize().y + 0.5f < m_hits[j].GetCenter().y + m_hits[j].GetSize().y))
             return hitDir = HitDir.LEFT;
