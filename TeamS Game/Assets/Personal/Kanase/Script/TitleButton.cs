@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class TitleButton : MonoBehaviour
 {
@@ -10,11 +11,19 @@ public class TitleButton : MonoBehaviour
     [SerializeField] AudioClip decideSE;        //決定音
     [SerializeField] AudioClip selectSE;        //選択音
     AudioSource audioSource;
+    [SerializeField]
+    private GameObject OptionUI = null;
+    [SerializeField]
+    private GameObject OptionFirst; //オプション選択時最初にフォーカスさせたいボタン
+    [SerializeField]
+    private GameObject PauseFirst;  //ポーズ画面開いた時に最初にフォーカスさせたいボタン
+    private bool OpitionFlg;        //オプション画面かどうかのフラグ
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        OptionUI.gameObject.SetActive(false);
     }
     //ボタンが押された時の関数名はなんでもよいが、
     //Unity側でボタンが押されたときに実行する
@@ -29,15 +38,17 @@ public class TitleButton : MonoBehaviour
             SceneManager.LoadScene("GameScene");
         });
     }
-    //public void StartOption()
-    //{
-    //    //fade.FadeIn(1f, () =>
-    //    //{
-    //    //    //fade.FadeOut(1f,() =>
-    //    //    //{
-    //    //    //});
-    //    //});
-    //}
+    // Update is called once per frame
+    private void FixedUpdate()
+    {
+        //オプション画面中にコントローラーのBを押したら
+        if (OpitionFlg && Input.GetKeyDown(IS_XBoxInput.B))
+        {
+            OnClickReturn();
+            OpitionFlg = false;
+        }
+
+    }
     //ゲーム終了
     public void GameExit()
     {
@@ -57,15 +68,22 @@ public class TitleButton : MonoBehaviour
     //ボタン押下時にフラグオン
     public void OnClickOption()
     {
-        //    //StartOption();
-        //    //Invoke("StartOption", InvokeTime);  //指定の時間待ってからフェードイン
-        //    GameOptionFlg = false;              //フラグオフ(他のシーンに遷移しないのでオフにしないとオンのままになる)
-        //audioSource.PlayOneShot(selectSE);
+        //オプション画面を開いたとき
+        OpitionFlg = true;
+        OptionUI.gameObject.SetActive(true);        
+        EventSystem.current.SetSelectedGameObject(OptionFirst);
+        audioSource.PlayOneShot(selectSE);
     }
     //ボタン押下時にフラグオン
     public void OnClickExit()
     {
         Invoke("GameExit", InvokeTime * 2);  //指定の時間待ってからゲーム終了(今は1秒)
         audioSource.PlayOneShot(decideSE);
+    }
+    public void OnClickReturn()
+    {
+        //オプション画面を閉じた時        
+        OptionUI.gameObject.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(PauseFirst);
     }
 }
