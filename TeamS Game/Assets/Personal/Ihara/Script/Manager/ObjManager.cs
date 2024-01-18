@@ -30,6 +30,8 @@ public class ObjManager : MonoBehaviour
     private int otherID; // 相手のオブジェクトID
     private int maxID;   // 現在割り振られているオブジェクトIDの最大数
 
+    [SerializeField] private float restartPos;
+
     private void Start()
     {
         // --- 初期化 ---
@@ -455,8 +457,22 @@ public class ObjManager : MonoBehaviour
                     // 右に当たっていたら
                     if (ON_HitManager.instance.GetData(i).dir == HitDir.RIGHT)
                     {
-                        Objs[myID].GetSetSpeed += new Vector2(-0.25f, 0.05f);
-                        Objs[myID].GetSetDir = ObjDir.LEFT;
+                        if(Objs[myID].GetSetPos.x < Objs[ON_HitManager.instance.GetData(i).otherID].GetSetPos.x)
+                        {
+                            Objs[myID].GetSetSpeed += new Vector2(-0.25f, 0.05f);
+                            Objs[myID].GetSetDir = ObjDir.LEFT;
+                        }
+                        else
+                        {
+                            // 右の壁の中にいる
+                            Debug.Log("右の壁の中にいる");
+
+                            Objs[myID].GetSetPos = new Vector3(Camera.main.transform.position.x + restartPos, Objs[myID].GetSetPos.y, Objs[myID].GetSetPos.z);
+                            Debug.Log("出てくる座標" + Objs[myID].GetSetPos.x);
+
+                            Objs[myID].GetSetSpeed += new Vector2(-0.25f, 0.05f);
+                            Objs[myID].GetSetDir = ObjDir.LEFT;
+                        }
 
                         // エフェクト再生
                         wallEffect.Play();
@@ -466,8 +482,22 @@ public class ObjManager : MonoBehaviour
                     // 左に当たっていたら
                     if (ON_HitManager.instance.GetData(i).dir == HitDir.LEFT)
                     {
-                        Objs[myID].GetSetSpeed += new Vector2(0.25f, 0.05f);
-                        Objs[myID].GetSetDir = ObjDir.RIGHT;
+                        if (Objs[myID].GetSetPos.x > Objs[ON_HitManager.instance.GetData(i).otherID].GetSetPos.x)
+                        {
+                            Objs[myID].GetSetSpeed += new Vector2(0.25f, 0.05f);
+                            Objs[myID].GetSetDir = ObjDir.RIGHT;
+                        }
+                        else
+                        {
+                            // 左の壁の中にいる
+                            Debug.Log("左の壁の中にいる");
+                            Objs[myID].GetSetPos = new Vector3(Camera.main.transform.position.x - restartPos, Objs[myID].GetSetPos.y, Objs[myID].GetSetPos.z);
+                            Debug.Log("出てくる座標" + Objs[myID].GetSetPos.x);
+
+                            Objs[myID].GetSetSpeed += new Vector2(0.25f, 0.05f);
+                            Objs[myID].GetSetDir = ObjDir.RIGHT;
+                        }
+
 
                         // エフェクト再生
                         wallEffect.Play();
