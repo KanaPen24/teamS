@@ -14,7 +14,7 @@ public class HitotumeProto : ObjEnemyBase
     [SerializeField] private List<NK_HitotumeStrategy> m_HitotumeStrategy;
     private float m_localScalex;
     [SerializeField] private Animator m_Anim;
-    [SerializeField] private GameObject m_buttobiSmog;
+    [SerializeField] private ParticleSystem m_buttobiSmog;
     private EnemyState OldEnemyState;
     [SerializeField] private float m_buttobiTime;
 
@@ -69,12 +69,12 @@ public class HitotumeProto : ObjEnemyBase
 
     private void ButtobiStart()
     {
-        m_buttobiSmog.SetActive(true);
+        m_buttobiSmog.Play();
         Invoke("ButtobiEnd", m_buttobiTime);
     }
 
     private void ButtobiEnd()
     {
-        m_buttobiSmog.SetActive(false);
+        m_buttobiSmog.Stop();
     }
 }
