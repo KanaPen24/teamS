@@ -13,6 +13,7 @@ using UnityEngine.VFX;
 public class PlayerAtk01 : PlayerStrategy
 {
     [SerializeField] private Vector3 m_vAtkArea;
+    [SerializeField] private float m_fAtkCenterY;
     [SerializeField] private float m_fLength;
     [SerializeField] private float m_fAtkTime;
     [SerializeField] private VisualEffect atkEffect;
@@ -43,10 +44,19 @@ public class PlayerAtk01 : PlayerStrategy
         if (atknum != -1)
         {
             // 座標更新
+            var size = m_vAtkArea;
+            m_fAtkCenterY = Mathf.Lerp(0.0f, 2.0f, m_fTime / m_fAtkTime);
+            size.y = Mathf.Lerp(1.5f, m_vAtkArea.y, m_fTime / m_fAtkTime);
             if (ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
-                ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f));
+            {
+                ON_HitManager.instance.SetSize(atknum, size);
+                ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, m_fAtkCenterY, 0f));
+            }
             else if (ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
-                ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f));
+            {
+                ON_HitManager.instance.SetSize(atknum, size);
+                ON_HitManager.instance.SetCenter(atknum, ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, -m_fAtkCenterY, 0f));
+            }
 
             // 攻撃時間が終わったら
             if (m_fTime <= 0)
@@ -58,6 +68,9 @@ public class PlayerAtk01 : PlayerStrategy
                 atknum = -1;
 
                 m_fTime = 0;
+
+                ObjPlayer.instance.m_PlayerState = PlayerState.Idle;
+                EndState();
             }
             else m_fTime -= Time.deltaTime;
         }
@@ -80,7 +93,7 @@ public class PlayerAtk01 : PlayerStrategy
         // 攻撃の当たり判定生成(向きによって生成位置が変わる)
         if (ObjPlayer.instance.GetSetDir == ObjDir.RIGHT)
         {
-            atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, 0f, 0f),
+            atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos + new Vector3(m_fLength, m_fAtkCenterY, 0f),
             m_vAtkArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
 
             ObjPlayer.instance.GetSetSpeed += new Vector2(5f, 0f);
@@ -92,7 +105,7 @@ public class PlayerAtk01 : PlayerStrategy
         }
         else if (ObjPlayer.instance.GetSetDir == ObjDir.LEFT)
         {
-            atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, 0f, 0f),
+            atknum = ON_HitManager.instance.GenerateHit(ObjPlayer.instance.GetSetPos - new Vector3(m_fLength, -m_fAtkCenterY, 0f),
             m_vAtkArea, true, HitType.ATTACK, ObjPlayer.instance.GetSetObjID);
 
             ObjPlayer.instance.GetSetSpeed += new Vector2(-5f, 0f);
