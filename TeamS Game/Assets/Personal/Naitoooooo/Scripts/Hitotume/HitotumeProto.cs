@@ -56,7 +56,7 @@ public class HitotumeProto : ObjEnemyBase
             {
                 ButtobiStart();
                 //AudioManager.instance.PlaySE(SEType.SE_EFly);
-                AudioManager.instance.PlaySE(SEType.SE_PEAtkDamage);
+                //AudioManager.instance.PlaySE(SEType.SE_PEAtkDamage);
             }
         }
 
